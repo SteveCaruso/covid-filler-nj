@@ -7,7 +7,7 @@ This is to help sign folks up for CoVID vaccines from a variety of places.
 //javascript:
 (function() {
 
-    window.covidInjection = function () {
+    function inject() {
 
         //Construct button
         var button = document.createElement("button");
@@ -64,5 +64,15 @@ This is to help sign folks up for CoVID vaccines from a variety of places.
         }
 
     }
+
+    var original = window.COVID;
+
+    var self = (window.COVID = {
+                                    inject: inject,
+                                    noConflict: function() {
+                                        window.COVID = original;
+                                        return self;
+                                    }
+    });
 
 })();
