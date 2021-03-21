@@ -4,7 +4,6 @@ This is to help sign folks up for CoVID vaccines from a variety of places.
 
 */
 
-//javascript:
 (function() {
 
     function inject() {
@@ -65,14 +64,9 @@ This is to help sign folks up for CoVID vaccines from a variety of places.
 
     }
 
-    var original = window.COVID;
-
-    var self = (window.COVID = {
-                                    inject: inject,
-                                    noConflict: function() {
-                                        window.COVID = original;
-                                        return self;
-                                    }
-    });
+    //Place it in a global object
+    window.COVID = {
+        inject : inject;
+    };
 
 })();
