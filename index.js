@@ -8,6 +8,18 @@ This is to help sign folks up for CoVID vaccines from a variety of places.
 
     function inject() {
 
+        var host = document.location.host;
+        var el = document.getElementById.bind(document);
+
+        var supported = [
+            "www.riteaid.com"
+        ];
+
+        if (supported.indexOf(host) === -1) {
+            alert("You are not on a supported vaccine portal.");
+            return;
+        }
+
         /* Data columns */
         var FNAME = 1;
         var LNAME = 2;
@@ -39,9 +51,6 @@ This is to help sign folks up for CoVID vaccines from a variety of places.
         /* Add click function */
         button.onclick = function() {
 
-            var h = document.location.host;
-            var el = document.getElementById.bind(document);
-
             /* Clipboard stuff */
             navigator.clipboard.readText().then( c => {
 
@@ -50,7 +59,8 @@ This is to help sign folks up for CoVID vaccines from a variety of places.
                     console.log(d);
                     d = d[0].padStart(2,"0")+'/'+d[1].padStart(2,"0")+'/'+d[2]; 
 
-                if (h == "www.riteaid.com") {
+                if (host == "www.riteaid.com") {
+
                     el("dateOfBirth").value=d;
                     el("city").value=c[CITY];
                     el("state").value=c[STATE];
