@@ -200,18 +200,129 @@ It's a *snicker* JavaScript injection... :-)
                         //Fire the change event manually
                         q('#q1_0').dispatchEvent(new Event('compositionend')); //Yep, that's what they use for checking.
 
-                        //But apparently that's not enough, so we need to add some classes
-                        //answer-free-input ng-dirty ng-valid ng-touched
+                        //March 22nd - q20-23 changed
+                        /*
+                            q20 - Age 65 or over
+                            q21 - Age 16 or over with medical conditions that increase risk of severe illness from COVID-19
+                            q22 - In another priority group
+                            q23 - None of the above
+                        */
 
+                        //Over 65
+                        if (age >= 65) {
+                            q('#q20').click();
+                        }
+
+                        //Health conditions
+                        else if (c[HEALTH] != "None of the Above" && c[HEALTH] != "") {
+                            q('#q21').click();
+                        }
+
+                        //Priority group
+                        else if (c[OCC] != "None of the Above" && c[OCC != ""]) {
+
+                            q('#q21').click();
+                            
+                            //Wait for it to populate
+                            wait(500);
+
+                            //K-12 & Childcare
+                            if (c[OCC] == "Childcare Worker" 
+                                || c[OCC] == "Pre-Kindergarten -12th grade Educator & Staff"
+                                || c[OCC] == "Family Childcare Providers"
+                                || c[OCC] == "Head Start and Early Head Start"
+                            ) {
+                                q('option[value="1: Teachers K-12, Daycare and preschool workers, a"]').setAttribute("selected", "true");
+                            }
+                            //Healthcare Workers
+                            else if (c[OCC] == "Health Care Worker") {
+                                q('option[value="2: Healthcare workers (paid and unpaid)"]').setAttribute("selected", "true");
+                            }
+                            //First Responders
+                            else if (c[OCC] == "Emergency Medical Services (EMS)"
+                                    || c[OCC] == "Firefighters"
+                                    || c[OCC] == "First Responder"
+                                    || c[OCC] == "Law Enforcement"
+                            ) {
+                                q('option[value="3: First responders including law enforcement and "]').setAttribute("selected", "true");
+                            }
+                            //Transit & Public Safety
+                                    else if (c[OCC] == "Local Transportation"
+                                    || c[OCC] == "Public Health Employee"
+                                    || c[OCC] == "Public Safety Workers"
+                                    || c[OCC] == "Public Transit Workers"
+                            ) {
+                                q('option[value="4: Transit and public safety worker"]').setAttribute("selected", "true");
+                            }
+                            //Migrant Farm Workers
+                            else if (c[OCC] == "Migrant Farm Workers") {
+                                q('option[value="5: Migrant Farm Worker"]').setAttribute("selected", "true");
+                            }
+                            //Tribal
+                            else if (c[OCC] == "Members of tribal communities") {
+                                q('option[value="6: Member of a tribal community"]').setAttribute("selected", "true");
+                            }
+                            //Homeless
+                            else if (c[OCC] == "Persons experiencing homelessness"
+                                    || c[OCC] == "Persons living in shelters"
+                            ) {
+                                q('option[value="7: Person experiencing homelessness or living in a"]').setAttribute("selected", "true");
+                            }
+                            //Long Term Care
+                            else if (c[OCC] == "Multigenerational Household"
+                            ) {
+                                q('option[value="8: Residents of long-term and high risk congregate"]').setAttribute("selected", "true");
+                            }
+                            //Long Term Care Staff
+                            else if (c[OCC] == "Long Term Care Facility Staff") {
+                                q('option[value="9: Healthcare workers or staff of long-term and hi"]').setAttribute("selected", "true");
+                            }
+                            //OTHER
+                            else {
+                                q('option[value="10: None of the above"]').setAttribute("selected", "true");
+                            }
+
+                            //Fire the change event manually
+                            q('#qlist').dispatchEvent(new Event('change'));
+
+                        }
+
+                        /*
+<select _ngcontent-shj-c76="" id="qlist" aria-describedby="listErr" formcontrolname="list" class="dd-list ng-touched ng-pristine ng-invalid">
+<option _ngcontent-shj-c76="" disabled="" value="0: null">Select</option>
+<option _ngcontent-shj-c76="" value="1: Teachers K-12, Daycare and preschool workers, a"> Teachers K-12, Daycare and preschool workers, and staff members</option>
+<option _ngcontent-shj-c76="" value="2: Healthcare workers (paid and unpaid)"> Healthcare workers (paid and unpaid)</option>
+<option _ngcontent-shj-c76="" value="3: First responders including law enforcement and "> First responders including law enforcement and fire professionals</option>
+<option _ngcontent-shj-c76="" value="4: Transit and public safety worker"> Transit and public safety worker</option>
+<option _ngcontent-shj-c76="" value="5: Migrant Farm Worker"> Migrant Farm Worker</option>
+<option _ngcontent-shj-c76="" value="6: Member of a tribal community"> Member of a tribal community</option>
+<option _ngcontent-shj-c76="" value="7: Person experiencing homelessness or living in a"> Person experiencing homelessness or living in a shelter</option>
+<option _ngcontent-shj-c76="" value="8: Residents of long-term and high risk congregate"> Residents of long-term and high risk congregate care settings</option>
+<option _ngcontent-shj-c76="" value="9: Healthcare workers or staff of long-term and hi"> Healthcare workers or staff of long-term and high risk congregate care settings</option>
+<option _ngcontent-shj-c76="" value="10: None of the above"> None of the above</option><!----></select>
+                        */
+
+                        //None of the above
+                        else {
+                            q('#q23').click();
+                        }
+
+                        //Click #qconsent
+                        q('#qconsent').click();
+
+                        //Click button[_ngcontent-kqo-c76].btn-control
+                        q('button.btn-control').click();
+                        
+                        //OLD CODE
                         //Click #q20
-                        q('#q20').click();
+                        //q('#q20').click();
 
                         //wait
-                        wait(500);
+                        //wait(500);
 
 
                         //Select elligibility criteria
-                        //THIS PART SUCKS
+                        //THIS PART SUCKS - and is deprecated as of March 22nd
                         /*
 
                         <select _ngcontent-kqo-c76="" id="qlist" aria-describedby="listErr" formcontrolname="list" class="dd-list ng-pristine ng-invalid ng-touched">
@@ -235,7 +346,7 @@ It's a *snicker* JavaScript injection... :-)
                         // For some selections #qtext needs to be given info
                         // K-12, First Responders, Transit & PS, Farm Worker, Healthcare Workers
                         // NEED employer 
-
+                        /*
                         //Senior
                         if (age >= 65) {
                             q('option[value="1: Age 65 or over"]').setAttribute("selected", "true");
@@ -312,12 +423,9 @@ It's a *snicker* JavaScript injection... :-)
                             //And trip the change event
                             q('#qtext').dispatchEvent(new Event('compositionend'));
                         }
+                        */
 
-                        //Click #qconsent
-                        q('#qconsent').click();
-
-                        //Click button[_ngcontent-kqo-c76].btn-control
-                        q('button.btn-control').click();
+                        
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/cvd/how-to-schedule
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/cvd/how-to-schedule") {
