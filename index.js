@@ -219,7 +219,7 @@ It's a *snicker* JavaScript injection... :-)
                         }
 
                         //Priority group
-                        else if (c[OCC] != "None of the Above" && c[OCC != ""]) {
+                        else if (c[OCC] != "None of the Above" && c[OCC] != "") {
 
                             q('#q21').click();
                             
