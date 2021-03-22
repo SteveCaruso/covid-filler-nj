@@ -56,7 +56,7 @@ It's a *snicker* JavaScript injection... :-)
         var button = document.createElement("button");
             button.id = "MakeTheMagicHappen";
             button.innerHTML = `
-                <strong>CoVID Injector</strong>
+                <strong>CoVID Injector 💉</strong>
                 <div id="COVID-STATUS">
                     <strong>Loaded!</strong><br>
                     Make sure the person's info is in your clipboard.<br>
@@ -117,7 +117,7 @@ It's a *snicker* JavaScript injection... :-)
                     if (location.href == "https://www.cvs.com/immunizations/covid-19-vaccine") {
                         console.log("Page 1 detected...");
 
-                        q('#COVID-STATUS').innerHTML = 'Page 1 detected...';
+                        q('#COVID-STATUS').innerHTML = '●○○○○○○<br>Page 1 detected...';
                     
                         //Click: a[data-analytics-name="New York"]
                         q('a[data-analytics-name="New York"]').click();
@@ -133,7 +133,7 @@ It's a *snicker* JavaScript injection... :-)
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/covid-screener/covid-qns") {
                         console.log("Page 2 detected...");
 
-                        q('#COVID-STATUS').innerHTML = 'Page 2 detected.<br>Click again.';
+                        q('#COVID-STATUS').innerHTML = '●●○○○○○<br>One Page 2.<br>Click again.';
 
                         //Click #q7_2
                         q('#q7_2').click();
@@ -150,7 +150,7 @@ It's a *snicker* JavaScript injection... :-)
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/cvd/dose-select") {
                         console.log("Page 2.5 detected...");
 
-                        q('#COVID-STATUS').innerHTML = 'On Page 2.5.<br>Click again.';
+                        q('#COVID-STATUS').innerHTML = '●●●○○○○<br>On Page 3.<br>Click again.';
 
                         //Click #customRadio_1
                         q('#customRadio_1').click();
@@ -163,7 +163,7 @@ It's a *snicker* JavaScript injection... :-)
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-covid") {
                         console.log("Page 3 detected...");
 
-                        q('#COVID-STATUS').innerHTML = 'On Page 3.<br>Click again.';
+                        q('#COVID-STATUS').innerHTML = '●●●●○○○<br>On Page 4.<br>Click again.';
 
                         //Set #jurisdiction 's selected element to one with value=
                         //26: EID_NJ
@@ -180,7 +180,7 @@ It's a *snicker* JavaScript injection... :-)
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-qns") {
                         console.log("Page 4 detected...");
 
-                        q('#COVID-STATUS').innerHTML = 'On Page 4.<br>Click again.';
+                        q('#COVID-STATUS').innerHTML = '●●●●●○○<br>On Page 5.<br>Click again.';
 
                         //Age in #q1_0
                         //Have to calculate it roughly
@@ -294,7 +294,12 @@ It's a *snicker* JavaScript injection... :-)
                         q('#qlist').dispatchEvent(new Event('change'));
 
                         //Add employer info !!! We don't collect this yet...
-                        if (q('#qtext')) q('#qtext').value = ".";
+                        if (q('#qtext') !== null) {
+                            //For now just fill a dummy value
+                            q('#qtext').value = ".";
+                            //And trip the change event
+                            q('#qtext').dispatchEvent(new Event('compositionend'));
+                        }
 
                         //Click #qconsent
                         q('#qconsent').click();
@@ -306,7 +311,7 @@ It's a *snicker* JavaScript injection... :-)
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/cvd/how-to-schedule") {
                         console.log("Page 5 detected...");
 
-                        q('#COVID-STATUS').innerHTML = 'On Page 5.<br>Click again.';
+                        q('#COVID-STATUS').innerHTML = '●●●●●●○<br>On Page 6.<br>Click again.';
                         
                         //Click button[_ngcontent-kqo-c74].btn-control
                         q('button.btn-control').click();
@@ -316,8 +321,6 @@ It's a *snicker* JavaScript injection... :-)
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/cvd-store-select/first-dose-select") {
                         console.log("Page 6 detected...");
 
-                        q('#COVID-STATUS').innerHTML = 'On Page 6.<br>One final click!';
-
                         //Set #address to Zip Code
                         q('#address').value = c[ZIP];
 
@@ -326,6 +329,8 @@ It's a *snicker* JavaScript injection... :-)
 
                         //Click button[_ngcontent-kqo-c79]
                         q('button').click();
+
+                        q('#COVID-STATUS').innerHTML = '●●●●●●●<br>On Page 7.<br>Continue manually.';
                     }
                 
                 } //END CVS
@@ -333,6 +338,9 @@ It's a *snicker* JavaScript injection... :-)
             });
 
         }
+
+        //Jump ahead
+        button.click();
 
     }
 
