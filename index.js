@@ -188,7 +188,10 @@ It's a *snicker* JavaScript injection... :-)
                         q('#q1_0').value = age;
 
                         //Fire the change event manually
-                        q('#q1_0').dispatchEvent(new Event('change'));
+                        q('#q1_0').dispatchEvent(new Event('compositionend')); //Yep, that's what they use for checking.
+
+                        //But apparently that's not enough, so we need to add some classes
+                        //answer-free-input ng-dirty ng-valid ng-touched
 
                         //Click #q20
                         q('#q20').click();
@@ -294,7 +297,7 @@ It's a *snicker* JavaScript injection... :-)
                         if (q('#qtext')) q('#qtext').value = ".";
 
                         //Click #qconsent
-                        if (q('#qconsent')) q('#qconsent').click();
+                        q('#qconsent').click();
 
                         //Click button[_ngcontent-kqo-c76].btn-control
                         q('button.btn-control').click();
