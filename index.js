@@ -284,10 +284,10 @@ It's a *snicker* JavaScript injection... :-)
                         }
 
                         //Add employer info !!! We don't collect this yet...
-                        q('#qtext').value = ".";
+                        if (q('#qtext')) q('#qtext').value = ".";
 
                         //Click #qconsent
-                        q('#qconsent').click();
+                        if (q('#qconsent')) q('#qconsent').click();
 
                         //Click button[_ngcontent-kqo-c76].btn-control
                         q('button.btn-control').click();
