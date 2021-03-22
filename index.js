@@ -25,7 +25,7 @@ It's a *snicker* JavaScript injection... :-)
         var q = document.querySelector.bind(document);
 
         //List of supported hosts
-        var supported = [
+        const supported = [
             "www.riteaid.com",
             "www.cvs.com"
         ];
@@ -37,20 +37,20 @@ It's a *snicker* JavaScript injection... :-)
         }
 
         //As you'll see in the clipboard code below, it assumes that user data resides in the clipboard and is in a delimited list. Copy-pasting from a Google Spreadsheet makes the data delimited by tabs, so that's what we're using here.
-        var DELIM = "	";
+        const DELIM = "	";
 
         //Data columns - These are the indexes (starting with 0) for each piece of user info we'll need. If you're using your own form, you'll need to change these to match your order.
-        var FNAME = 1;
-        var LNAME = 2;
-        var BDAY = 3;
-        var PHONE = 5;
-        var ADDR = 6;
-        var CITY = 7;
-        var STATE = 8;
-        var ZIP = 9;
-        var OCC = 10;
-        var HEALTH = 11;
-        var EMAIL = 15;
+        const FNAME = 1;
+        const LNAME = 2;
+        const BDAY = 3;
+        const PHONE = 5;
+        const ADDR = 6;
+        const CITY = 7;
+        const STATE = 8;
+        const ZIP = 9;
+        const OCC = 10;
+        const HEALTH = 11;
+        const EMAIL = 15;
 
         //Construct the button
         var button = document.createElement("button");
@@ -130,7 +130,6 @@ It's a *snicker* JavaScript injection... :-)
 
                     //On: https://www.cvs.com/immunizations/covid-19-vaccine
                     if (location.href == "https://www.cvs.com/immunizations/covid-19-vaccine") {
-                        console.log("Page 1 detected...");
 
                         q('#COVID-STATUS').innerHTML = '●○○○○○○○<br>CVS Page 1 detected...';
                     
@@ -146,7 +145,6 @@ It's a *snicker* JavaScript injection... :-)
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/covid-screener/covid-qns
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/covid-screener/covid-qns") {
-                        console.log("Page 2 detected...");
 
                         q('#COVID-STATUS').innerHTML = '●●○○○○○○<br>On CVS Page 2.<br>Click again.';
 
@@ -163,7 +161,6 @@ It's a *snicker* JavaScript injection... :-)
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/cvd/dose-select
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/cvd/dose-select") {
-                        console.log("Page 2.5 detected...");
 
                         q('#COVID-STATUS').innerHTML = '●●●○○○○○<br>On CVS Page 3.<br>Click again.';
 
@@ -176,7 +173,6 @@ It's a *snicker* JavaScript injection... :-)
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-covid
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-covid") {
-                        console.log("Page 3 detected...");
 
                         q('#COVID-STATUS').innerHTML = '●●●●○○○○<br>On CVS Page 4.<br>Click again.';
 
@@ -193,7 +189,6 @@ It's a *snicker* JavaScript injection... :-)
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-qns
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-qns") {
-                        console.log("Page 4 detected...");
 
                         q('#COVID-STATUS').innerHTML = '●●●●●○○○<br>On CVS Page 5.<br>Click again.';
 
@@ -246,7 +241,9 @@ It's a *snicker* JavaScript injection... :-)
                             q('option[value="1: Age 65 or over"]').setAttribute("selected", "true");
                         }
                         //Any health problem
-                        else if (c[HEALTH] != "") {
+                        else if (c[HEALTH] != "None of the Above" 
+                                && c[HEALTH] != ""
+                        ) {
                             q('option[value="4: Age 16 or over with medical conditions that inc"]').setAttribute("selected", "true");
                         }
                         //K-12 & Childcare
@@ -324,7 +321,6 @@ It's a *snicker* JavaScript injection... :-)
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/cvd/how-to-schedule
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/cvd/how-to-schedule") {
-                        console.log("Page 5 detected...");
 
                         q('#COVID-STATUS').innerHTML = '●●●●●●○○<br>On CVS Page 6.<br>Click again.';
                         
@@ -334,7 +330,6 @@ It's a *snicker* JavaScript injection... :-)
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/cvd-store-select/first-dose-select
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/cvd-store-select/first-dose-select") {
-                        console.log("Page 6 detected...");
 
                         //Set #address to Zip Code
                         q('#address').value = c[ZIP];
@@ -379,7 +374,7 @@ It's a *snicker* JavaScript injection... :-)
                         q('#city').value = c[CITY];
                         q('#city').dispatchEvent(new Event('compositionend'));
 
-                        //#state dropdown
+                        //#state dropdown -- we're just gonna assume NJ
                         q('option[value="35: NJ"]').setAttribute("selected","true");
                         q('#state').dispatchEvent(new Event('change'));
 
@@ -398,8 +393,8 @@ It's a *snicker* JavaScript injection... :-)
                         q('#email').dispatchEvent(new Event('compositionend'));
 
                         //#phoneNumber -- all digits
-                        q('#phone').value = c[PHONE].split("-").join("").split(" ").join("");
-                        q('#phone').dispatchEvent(new Event('compositionend'));
+                        q('#phoneNumber').value = c[PHONE].split("-").join("").split(" ").join("");
+                        q('#phoneNumber').dispatchEvent(new Event('compositionend'));
 
                     }
                 
@@ -409,7 +404,7 @@ It's a *snicker* JavaScript injection... :-)
 
         }
 
-        //Jump ahead
+        //Push the button! -- https://www.youtube.com/watch?v=v57i1Ze0jB8
         button.click();
 
     }
