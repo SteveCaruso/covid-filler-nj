@@ -154,6 +154,9 @@ It's a *snicker* JavaScript injection... :-)
                         //26: EID_NJ
                         q('option[value="26: EID_NJ"]').setAttribute("selected","true");
 
+                        //Fire the change event manually
+                        q('#jurisdiction').dispatchEvent(new Event('change'));
+
                         //Click button!
                         q('button[type="submit"].btn-control').click();
 
