@@ -50,6 +50,7 @@ It's a *snicker* JavaScript injection... :-)
         const ZIP = 9;
         const OCC = 10;
         const HEALTH = 11;
+        const NOTES = 14;
         const EMAIL = 15;
 
         //Construct the button
@@ -93,6 +94,11 @@ It's a *snicker* JavaScript injection... :-)
 
                 //Display name of person the data is from
                 q('#COVID-TARGET').innerHTML = "<strong><em>" + c[FNAME] + " " + c[LNAME] + "</em></strong>";
+
+                //Check if there are any considerations
+                if (c[NOTES].length > 0) {
+                    q('#COVID-TARGET').innerHTML += "<br>(<em>" + c[NOTES] + "</em>)";
+                }
 
                 //Add a version of the birthdate so that it has leading zeroes
                 //A number of sites want it this way...
