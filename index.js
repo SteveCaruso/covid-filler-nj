@@ -55,7 +55,7 @@ It's a *snicker* JavaScript injection... :-)
         //Construct the button
         var button = document.createElement("button");
             button.id = "MakeTheMagicHappen";
-            button.innerHTML = "<strong>CoVID Filler is Loaded!</strong><br>Make sure the person's info is in your clipboard.<br/>Then click on me.";
+            button.innerHTML = "<strong>CoVID Injector is Loaded!</strong><br>Make sure the person's info is in your clipboard.<br/>Then click here.";
             button.style.position = "fixed";
             button.style.left="10px";
             button.style.top="10px";
