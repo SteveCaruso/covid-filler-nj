@@ -39,6 +39,9 @@ It's a *snicker* JavaScript injection... :-)
         //As you'll see in the clipboard code below, it assumes that user data resides in the clipboard and is in a delimited list. Copy-pasting from a Google Spreadsheet makes the data delimited by tabs, so that's what we're using here.
         const DELIM = "	";
 
+        //The expected number of columns in the clipboard
+        const COLS = 25;
+
         //Data columns - These are the indexes (starting with 0) for each piece of user info we'll need. If you're using your own form, you'll need to change these to match your order.
         const FNAME = 1;
         const LNAME = 2;
@@ -87,7 +90,7 @@ It's a *snicker* JavaScript injection... :-)
                 //Split the clipboard data by the delimiter
                 c = c.split(DELIM);
 
-                if (c.length != 22) {
+                if (c.length != COLS) {
                     alert(`You do not appear to have the data you need in your clipboard. (Expected 22 columns, found ${c.length})`);
                     return;
                 }
