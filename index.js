@@ -85,6 +85,11 @@ It's a *snicker* JavaScript injection... :-)
                 //Split the clipboard data by the delimiter
                 c = c.split(DELIM);
 
+                if (c.length != 22) {
+                    alert("You do not appear to have the data you need in your clipboard.");
+                    return;
+                }
+
                 //Display name of person the data is from
                 q('#COVID-TARGET').innerHTML = "<strong><em>" + c[FNAME] + " " + c[LNAME] + "</em></strong>";
 
