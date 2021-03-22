@@ -152,7 +152,7 @@ It's a *snicker* JavaScript injection... :-)
 
                         //Set #jurisdiction 's selected element to one with value=
                         //26: EID_NJ
-                        q('#jurisdiction').innerHTML = `<option value="26: EID_NJ" selected>New Jersey</option>`;
+                        q('option[value="26: EID_NJ"]').setAttribute("selected","true");
 
                         //Click button!
                         q('button[type="submit"].btn-control').click();
