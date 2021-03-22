@@ -308,6 +308,16 @@ It's a *snicker* JavaScript injection... :-)
                             q('#q23').click();
                         }
 
+                        //Check if employer field is active
+                        if (q('#qtext') != null) {
+
+                            //Fill it.... we need to add EMPLOYER info to the form
+                            q('#qtext').value = ".";
+
+                            //Fire the change event manually
+                            q('#qtext').dispatchEvent(new Event('compositionend'));
+                        }
+
                         //Click #qconsent
                         q('#qconsent').click();
 
