@@ -165,10 +165,10 @@ It's a *snicker* JavaScript injection... :-)
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-qns") {
                         console.log("Page 4 detected...");
 
-                        //Age in #q_01
+                        //Age in #q1_0
                         //Have to calculate it roughly
                         var age = (new Date().getFullYear()) - parseInt(c[BDAY].split('/')[2]);
-                        q('#q_01').value = age;
+                        q('#q1_0').value = age;
 
                         //Click #q20
                         q('#q20').click();
