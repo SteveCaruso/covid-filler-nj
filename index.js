@@ -102,7 +102,8 @@ It's a *snicker* JavaScript injection... :-)
                     el("continue").disabled = false;
                     el("continue").click();
 
-                }
+                }//END RiteAid
+                
                 else if (host == "www.cvs.com") { console.log("CVS detected...")
 
                     //On: https://www.cvs.com/immunizations/covid-19-vaccine
@@ -131,16 +132,19 @@ It's a *snicker* JavaScript injection... :-)
                         q('#q9_2').click();
 
                         //Click button[_ngcontent-hll-c70]
-                        q('button[_ngcontent-hll-c70]').click();
-
-                        //wait
-                        wait(500);
+                        q('button.btn-control').click();
+                   
+                    }
+                    //On: https://www.cvs.com/vaccine/intake/store/cvd/dose-select
+                    else if (location.href == "https://www.cvs.com/vaccine/intake/store/cvd/dose-select") {
+                        console.log("Page 2.5 detected...");
 
                         //Click #customRadio_1
                         q('#customRadio_1').click();
 
                         //Click button[_ngcontent-kqo-c72][type="submit"]
-                        q('button[_ngcontent-kqo-c72][type="submit"]').click();
+                        q('button[type="submit"]').click();
+
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-covid
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-covid") {
