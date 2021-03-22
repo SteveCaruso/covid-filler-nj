@@ -88,7 +88,7 @@ It's a *snicker* JavaScript injection... :-)
                 c = c.split(DELIM);
 
                 if (c.length != 22) {
-                    alert("You do not appear to have the data you need in your clipboard.");
+                    alert(`You do not appear to have the data you need in your clipboard. (Expected 22 columns, found ${c.length})`);
                     return;
                 }
 
