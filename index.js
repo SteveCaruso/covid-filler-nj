@@ -55,6 +55,9 @@ It's a *snicker* JavaScript injection... :-)
         const HEALTH = 11;
         const NOTES = 14;
         const EMAIL = 15;
+        const SEX = 16;
+        const GEN = 17;
+        const EMP = 18;
 
         //Construct the button
         var button = document.createElement("button");
@@ -321,7 +324,7 @@ It's a *snicker* JavaScript injection... :-)
                         if (q('#qtext') != null) {
 
                             //Fill it.... we need to add EMPLOYER info to the form
-                            q('#qtext').value = ".";
+                            q('#qtext').value = c[EMP].length > 0 ? c[EMP] : ".";
 
                             //Fire the change event manually
                             q('#qtext').dispatchEvent(new Event('compositionend'));
@@ -377,7 +380,9 @@ It's a *snicker* JavaScript injection... :-)
                         q('#dob').dispatchEvent(new Event('compositionend'));
 
                         //#customRadio_F checkbox female
+                        if (c["SEX"] == "Female") q("#customRadio_F").click();
                         //#customRadio_M checkbox male
+                        else q("#customRadio_M").click();
 
                         //#address
                         q('#address').value = c[ADDR];
