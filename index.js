@@ -83,7 +83,7 @@ It's a *snicker* JavaScript injection... :-)
                     d = d[0].padStart(2,"0")+'/'+d[1].padStart(2,"0")+'/'+d[2]; 
 
                 //Riteaid
-                if (host == "www.riteaid.com") {
+                if (host == "www.riteaid.com") { console.log("RiteAid detected...")
 
                     //Add in everything to the appropriate fields
                     el("dateOfBirth").value =           d;
@@ -103,10 +103,11 @@ It's a *snicker* JavaScript injection... :-)
                     el("continue").click();
 
                 }
-                else if (host == "www.cvs.com") {
+                else if (host == "www.cvs.com") { console.log("CVS detected...")
 
                     //On: https://www.cvs.com/immunizations/covid-19-vaccine
                     if (location.href == "https://www.cvs.com/immunizations/covid-19-vaccine") {
+                        console.log("Page 1 detected...");
                     
                         //Click: a[data-analytics-name="New York"]
                         q('a[data-analytics-name="New York"]').click();
@@ -120,6 +121,8 @@ It's a *snicker* JavaScript injection... :-)
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/covid-screener/covid-qns
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/covid-screener/covid-qns") {
+                        console.log("Page 2 detected...");
+
                         //Click #q7_2
                         q('#q7_2').click();
                         //Click #q8_2
@@ -141,6 +144,7 @@ It's a *snicker* JavaScript injection... :-)
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-covid
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-covid") {
+                        console.log("Page 3 detected...");
 
                         //Set #jurisdiction 's selected element to one with value=
                         //26: EID_NJ
@@ -150,6 +154,8 @@ It's a *snicker* JavaScript injection... :-)
 
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-qns
+                    else if (location.href == "https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-qns") {
+                        console.log("Page 4 detected...");
 
                         //Age in #q_01
                         //Have to calculate it roughly
@@ -258,21 +264,25 @@ It's a *snicker* JavaScript injection... :-)
 
                         //Click button[_ngcontent-kqo-c76].btn-control
                         q('button[_ngcontent-kqo-c76].btn-control').click();
-
+                    }
                     //On: https://www.cvs.com/vaccine/intake/store/cvd/how-to-schedule
-
+                    else if (location.href == "https://www.cvs.com/vaccine/intake/store/cvd/how-to-schedule") {
+                        console.log("Page 5 detected...");
                         //Click button[_ngcontent-kqo-c74].btn-control
                         q('button[_ngcontent-kqo-c74].btn-control').click();
-
+                    }
                     //On: https://www.cvs.com/vaccine/intake/store/cvd-store-select/first-dose-select
+                    else if (location.href == "https://www.cvs.com/vaccine/intake/store/cvd-store-select/first-dose-select") {
+                        console.log("Page 6 detected...");
 
                         //Set #address to Zip Code
                         q('#address').value = c[ZIP];
 
                         //Click button[_ngcontent-kqo-c79]
                         q('button[_ngcontent-kqo-c79]').click();
-
-                }
+                    }
+                
+                } //END CVS
 
             });
 
