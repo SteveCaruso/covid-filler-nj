@@ -62,6 +62,7 @@ It's a *snicker* JavaScript injection... :-)
                     Make sure the person's info is in your clipboard.<br>
                     Then click here.
                 </div>`;
+            button.style.width="100px";
             button.style.position = "fixed";
             button.style.left="10px";
             button.style.top="10px";
@@ -186,6 +187,9 @@ It's a *snicker* JavaScript injection... :-)
                         var age = (new Date().getFullYear()) - parseInt(c[BDAY].split('/')[2]);
                         q('#q1_0').value = age;
 
+                        //Fire the change event manually
+                        q('#q1_0').dispatchEvent(new Event('change'));
+
                         //Click #q20
                         q('#q20').click();
 
@@ -282,6 +286,9 @@ It's a *snicker* JavaScript injection... :-)
                         else {
                             q('option[value="12: None of the above"]').setAttribute("selected", "true");
                         }
+
+                        //Fire the change event manually
+                        q('#qlist').dispatchEvent(new Event('change'));
 
                         //Add employer info !!! We don't collect this yet...
                         if (q('#qtext')) q('#qtext').value = ".";
