@@ -55,7 +55,7 @@ It's a *snicker* JavaScript injection... :-)
         //Construct the button
         var button = document.createElement("button");
             button.id = "MakeTheMagicHappen";
-            button.innerHTML = "<h3>CoVID Filler is Loaded!</h3><br>Make sure the person's info is in your clipboard.<br/>Then click on me.";
+            button.innerHTML = "<strong>CoVID Filler is Loaded!</strong><br>Make sure the person's info is in your clipboard.<br/>Then click on me.";
             button.style.position = "fixed";
             button.style.left="10px";
             button.style.top="10px";
@@ -143,7 +143,7 @@ It's a *snicker* JavaScript injection... :-)
                         q('#customRadio_1').click();
 
                         //Click button[_ngcontent-kqo-c72][type="submit"]
-                        q('button[type="submit"]').click();
+                        q('button[type="submit"].btn-control').click();
 
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-covid
@@ -152,9 +152,10 @@ It's a *snicker* JavaScript injection... :-)
 
                         //Set #jurisdiction 's selected element to one with value=
                         //26: EID_NJ
-                        q('#jurisdiction').innerHTML = `<option value="26: EID_NJ" selected></option>`;
+                        q('#jurisdiction').innerHTML = `<option value="26: EID_NJ" selected>New Jersey</option>`;
 
-                        //Click button! <--- Fix!
+                        //Click button!
+                        q('button[type="submit"].btn-control').click();
 
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-qns
