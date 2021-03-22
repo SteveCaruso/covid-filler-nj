@@ -55,7 +55,13 @@ It's a *snicker* JavaScript injection... :-)
         //Construct the button
         var button = document.createElement("button");
             button.id = "MakeTheMagicHappen";
-            button.innerHTML = "<strong>CoVID Injector is Loaded!</strong><br>Make sure the person's info is in your clipboard.<br/>Then click here.";
+            button.innerHTML = `
+                <strong>CoVID Injector</strong>
+                <div id="COVID-STATUS">
+                    <strong>Loaded!</strong><br>
+                    Make sure the person's info is in your clipboard.<br>
+                    Then click here.
+                </div>`;
             button.style.position = "fixed";
             button.style.left="10px";
             button.style.top="10px";
@@ -124,6 +130,8 @@ It's a *snicker* JavaScript injection... :-)
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/covid-screener/covid-qns") {
                         console.log("Page 2 detected...");
 
+                        q('COVID-STATUS').innerHTML = 'Page 2 detected...';
+
                         //Click #q7_2
                         q('#q7_2').click();
                         //Click #q8_2
@@ -139,6 +147,8 @@ It's a *snicker* JavaScript injection... :-)
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/cvd/dose-select") {
                         console.log("Page 2.5 detected...");
 
+                        q('COVID-STATUS').innerHTML = 'On Page 2.5.<br>Click for Page 3.';
+
                         //Click #customRadio_1
                         q('#customRadio_1').click();
 
@@ -149,6 +159,8 @@ It's a *snicker* JavaScript injection... :-)
                     //On: https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-covid
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-covid") {
                         console.log("Page 3 detected...");
+
+                        q('COVID-STATUS').innerHTML = 'On Page 3.<br>Click for Page 4.';
 
                         //Set #jurisdiction 's selected element to one with value=
                         //26: EID_NJ
@@ -164,6 +176,8 @@ It's a *snicker* JavaScript injection... :-)
                     //On: https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-qns
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-qns") {
                         console.log("Page 4 detected...");
+
+                        q('COVID-STATUS').innerHTML = 'On Page 4.<br>Click for Page 5.';
 
                         //Age in #q1_0
                         //Have to calculate it roughly
@@ -268,26 +282,35 @@ It's a *snicker* JavaScript injection... :-)
                         }
 
                         //Add employer info !!! We don't collect this yet...
-                        //q('#qtext')
+                        q('#qtext').value = ".";
+
+                        //Click #qconsent
+                        q('#qconsent').click();
 
                         //Click button[_ngcontent-kqo-c76].btn-control
-                        q('button[_ngcontent-kqo-c76].btn-control').click();
+                        q('button.btn-control').click();
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/cvd/how-to-schedule
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/cvd/how-to-schedule") {
                         console.log("Page 5 detected...");
+
+                        q('COVID-STATUS').innerHTML = 'On Page 5.<br>Click for Page 6.';
+                        
                         //Click button[_ngcontent-kqo-c74].btn-control
-                        q('button[_ngcontent-kqo-c74].btn-control').click();
+                        q('button.btn-control').click();
+
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/cvd-store-select/first-dose-select
                     else if (location.href == "https://www.cvs.com/vaccine/intake/store/cvd-store-select/first-dose-select") {
                         console.log("Page 6 detected...");
 
+                        q('COVID-STATUS').innerHTML = 'On Page 6.<br>Click to go forward...';
+
                         //Set #address to Zip Code
                         q('#address').value = c[ZIP];
 
                         //Click button[_ngcontent-kqo-c79]
-                        q('button[_ngcontent-kqo-c79]').click();
+                        q('button').click();
                     }
                 
                 } //END CVS
