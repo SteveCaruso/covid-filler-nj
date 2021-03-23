@@ -205,7 +205,142 @@ It's a *snicker* JavaScript injection... :-)
                     }
                     else if (location.href == "https://www.riteaid.com/pharmacy/apt-scheduler") {
 
-                        q('#COVID-STATUS').innerHTML = 'RiteAid Page 2 detected. Continue manually.';
+                        if (q("#firstName") == null) {
+                        
+                            q('#COVID-STATUS').innerHTML = 'RiteAid Page 2 detected. Continue manually until you get to <em>Customer Information</em>, then click here.';
+                        
+                        }
+                        else {
+
+                            //Click to fill. Review and manually continue.
+
+                            //#firstName
+                            q("#firstName").value = c[FNAME];
+
+                            //test
+                            q("#ysptIsPregnant").click();
+
+                            //#lastName
+                            //#dateOfBirth MM/DD/YYYY
+                            //#phone
+                            //#addr1
+                            //#email
+                            //#city
+                            //#patient_state
+
+                            /*
+<ul class="typeahead__list"><li class="typeahead__item typeahead__group-group" data-group="group" data-index="0"><a href="javascript:;">Alaska</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="1"><a href="javascript:;">Alabama</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="2"><a href="javascript:;">Arkansas</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="3"><a href="javascript:;">Arizona</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="4"><a href="javascript:;">California</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="5"><a href="javascript:;">Colorado</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="6"><a href="javascript:;">Connecticut</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="7"><a href="javascript:;">District Of Columbia</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="8"><a href="javascript:;">Delaware</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="9"><a href="javascript:;">Florida</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="10"><a href="javascript:;">Georgia</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="11"><a href="javascript:;">Hawaii</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="12"><a href="javascript:;">Iowa</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="13"><a href="javascript:;">Idaho</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="14"><a href="javascript:;">Illinois</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="15"><a href="javascript:;">Indiana</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="16"><a href="javascript:;">Kansas</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="17"><a href="javascript:;">Kentucky</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="18"><a href="javascript:;">Louisiana</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="19"><a href="javascript:;">Massachusetts</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="20"><a href="javascript:;">Maryland</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="21"><a href="javascript:;">Maine</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="22"><a href="javascript:;">Michigan</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="23"><a href="javascript:;">Minnesota</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="24"><a href="javascript:;">Missouri</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="25"><a href="javascript:;">Mississippi</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="26"><a href="javascript:;">Montana</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="27"><a href="javascript:;">North Carolina</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="28"><a href="javascript:;">North Dakota</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="29"><a href="javascript:;">Nebraska</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="30"><a href="javascript:;">New Hampshire</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="31"><a href="javascript:;">New Jersey</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="32"><a href="javascript:;">New Mexico</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="33"><a href="javascript:;">Nevada</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="34"><a href="javascript:;">New York</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="35"><a href="javascript:;">Ohio</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="36"><a href="javascript:;">Oklahoma</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="37"><a href="javascript:;">Oregon</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="38"><a href="javascript:;">Pennsylvania</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="39"><a href="javascript:;">Rhode Island</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="40"><a href="javascript:;">South Carolina</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="41"><a href="javascript:;">South Dakota</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="42"><a href="javascript:;">Tennessee</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="43"><a href="javascript:;">Texas</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="44"><a href="javascript:;">Utah</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="45"><a href="javascript:;">Virginia</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="46"><a href="javascript:;">Vermont</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="47"><a href="javascript:;">Washington</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="48"><a href="javascript:;">Wisconsin</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="49"><a href="javascript:;">West Virginia</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="50"><a href="javascript:;">Wyoming</a></li></ul>
+                            */
+
+                            //#zip
+                            //#sendReminderEmail
+                            //label[for="sendReminderEmail"].click();
+                            //q('.primarycareprovider label.physcian-details__switch').click();
+                            //#continue switch disabled to false
+
+
+                            //Click to fill. Manually review and continue.
+
+                            //#mi_gender <-- sex assigned at birth
+                            /*
+
+<input type="text" class="medical-information__gender form__input error" id="mi_gender" name="mi_gender" aria-label="Select Gender" autocomplete="false" ptsexassignedatbirth="true">
+
+<ul class="typeahead__list"><li class="typeahead__item typeahead__group-group" data-group="group" data-index="0"><a href="javascript:;"><span class="typeahead__display">Decline to Answer</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="1"><a href="javascript:;"><span class="typeahead__display">Female</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="2"><a href="javascript:;"><span class="typeahead__display">Male</span></a></li></ul>
+
+                            */
+
+                            //#ptWeight  <-- weight if less than 110 lbs
+
+                            //#mi_origin <-- latino
+                            /*
+
+<input type="text" class="medical-information__origin form__input" id="mi_origin" name="mi_origin" aria-label="Select Race" autocomplete="false" pthispanic="true">
+
+<ul class="typeahead__list"><li class="typeahead__item typeahead__group-group" data-group="group" data-index="0"><a href="javascript:;"><span class="typeahead__display">Hispanic or Latino</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="1"><a href="javascript:;"><span class="typeahead__display">Not Hispanic or Latino</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="2"><a href="javascript:;"><span class="typeahead__display">Unknown ethnicity</span></a></li></ul>
+*/
+
+                            /*
+<input type="text" class="medical-information__represents form__input error" id="mi_represents" name="mi_represents" aria-label="Select Hispanic" autocomplete="false" ptrace="true">
+
+<ul class="typeahead__list"><li class="typeahead__item typeahead__group-group" data-group="group" data-index="0"><a href="javascript:;"><span class="typeahead__display">American Indian or Alaska Native</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="1"><a href="javascript:;"><span class="typeahead__display">Asian</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="2"><a href="javascript:;"><span class="typeahead__display">Black or African American</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="3"><a href="javascript:;"><span class="typeahead__display">Native Hawaiian or Other Pacific Islander</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="4"><a href="javascript:;"><span class="typeahead__display">White</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="5"><a href="javascript:;"><span class="typeahead__display">Other</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="6"><a href="javascript:;"><span class="typeahead__display">Unknown</span></a></li></ul>
+                            */
+
+
+                            //Do you have a long-term health problem with heart disease, kidney disease, metabolic disorder (e.g. diabetes), anemia, or blood disorders?
+
+                            //#ysptHasHealthProblem yes click?
+                            //#noptHasHealthProblem no click?
+                            //#naptHasHealthProblem don't know click?
+
+                            //Do you have a long-term health problem with lung disease or asthma?
+
+                            //#ysptHasLungProblem
+                            //#noptHasLungProblem
+                            //#naptHasLungProblem
+
+                            //Do you use any nicotine products?
+                            //ysptUsesNicotine
+                            //noptUsesNicotine
+                            //naptUsesNicotine
+
+                            //Do you have allergies to medications, food (i.e. eggs), latex or any vaccine component (e.g. neomycin, formaldehyde, gentamicin, thimerosal, bovine protein, phenol, polymyxin, gelatin, baker's yeast or yeast)?
+                            //ysptHasVaxAllergy
+                            //noptHasVaxAllergy
+                            //naptHasVaxAllergy
+
+                            //Have you received any vaccinations in the past 4 weeks?
+                            //ysptGotVaxInLast4Weeks
+                            //noptGotVaxInLast4Weeks
+                            //naptGotVaxInLast4Weeks
+
+                            //Have you ever had a serious reaction after receiving a vaccination?
+                            //ysptHasPriorVaxReaction
+                            //noptHasPriorVaxReaction
+                            //naptHasPriorVaxReaction
+
+                            //Do you have a neurological disorder such as seizures or other disorders that affect the brain or have had a disorder that resulted from vaccine (e.g. Guillain-Barre Syndrome)?
+                            //ysptHasSeizureHistory
+                            //etc
+
+                            //Do you take prednisone, other steroids, or anticancer drugs, or have you had radiation treatments?
+                            //ysptTakesCancerDrugs
+                            //etc
+
+                            //During the past year, have you received a transfusion of blood or blood products, including anti bodies?
+                            //ysptReceivedTransfusion
+                            //etc
+
+                            //Are you parent, family member, or caregiver to a new born infant?
+                            //ysptIsInfantCaregiver
+
+                            //Are you pregnant or could you become pregnant in the next three months?
+                            //ysptIsPregnant
+
+                            //Will you bring your Immunization Record Card with you?
+                            //ysptHasImmRecCard
+
+                            //Are you currently enrolled in one of our medication adherence programs at Rite Aid (OneTrip Refill, Automated Courtesy Refills, or Rx Messaging - Text, Email, Phone)?
+                            //ysptHasMedAdherenceProgram
+
+                            //Have you had a pneumococcal vaccine? (You may need two different pneumococcal shots)
+                            //ysptHadFluShot
+
+                            //Have you had a shingles vaccine?
+                            //ysptHadShinglesShot
+
+                            //Have you had a whooping cough(Tdap/Td) vaccine?
+                            //ysptHadWhoopShot
+
+                            //#continue <-- click
+
+                            //// SCREENING AND CONSENT
+
+                            //sign manually
+
+
+
+                        }
 
                     }
                     else {
