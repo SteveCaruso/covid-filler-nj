@@ -195,10 +195,12 @@ It's a *snicker* JavaScript injection... :-)
                         q("#continue").disabled = false;
                         q("#continue").click();
 
-                        await pause(2000);
+                        pause(2000).then(() => {
 
-                        //Click forward
-                        q("#learnmorebttn").click();
+                            //Click forward
+                            q("#learnmorebttn").click();
+
+                        });
                     
                     }
                     else if (location.href == "https://www.riteaid.com/pharmacy/apt-scheduler") {
