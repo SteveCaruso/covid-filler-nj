@@ -719,7 +719,10 @@ It's a *snicker* JavaScript injection... :-)
                     ZocDoc (Handles several portals)
                 */
                 else if (host == "www.zocdoc.com") {
-                    
+
+                    //Patient info URL
+                    var pi = "https://www.zocdoc.com/booking/patientinfo/";
+
                     /*
                         St. Peter's
                     */
@@ -730,6 +733,47 @@ It's a *snicker* JavaScript injection... :-)
                         pause(1000).then(() => {
                             q(`div#modal-root button[data-test="modal-primary-button"]`).click();
                         });
+
+                    }
+
+                    //There may be multiples here
+                    else if (location.href.substr(0,pi.length) == pi) {
+
+                        //Detect St. Peters...
+                        if ( q('img[src="https://d2gmqy7n86tnsf.cloudfront.net/c8beebd4-d6b3-4b40-a066-a3bd3bf819f2/bookingLogo.jpeg"]') != null ) {
+
+                            q('#COVID-STATUS').innerHTML = 'St. Peter\'s Page 2 detected.';
+
+                            //First name
+                            q('input[name="firstName"]').value = c[FNAME];
+                            q('input[name="firstName"]').dispatchEvent(new Event('input',{ bubbles: true }));
+
+                            //Last name
+                            q('input[name="lastName"]').value = c[LNAME];
+                            q('input[name="lastName"]').dispatchEvent(new Event('input',{ bubbles: true }));
+
+                            let bd = d.split("/");
+
+                            //Birth Month
+                            q('input[name="birthMonth"]').value = bd[0];
+                            q('input[name="birthMonth"]').dispatchEvent(new Event('input',{ bubbles: true }));
+
+                            //Birth Month
+                            q('input[name="birthDay"]').value = bd[1];
+                            q('input[name="birthDay"]').dispatchEvent(new Event('input',{ bubbles: true }));
+
+                            //Birth Year
+                            q('input[name="birthYear"]').value = bd[2];
+                            q('input[name="birthYear"]').dispatchEvent(new Event('input',{ bubbles: true }));
+
+                            //Male/female
+                            if ( _(c[SEX]) == "Male" ) q('input[value="male"]').click();
+                            else q('input[value="female"]').click();
+
+                            //Click continue
+                            q('button[type="submit"]').click();
+
+                        }
 
                     }
 
