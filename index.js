@@ -12,10 +12,6 @@ It's a *snicker* JavaScript injection... :-)
     //YES it would be better to change the form so it's all in English or has a language neutral internal state
     // ... but we went with Google Forms and that's not possible. So we need to work around it.
     var langs = {
-        //English
-        "en" : {
-
-        },
         //Spanish
         "es" : {
 
@@ -30,31 +26,62 @@ It's a *snicker* JavaScript injection... :-)
             //Occupations
             "" : "Childcare Worker",
             "" : "Correctional Officers",
-            "" : "Emergency Medical Services (EMS)",
-            "" : "Essential Worker",
+            "Servicios médicos de emergencia (EMS)" : "Emergency Medical Services (EMS)",
+            "Trabajador esencial" : "Essential Worker",
             "" : "Family Childcare Providers",
             "" : "Firefighters",
             "" : "First Responder",
             "" : "Food and Agricultural Workers",
-            "" : "Funeral Services",
-            "" : "Grocery Workers",
-            "" : "Head Start and Early Head Start",
-            "" : "Health Care Worker",
-            "" : "Law Enforcement",
-            "" : "Local Transportation",
+            "Servicio funerario" : "Funeral Services",
+            "Trabajador de bodegas/mercados " : "Grocery Workers",
+            "Asociación Head Start o Early Head Start" : "Head Start and Early Head Start",
+            "Trabajador de salud" : "Health Care Worker",
+            "Cumplimiento de la ley" : "Law Enforcement",
+            "Transporte local" : "Local Transportation",
             "" : "Long Term Care Facility Staff",
-            "" : "Members of tribal communities",
-            "" : "Migrant Farm Workers",
-            "" : "Multigenerational Household",
-            "" : "Persons experiencing homelessness",
-            "" : "Persons living in shelters",
-            "" : "Pharmacy Staff",
-            "" : "Pre-Kindergarten -12th grade Educator & Staff",
+            "Miembro de comunidad tribal" : "Members of tribal communities",
+            "Trabajador agrícola migrante" : "Migrant Farm Workers",
+            "Hogar multigeneracional" : "Multigenerational Household",
+            "Persona sin hogar" : "Persons experiencing homelessness",
+            "Persona que vive en un refugio" : "Persons living in shelters",
+            "Trabajador de farmacia" : "Pharmacy Staff",
+            "Educador o empleado en escuela Pre-K a duodécimo grado" : "Pre-Kindergarten -12th grade Educator & Staff",
             "" : "Public Health Employee",
             "" : "Public Safety Workers",
             "" : "Public Transit Workers"
         }
     };
+
+    /*
+
+        
+        Bombero
+        
+        
+        Personal del centro de atención a largo plazo
+        Empleado de salud pública
+        Funcionario de prisiones
+        
+        
+        
+        
+        Primer interviniente
+        Proveedor de cuidado infantil familiar
+        
+        
+        Trabajador agroalimentario
+        
+        
+        Trabajador de cuidado infantil
+        
+        
+        Trabajador de seguridad pública
+        Trabajador de transporte público
+        
+        
+        Ninguna de las anteriores
+
+    */
 
     //Language input data
     const LANG = "en";
@@ -85,7 +112,8 @@ It's a *snicker* JavaScript injection... :-)
         //List of supported hosts
         const supported = [
             "www.riteaid.com",
-            "www.cvs.com"
+            "www.cvs.com",
+            "www.zocdoc.com"
         ];
 
         //Check to see if we're *on* a supported host, otherwise we shouldn't mess with it.
@@ -171,7 +199,11 @@ It's a *snicker* JavaScript injection... :-)
                     console.log(d);
                     d = d[0].padStart(2,"0")+'/'+d[1].padStart(2,"0")+'/'+d[2]; 
 
-                //Riteaid
+
+
+                /* 
+                    RITEAID
+                */
                 if (host == "www.riteaid.com") { console.log("RiteAid detected...")
 
                     if (location.href == "https://www.riteaid.com/pharmacy/covid-qualifier") {
@@ -388,6 +420,10 @@ It's a *snicker* JavaScript injection... :-)
 
                 } //END RiteAid
                 
+
+                /*
+                    CVS
+                */
                 else if (host == "www.cvs.com") { console.log("CVS detected...");
 
                     //On: https://www.cvs.com/immunizations/covid-19-vaccine
@@ -676,6 +712,28 @@ It's a *snicker* JavaScript injection... :-)
                     }
                 
                 } //END CVS
+
+
+
+                /*
+                    ZocDoc (Handles several portals)
+                */
+                else if (host == "www.zocdoc.com") {
+                    
+                    /*
+                        St. Peter's
+                    */
+                    if (location.href == "https://www.zocdoc.com/wl/saintpeterscovid19vaccinemonroe/practice/65013?reason_visit=5243") {
+
+                        q('#COVID-STATUS').innerHTML = 'St. Peter\'s Page 1 detected. Continue manually.';
+
+                        pause(1000).then(() => {
+                            q(`div#modal-root button[data-test="modal-primary-button"]`).click();
+                        });
+
+                    }
+
+                }
 
             });
 
