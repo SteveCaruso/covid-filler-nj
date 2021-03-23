@@ -737,7 +737,7 @@ It's a *snicker* JavaScript injection... :-)
                     }
 
                     //There may be multiples here
-                    else if (location.href.substr(0,pi.length) == pi) {
+                    else if (location.href.substr(0,pi.length) == pi) { console.log("PatientInfoScreen detected.");
 
                         //Detect St. Peters...
                         if ( q('img[src="https://d2gmqy7n86tnsf.cloudfront.net/c8beebd4-d6b3-4b40-a066-a3bd3bf819f2/bookingLogo.jpeg"]') != null ) {
