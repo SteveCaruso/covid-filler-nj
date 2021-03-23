@@ -138,6 +138,7 @@ It's a *snicker* JavaScript injection... :-)
             button.style.zIndex = 10000;
             button.style.borderRadius = "5px";
             button.style.boxShadow = "5px 5px 5px 5px rgba(0,0,0,.5)";
+            //button.style.overflowWrap = "";
         
         //Inject the button into the document
         document.body.appendChild(button);
@@ -178,21 +179,26 @@ It's a *snicker* JavaScript injection... :-)
                         q('#COVID-STATUS').innerHTML = 'RiteAid Page 1 detected...';
 
                         //Add in everything to the appropriate fields
-                        el("dateOfBirth").value =           d;
-                        el("city").value =                  c[CITY];
-                        el("state").value =                 c[STATE];
-                        el("eligibility_state").value =     c[STATE];
-                        el("zip").value =                   c[ZIP];
+                        q("#dateOfBirth").value =           d;
+                        q("#city").value =                  c[CITY];
+                        q("#state").value =                 c[STATE];
+                        q("#eligibility_state").value =     c[STATE];
+                        q("#zip").value =                   c[ZIP];
                         
-                        el("Occupation").value =            _(c[OCC]);
-                        el("occu").value =                  _(c[OCC]);
+                        q("#Occupation").value =            _(c[OCC]);
+                        q("#occu").value =                  _(c[OCC]);
 
-                        el("mediconditions").value =        _(c[HEALTH]);
-                        el("medcond").value =               _(c[HEALTH]);
+                        q("#mediconditions").value =        _(c[HEALTH]);
+                        q("#medcond").value =               _(c[HEALTH]);
 
                         //Since there are no fields that need manual filling, click next
-                        el("continue").disabled = false;
-                        el("continue").click();
+                        q("#continue").disabled = false;
+                        q("#continue").click();
+
+                        wait(500);
+
+                        //Click forward
+                        q("#learnmorebttn").click();
                     
                     }
                     else if (location.href == "https://www.riteaid.com/pharmacy/apt-scheduler") {
