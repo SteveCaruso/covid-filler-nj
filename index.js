@@ -68,8 +68,8 @@ It's a *snicker* JavaScript injection... :-)
     //Do the thing!
     async function inject() {
 
-        //Wait function
-        var wait = function (time) {
+        //Pause function
+        var pause = function (time) {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve();
@@ -195,7 +195,7 @@ It's a *snicker* JavaScript injection... :-)
                         q("#continue").disabled = false;
                         q("#continue").click();
 
-                        wait(500);
+                        await pause(2000);
 
                         //Click forward
                         q("#learnmorebttn").click();
@@ -225,7 +225,7 @@ It's a *snicker* JavaScript injection... :-)
                         q('a[data-analytics-name="New York"]').click();
 
                         //wait
-                        wait(500);
+                        //await pause(500);
 
                         //Click: a[data-analytics-name="Schedule an appointment now"]
                         q('a[data-analytics-name="Schedule an appointment now"]').click();
@@ -312,7 +312,7 @@ It's a *snicker* JavaScript injection... :-)
                             q('#q22').click();
                             
                             //Wait for it to populate
-                            wait(500);
+                            //wait(500);
 
                             /*
 <select _ngcontent-shj-c76="" id="qlist" aria-describedby="listErr" formcontrolname="list" class="dd-list ng-touched ng-pristine ng-invalid">
