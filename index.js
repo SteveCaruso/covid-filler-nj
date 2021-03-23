@@ -16,72 +16,73 @@ It's a *snicker* JavaScript injection... :-)
         "es" : {
 
             //General Responses
-            "Si"                            : "Yes",
-            "No"                            : "No",
-            "Hombre"                        : "Male",
-            "Mujer"                         : "Female",
-            "Otro o prefiero no decir"      : "Other or prefer not to say",
-            "Ninguna de las anteriores"     : "None of the above",
+            "Si"                                        : "Yes",
+            "No"                                        : "No",
+            "Hombre"                                    : "Male",
+            "Mujer"                                     : "Female",
+            "Otro o prefiero no decir"                  : "Other or prefer not to say",
+            "Ninguna de las anteriores"                 : "None of the above",
 
             //Occupations
-            "" : "Childcare Worker",
-            "" : "Correctional Officers",
-            "Servicios médicos de emergencia (EMS)" : "Emergency Medical Services (EMS)",
-            "Trabajador esencial" : "Essential Worker",
-            "" : "Family Childcare Providers",
-            "" : "Firefighters",
-            "" : "First Responder",
-            "" : "Food and Agricultural Workers",
-            "Servicio funerario" : "Funeral Services",
-            "Trabajador de bodegas/mercados " : "Grocery Workers",
-            "Asociación Head Start o Early Head Start" : "Head Start and Early Head Start",
-            "Trabajador de salud" : "Health Care Worker",
-            "Cumplimiento de la ley" : "Law Enforcement",
-            "Transporte local" : "Local Transportation",
-            "" : "Long Term Care Facility Staff",
-            "Miembro de comunidad tribal" : "Members of tribal communities",
-            "Trabajador agrícola migrante" : "Migrant Farm Workers",
-            "Hogar multigeneracional" : "Multigenerational Household",
-            "Persona sin hogar" : "Persons experiencing homelessness",
-            "Persona que vive en un refugio" : "Persons living in shelters",
-            "Trabajador de farmacia" : "Pharmacy Staff",
+            "Trabajador de cuidado infantil"            : "Childcare Worker",
+            "Funcionario de prisiones"                  : "Correctional Officers",
+            "Servicios médicos de emergencia (EMS)"     : "Emergency Medical Services (EMS)",
+            "Trabajador esencial"                       : "Essential Worker",
+            "Proveedor de cuidado infantil familiar"    : "Family Childcare Providers",
+            "Bombero"                                   : "Firefighters",
+            "Primer interviniente"                      : "First Responder",
+            "Trabajador agroalimentario"                : "Food and Agricultural Workers",
+            "Servicio funerario"                        : "Funeral Services",
+            "Trabajador de bodegas/mercados "           : "Grocery Workers",
+            "Asociación Head Start o Early Head Start"  : "Head Start and Early Head Start",
+            "Trabajador de salud"                       : "Health Care Worker",
+            "Cumplimiento de la ley"                    : "Law Enforcement",
+            "Transporte local"                          : "Local Transportation",
+            "Personal del centro de atención a largo plazo" : "Long Term Care Facility Staff",
+            "Miembro de comunidad tribal"               : "Members of tribal communities",
+            "Trabajador agrícola migrante"              : "Migrant Farm Workers",
+            "Hogar multigeneracional"                   : "Multigenerational Household",
+            "Persona sin hogar"                         : "Persons experiencing homelessness",
+            "Persona que vive en un refugio"            : "Persons living in shelters",
+            "Trabajador de farmacia"                    : "Pharmacy Staff",
             "Educador o empleado en escuela Pre-K a duodécimo grado" : "Pre-Kindergarten -12th grade Educator & Staff",
-            "" : "Public Health Employee",
-            "" : "Public Safety Workers",
-            "" : "Public Transit Workers"
+            "Empleado de salud pública"                 : "Public Health Employee",
+            "Trabajador de seguridad pública"           : "Public Safety Workers",
+            "Trabajador de transporte público"          : "Public Transit Workers",
+
+            //Health Conditions
+            "Asma - con hospitalización"                : "Asthma-with hospitalization",
+            "Esclerosis lateral amiotrófica"            : "Amyotrophic Lateral Asclerosis (ALS)",
+            "Asma"                                      : "Asthma",
+            "Transplante de médula osea"                : "Bone Marrow Transplant",
+            "Enfermedad Pulmonar Obstructiva Crónica (EPOC)" : "COPD",
+            "Cáncer"                                    : "Cancer",
+            "Parálisis cerebral"                        : "Cerebral Palsy",
+            "Fibrosis quística"                         : "Cystic Fibrosis",
+            "Diabetes"                                  : "Diabetes",
+            "Síndrome de Down"                          : "Down Syndrome",
+            "Epilepsia"                                 : "Epilepsy",
+            "VIH"                                       : "HIV",
+            "Problemas cardiacos"                       : "Heart Condition",
+            "Discapacidades intelectuales y del desarrollo" : "Intellectual and Developmental Disabilities",
+            "Enfermedad del riñon"                      : "Kidney Disease",
+            "Enfermedad del hígado"                     :  "Liver Disease",
+            "Desordenes metabólicos"                    : "Metabolic Disorders",
+            "Distrofia muscular"                        : "Muscular Dystrophy",
+            "Condición neurológica"                     : "Neurologic Condition",
+            "Obesidad"                                  : "Obesity",
+            "Trasplante de organo"                      : "Organ transplant",
+            "Embarazo"                                  : "Pregnancy",
+            "Fibrosis pulmonar"                         : "Pulmonary Fibrosis",
+            "Trastornos genéticos severos"              : "Severe Genetic Disorders",
+            "Anemia falciforme"                         : "Sickle Cell Anemia",
+            "Fumígeno"                                  : "Smoking",
+            "Spina bifida"                              : "Spina Bifida",
+            "Sistema inmunológico debilitado"           : "Weakened Immune System"
+
         }
     };
 
-    /*
-
-        
-        Bombero
-        
-        
-        Personal del centro de atención a largo plazo
-        Empleado de salud pública
-        Funcionario de prisiones
-        
-        
-        
-        
-        Primer interviniente
-        Proveedor de cuidado infantil familiar
-        
-        
-        Trabajador agroalimentario
-        
-        
-        Trabajador de cuidado infantil
-        
-        
-        Trabajador de seguridad pública
-        Trabajador de transporte público
-        
-        
-        Ninguna de las anteriores
-
-    */
 
     //Language input data
     const LANG = "en";
@@ -184,6 +185,9 @@ It's a *snicker* JavaScript injection... :-)
                     alert(`You do not appear to have the data you need in your clipboard. (Expected ${COLS} columns, found ${c.length})`);
                     return;
                 }
+
+                //Detect language
+                //figure that out...
 
                 //Display name of person the data is from
                 q('#COVID-TARGET').innerHTML = "<strong><em>" + c[FNAME] + " " + c[LNAME] + "</em></strong>";
@@ -742,7 +746,7 @@ It's a *snicker* JavaScript injection... :-)
                         //Detect St. Peters...
                         if ( q('img[src="https://d2gmqy7n86tnsf.cloudfront.net/c8beebd4-d6b3-4b40-a066-a3bd3bf819f2/bookingLogo.jpeg"]') != null ) {
 
-                            q('#COVID-STATUS').innerHTML = 'St. Peter\'s Page 2 detected.';
+                            q('#COVID-STATUS').innerHTML = 'St. Peter\'s Page 2 detected. Form autofilled. Continue manually.';
 
                             //First name
                             q('input[name="firstName"]').value = c[FNAME];
@@ -770,8 +774,8 @@ It's a *snicker* JavaScript injection... :-)
                             if ( _(c[SEX]) == "Male" ) q('input[value="male"]').click();
                             else q('input[value="female"]').click();
 
-                            //Click continue
-                            q('button[type="submit"]').click();
+                            //
+                            q('button[data-test="submit-button"]').click();
 
                         }
 
