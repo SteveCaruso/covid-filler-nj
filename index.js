@@ -8,6 +8,64 @@ It's a *snicker* JavaScript injection... :-)
 
 (function() {
 
+    //Translation text for data given in forms other than English
+    //YES it would be better to change the form so it's all in English or has a language neutral internal state
+    // ... but we went with Google Forms and that's not possible. So we need to work around it.
+    var langs = {
+        //English
+        "en" : {
+
+        },
+        //Spanish
+        "es" : {
+
+            //General Responses
+            "Si"                            : "Yes",
+            "No"                            : "No",
+            "Hombre"                        : "Male",
+            "Mujer"                         : "Female",
+            "Otro o prefiero no decir"      : "Other or prefer not to say",
+            "Ninguna de las anteriores"     : "None of the above",
+
+            //Occupations
+            "" : "Childcare Worker",
+            "" : "Correctional Officers",
+            "" : "Emergency Medical Services (EMS)",
+            "" : "Essential Worker",
+            "" : "Family Childcare Providers",
+            "" : "Firefighters",
+            "" : "First Responder",
+            "" : "Food and Agricultural Workers",
+            "" : "Funeral Services",
+            "" : "Grocery Workers",
+            "" : "Head Start and Early Head Start",
+            "" : "Health Care Worker",
+            "" : "Law Enforcement",
+            "" : "Local Transportation",
+            "" : "Long Term Care Facility Staff",
+            "" : "Members of tribal communities",
+            "" : "Migrant Farm Workers",
+            "" : "Multigenerational Household",
+            "" : "Persons experiencing homelessness",
+            "" : "Persons living in shelters",
+            "" : "Pharmacy Staff",
+            "" : "Pre-Kindergarten -12th grade Educator & Staff",
+            "" : "Public Health Employee",
+            "" : "Public Safety Workers",
+            "" : "Public Transit Workers"
+        }
+    };
+
+    //Language input data
+    const LANG = "en";
+
+    //Translator
+    function _(s) {
+        if (langs[LANG]) if (langs[LANG][s]) return langs[LANG][s];
+        return s;
+    }
+
+    //Do the thing!
     async function inject() {
 
         //Wait function
@@ -94,7 +152,7 @@ It's a *snicker* JavaScript injection... :-)
                 c = c.split(DELIM);
 
                 if (c.length != COLS) {
-                    alert(`You do not appear to have the data you need in your clipboard. (Expected 22 columns, found ${c.length})`);
+                    alert(`You do not appear to have the data you need in your clipboard. (Expected ${COLS} columns, found ${c.length})`);
                     return;
                 }
 
@@ -115,30 +173,42 @@ It's a *snicker* JavaScript injection... :-)
                 //Riteaid
                 if (host == "www.riteaid.com") { console.log("RiteAid detected...")
 
-                    q('#COVID-STATUS').innerHTML = 'RiteAid Page 1 detected...';
+                    if (location.href == "https://www.riteaid.com/pharmacy/covid-qualifier") {
 
-                    //Add in everything to the appropriate fields
-                    el("dateOfBirth").value =           d;
-                    el("city").value =                  c[CITY];
-                    el("state").value =                 c[STATE];
-                    el("eligibility_state").value =     c[STATE];
-                    el("zip").value =                   c[ZIP];
+                        q('#COVID-STATUS').innerHTML = 'RiteAid Page 1 detected...';
+
+                        //Add in everything to the appropriate fields
+                        el("dateOfBirth").value =           d;
+                        el("city").value =                  c[CITY];
+                        el("state").value =                 c[STATE];
+                        el("eligibility_state").value =     c[STATE];
+                        el("zip").value =                   c[ZIP];
+                        
+                        el("Occupation").value =            _(c[OCC]);
+                        el("occu").value =                  _(c[OCC]);
+
+                        el("mediconditions").value =        _(c[HEALTH]);
+                        el("medcond").value =               _(c[HEALTH]);
+
+                        //Since there are no fields that need manual filling, click next
+                        el("continue").disabled = false;
+                        el("continue").click();
                     
-                    el("Occupation").value =            c[OCC];
-                    el("occu").value =                  c[OCC];
+                    }
+                    else if (location.href == "https://www.riteaid.com/pharmacy/apt-scheduler") {
 
-                    el("mediconditions").value =        c[HEALTH];
-                    el("medcond").value =               c[HEALTH];
+                        q('#COVID-STATUS').innerHTML = 'RiteAid Page 2 detected. Continue manually.';
 
-                    //Since there are no fields that need manual filling, click next
-                    el("continue").disabled = false;
-                    el("continue").click();
+                    }
+                    else {
 
-                    q('#COVID-STATUS').innerHTML = 'On RiteAid Page 1.<br>Continue manually.';
+                        q('#COVID-STATUS').innerHTML = 'RiteAid detected. Continue manually.';
 
-                }//END RiteAid
+                    }
+
+                } //END RiteAid
                 
-                else if (host == "www.cvs.com") { console.log("CVS detected...")
+                else if (host == "www.cvs.com") { console.log("CVS detected...");
 
                     //On: https://www.cvs.com/immunizations/covid-19-vaccine
                     if (location.href == "https://www.cvs.com/immunizations/covid-19-vaccine") {
@@ -226,12 +296,12 @@ It's a *snicker* JavaScript injection... :-)
                         }
 
                         //Health conditions
-                        else if (c[HEALTH] != "None of the Above" && c[HEALTH] != "") {
+                        else if ( _(c[HEALTH]) != "None of the Above" && c[HEALTH] != "") {
                             q('#q21').click();
                         }
 
                         //Priority group
-                        else if (c[OCC] != "None of the Above" && c[OCC] != "") {
+                        else if ( _(c[OCC]) != "None of the Above" && c[OCC] != "") {
 
                             q('#q22').click();
                             
@@ -255,54 +325,54 @@ It's a *snicker* JavaScript injection... :-)
 
 
                             //K-12 & Childcare
-                            if (c[OCC] == "Childcare Worker" 
-                                || c[OCC] == "Pre-Kindergarten -12th grade Educator & Staff"
-                                || c[OCC] == "Family Childcare Providers"
-                                || c[OCC] == "Head Start and Early Head Start"
+                            if ( _(c[OCC]) == "Childcare Worker" 
+                                || _(c[OCC]) == "Pre-Kindergarten -12th grade Educator & Staff"
+                                || _(c[OCC]) == "Family Childcare Providers"
+                                || _(c[OCC]) == "Head Start and Early Head Start"
                             ) {
                                 q('option[value="1: Teachers K-12, Daycare and preschool workers, a"]').setAttribute("selected", "true");
                             }
                             //Healthcare Workers
-                            else if (c[OCC] == "Health Care Worker") {
+                            else if ( _(c[OCC]) == "Health Care Worker") {
                                 q('option[value="2: Healthcare workers (paid and unpaid)"]').setAttribute("selected", "true");
                             }
                             //First Responders
-                            else if (c[OCC] == "Emergency Medical Services (EMS)"
-                                    || c[OCC] == "Firefighters"
-                                    || c[OCC] == "First Responder"
-                                    || c[OCC] == "Law Enforcement"
+                            else if ( _(c[OCC]) == "Emergency Medical Services (EMS)"
+                                    || _(c[OCC]) == "Firefighters"
+                                    || _(c[OCC]) == "First Responder"
+                                    || _(c[OCC]) == "Law Enforcement"
                             ) {
                                 q('option[value="3: First responders including law enforcement and "]').setAttribute("selected", "true");
                             }
                             //Transit & Public Safety
-                                    else if (c[OCC] == "Local Transportation"
-                                    || c[OCC] == "Public Health Employee"
-                                    || c[OCC] == "Public Safety Workers"
-                                    || c[OCC] == "Public Transit Workers"
+                                    else if ( _(c[OCC]) == "Local Transportation"
+                                    || _(c[OCC]) == "Public Health Employee"
+                                    || _(c[OCC]) == "Public Safety Workers"
+                                    || _(c[OCC]) == "Public Transit Workers"
                             ) {
                                 q('option[value="4: Transit and public safety worker"]').setAttribute("selected", "true");
                             }
                             //Migrant Farm Workers
-                            else if (c[OCC] == "Migrant Farm Workers") {
+                            else if ( _(c[OCC]) == "Migrant Farm Workers") {
                                 q('option[value="5: Migrant Farm Worker"]').setAttribute("selected", "true");
                             }
                             //Tribal
-                            else if (c[OCC] == "Members of tribal communities") {
+                            else if ( _(c[OCC]) == "Members of tribal communities") {
                                 q('option[value="6: Member of a tribal community"]').setAttribute("selected", "true");
                             }
                             //Homeless
-                            else if (c[OCC] == "Persons experiencing homelessness"
-                                    || c[OCC] == "Persons living in shelters"
+                            else if ( _(c[OCC]) == "Persons experiencing homelessness"
+                                    || _(c[OCC]) == "Persons living in shelters"
                             ) {
                                 q('option[value="7: Person experiencing homelessness or living in a"]').setAttribute("selected", "true");
                             }
                             //Long Term Care
-                            else if (c[OCC] == "Multigenerational Household"
+                            else if ( _(c[OCC]) == "Multigenerational Household"
                             ) {
                                 q('option[value="8: Residents of long-term and high risk congregate"]').setAttribute("selected", "true");
                             }
                             //Long Term Care Staff
-                            else if (c[OCC] == "Long Term Care Facility Staff") {
+                            else if ( _(c[OCC]) == "Long Term Care Facility Staff") {
                                 q('option[value="9: Healthcare workers or staff of long-term and hi"]').setAttribute("selected", "true");
                             }
                             //OTHER
@@ -380,7 +450,7 @@ It's a *snicker* JavaScript injection... :-)
                         q('#dob').dispatchEvent(new Event('compositionend'));
 
                         //#customRadio_F checkbox female
-                        if (c["SEX"] == "Female") q("#customRadio_F").click();
+                        if ( _(c["SEX"]) == "Female") q("#customRadio_F").click();
                         //#customRadio_M checkbox male
                         else q("#customRadio_M").click();
 
@@ -416,6 +486,12 @@ It's a *snicker* JavaScript injection... :-)
                         //#phoneNumber -- all digits
                         q('#phoneNumber').value = c[PHONE].split("-").join("").split(" ").join("");
                         q('#phoneNumber').dispatchEvent(new Event('compositionend'));
+
+                    }
+
+                    else {
+
+                        q('#COVID-STATUS').innerHTML = "CVS detected. Continue manually.";
 
                     }
                 
