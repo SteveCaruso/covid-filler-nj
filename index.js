@@ -746,7 +746,7 @@ It's a *snicker* JavaScript injection... :-)
                         //Detect St. Peters...
                         if ( q('img[src="https://d2gmqy7n86tnsf.cloudfront.net/c8beebd4-d6b3-4b40-a066-a3bd3bf819f2/bookingLogo.jpeg"]') != null ) {
 
-                            q('#COVID-STATUS').innerHTML = 'St. Peter\'s Page 2 detected. Form autofilled. Continue manually.';
+                            q('#COVID-STATUS').innerHTML = 'St. Peter\'s Page 2 detected. Form autofilled. Continue manually up to and including clicking on "Review and book".';
 
                             //First name
                             q('input[name="firstName"]').value = c[FNAME];
@@ -774,8 +774,26 @@ It's a *snicker* JavaScript injection... :-)
                             if ( _(c[SEX]) == "Male" ) q('input[value="male"]').click();
                             else q('input[value="female"]').click();
 
-                            //
-                            q('button[data-test="submit-button"]').click();
+                            //Email
+                            q('input[name="email"]').value = c[EMAIL];
+                            q('input[name="email"]').dispatchEvent(new Event('input',{ bubbles: true }));
+                            q('input[name="confirmEmail"]').value = c[EMAIL];
+                            q('input[name="confirmEmail"]').dispatchEvent(new Event('input',{ bubbles: true }));
+
+                            //Password
+                            q('input[name="password"]').value = 'Volunteer1!';
+                            q('input[name="password"]').dispatchEvent(new Event('input',{ bubbles: true }));
+
+                            //TOS
+                            q('input[name="termsOfService"]').click();
+
+                            //Uncheck keep me logged in
+                            q('input[name="rememberMe"]').click();
+
+                            //Wait and submit
+                            pause(500).then(() => {
+                                q('button[data-test="submit-button"]').click();
+                            });
 
                         }
 
