@@ -627,7 +627,7 @@ March 26th changes:
                             }
                             //Long Term Care Staff
                             else if ( _(c[OCC]) == "Long Term Care Facility Staff") {
-                                q('option[value="11: Healthcare workers or staff of long-term and h", "true");
+                                q('option[value="11: Healthcare workers or staff of long-term and h"]').setAttribute("selected", "true");
                             }
                             //OTHER
                             else {
