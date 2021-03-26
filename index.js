@@ -127,7 +127,7 @@ It's a *snicker* JavaScript injection... :-)
         const DELIM = "	";
 
         //The expected number of columns in the clipboard
-        const COLS = 25;
+        const COLS = 24;
 
         //Data columns - These are the indexes (starting with 0) for each piece of user info we'll need. If you're using your own form, you'll need to change these to match your order.
         const EMAIL = 1;
