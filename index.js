@@ -550,20 +550,45 @@ It's a *snicker* JavaScript injection... :-)
 <option _ngcontent-shj-c76="" value="8: Residents of long-term and high risk congregate"> Residents of long-term and high risk congregate care settings</option>
 <option _ngcontent-shj-c76="" value="9: Healthcare workers or staff of long-term and hi"> Healthcare workers or staff of long-term and high risk congregate care settings</option>
 <option _ngcontent-shj-c76="" value="10: None of the above"> None of the above</option><!----></select>
+
+
+March 26th changes:
+
+<select _ngcontent-wnb-c76="" id="qlist" aria-describedby="listErr" formcontrolname="list" class="dd-list ng-pristine ng-invalid ng-touched">
+<option _ngcontent-wnb-c76="" disabled="" value="0: null">Select</option>
+<option _ngcontent-wnb-c76="" value="1: Teachers and staff in PreK-12 Schools"> Teachers and staff in PreK-12 Schools</option>
+<option _ngcontent-wnb-c76="" value="2: Childcare centers and staff"> Childcare centers and staff</option>
+<option _ngcontent-wnb-c76="" value="3: Head Start, Part C Intervention &amp; licensed home"> Head Start, Part C Intervention &amp; licensed home visitors and staff</option>
+<option _ngcontent-wnb-c76="" value="4: Healthcare workers (paid and unpaid)"> Healthcare workers (paid and unpaid)</option>
+<option _ngcontent-wnb-c76="" value="5: First responders including law enforcement and "> First responders including law enforcement and fire professionals</option>
+<option _ngcontent-wnb-c76="" value="6: Transit and public safety worker"> Transit and public safety worker</option>
+<option _ngcontent-wnb-c76="" value="7: Migrant Farm Worker"> Migrant Farm Worker</option>
+<option _ngcontent-wnb-c76="" value="8: Member of a tribal community"> Member of a tribal community</option>
+<option _ngcontent-wnb-c76="" value="9: Person experiencing homelessness or living in a"> Person experiencing homelessness or living in a shelter</option>
+<option _ngcontent-wnb-c76="" value="10: Residents of long-term and high risk congregat"> Residents of long-term and high risk congregate care settings</option>
+<option _ngcontent-wnb-c76="" value="11: Healthcare workers or staff of long-term and h"> Healthcare workers or staff of long-term and high risk congregate care settings</option>
+<option _ngcontent-wnb-c76="" value="12: None of the above"> None of the above</option><!----></select>
+
                         */
 
 
                             //K-12 & Childcare
-                            if ( _(c[OCC]) == "Childcare Worker" 
-                                || _(c[OCC]) == "Pre-Kindergarten -12th grade Educator & Staff"
+                            if ( _(c[OCC]) == "Pre-Kindergarten -12th grade Educator & Staff" ) {
+                                q('option[value="1: Teachers and staff in PreK-12 Schools"]').setAttribute("selected", "true");
+                            }
+                            //Childcare
+                            else if ( _(c[OCC]) == "Childcare Worker" 
                                 || _(c[OCC]) == "Family Childcare Providers"
-                                || _(c[OCC]) == "Head Start and Early Head Start"
                             ) {
-                                q('option[value="1: Teachers K-12, Daycare and preschool workers, a"]').setAttribute("selected", "true");
+                                q('option[value="2: Childcare centers and staff"]').setAttribute("selected", "true");
+                            }
+                            //Head Start
+                            else if ( _(c[OCC]) == "Head Start and Early Head Start" ) {
+                                q('option[value="3: Head Start, Part C Intervention &amp; licensed home"]').setAttribute("selected", "true");
                             }
                             //Healthcare Workers
                             else if ( _(c[OCC]) == "Health Care Worker") {
-                                q('option[value="2: Healthcare workers (paid and unpaid)"]').setAttribute("selected", "true");
+                                q('option[value="4: Healthcare workers (paid and unpaid)"]').setAttribute("selected", "true");
                             }
                             //First Responders
                             else if ( _(c[OCC]) == "Emergency Medical Services (EMS)"
@@ -571,7 +596,7 @@ It's a *snicker* JavaScript injection... :-)
                                     || _(c[OCC]) == "First Responder"
                                     || _(c[OCC]) == "Law Enforcement"
                             ) {
-                                q('option[value="3: First responders including law enforcement and "]').setAttribute("selected", "true");
+                                q('option[value="5: First responders including law enforcement and "]').setAttribute("selected", "true");
                             }
                             //Transit & Public Safety
                                     else if ( _(c[OCC]) == "Local Transportation"
@@ -579,34 +604,34 @@ It's a *snicker* JavaScript injection... :-)
                                     || _(c[OCC]) == "Public Safety Workers"
                                     || _(c[OCC]) == "Public Transit Workers"
                             ) {
-                                q('option[value="4: Transit and public safety worker"]').setAttribute("selected", "true");
+                                q('option[value="6: Transit and public safety worker"]').setAttribute("selected", "true");
                             }
                             //Migrant Farm Workers
                             else if ( _(c[OCC]) == "Migrant Farm Workers") {
-                                q('option[value="5: Migrant Farm Worker"]').setAttribute("selected", "true");
+                                q('option[value="7: Migrant Farm Worker"]').setAttribute("selected", "true");
                             }
                             //Tribal
                             else if ( _(c[OCC]) == "Members of tribal communities") {
-                                q('option[value="6: Member of a tribal community"]').setAttribute("selected", "true");
+                                q('option[value="8: Member of a tribal community"]').setAttribute("selected", "true");
                             }
                             //Homeless
                             else if ( _(c[OCC]) == "Persons experiencing homelessness"
                                     || _(c[OCC]) == "Persons living in shelters"
                             ) {
-                                q('option[value="7: Person experiencing homelessness or living in a"]').setAttribute("selected", "true");
+                                q('option[value="9: Person experiencing homelessness or living in a"]').setAttribute("selected", "true");
                             }
                             //Long Term Care
                             else if ( _(c[OCC]) == "Multigenerational Household"
                             ) {
-                                q('option[value="8: Residents of long-term and high risk congregate"]').setAttribute("selected", "true");
+                                q('option[value="10: Residents of long-term and high risk congregat"]').setAttribute("selected", "true");
                             }
                             //Long Term Care Staff
                             else if ( _(c[OCC]) == "Long Term Care Facility Staff") {
-                                q('option[value="9: Healthcare workers or staff of long-term and hi"]').setAttribute("selected", "true");
+                                q('option[value="11: Healthcare workers or staff of long-term and h", "true");
                             }
                             //OTHER
                             else {
-                                q('option[value="10: None of the above"]').setAttribute("selected", "true");
+                                q('option[value="12: None of the above"]').setAttribute("selected", "true");
                             }
 
                             //Fire the change event manually
