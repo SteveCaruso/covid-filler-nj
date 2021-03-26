@@ -599,7 +599,7 @@ March 26th changes:
                                 q('option[value="5: First responders including law enforcement and "]').setAttribute("selected", "true");
                             }
                             //Transit & Public Safety
-                                    else if ( _(c[OCC]) == "Local Transportation"
+                            else if ( _(c[OCC]) == "Local Transportation"
                                     || _(c[OCC]) == "Public Health Employee"
                                     || _(c[OCC]) == "Public Safety Workers"
                                     || _(c[OCC]) == "Public Transit Workers"
@@ -607,7 +607,9 @@ March 26th changes:
                                 q('option[value="6: Transit and public safety worker"]').setAttribute("selected", "true");
                             }
                             //Migrant Farm Workers
-                            else if ( _(c[OCC]) == "Migrant Farm Workers") {
+                            else if ( _(c[OCC]) == "Migrant Farm Workers"
+                                    || _(c[OCC]) == "Food and Agricultural Workers" 
+                            ) {
                                 q('option[value="7: Migrant Farm Worker"]').setAttribute("selected", "true");
                             }
                             //Tribal
