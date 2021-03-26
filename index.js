@@ -185,7 +185,7 @@ It's a *snicker* JavaScript injection... :-)
 
                     navigator.clipboard.writeText(`TEST DATA	john.doe.wiley.jane1938@gmail.com	Jim	Doe	4/15/1938	7328679420	9.75 River Rd	Highland Park	New Jersey	08904	Male	Male	None of the Above		Obesity	No	No							`).then( c => {
 
-                        alert(`You do not appear to have the data you need in your clipboard. (Expected ${COLS} columns, found ${c.length}). Dummy data 'Jim Doe' has just been copied.`);
+                        alert(`You do not appear to have the data you need in your clipboard (column mismatch). Dummy data 'Jim Doe' has just been copied.`);
 
                         button.click();
 
