@@ -440,7 +440,7 @@ It's a *snicker* JavaScript injection... :-)
                 else if (host == "www.cvs.com") { console.log("CVS detected...");
 
                     //On: https://www.cvs.com/immunizations/covid-19-vaccine
-                    if (location.href == "https://www.cvs.com/immunizations/covid-19-vaccine") {
+                    if (location.pathname == "/immunizations/covid-19-vaccine") {
 
                         q('#COVID-STATUS').innerHTML = '●○○○○○○○<br>CVS Page 1 detected...';
                     
@@ -455,7 +455,7 @@ It's a *snicker* JavaScript injection... :-)
 
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/covid-screener/covid-qns
-                    else if (location.href == "https://www.cvs.com/vaccine/intake/store/covid-screener/covid-qns") {
+                    else if (location.pathname == "/vaccine/intake/store/covid-screener/covid-qns") {
 
                         q('#COVID-STATUS').innerHTML = '●●○○○○○○<br>On CVS Page 2.<br>Click again.';
 
@@ -471,7 +471,7 @@ It's a *snicker* JavaScript injection... :-)
                    
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/cvd/dose-select
-                    else if (location.href == "https://www.cvs.com/vaccine/intake/store/cvd/dose-select") {
+                    else if (location.pathname == "/vaccine/intake/store/cvd/dose-select") {
 
                         q('#COVID-STATUS').innerHTML = '●●●○○○○○<br>On CVS Page 3.<br>Click again.';
 
@@ -483,7 +483,7 @@ It's a *snicker* JavaScript injection... :-)
 
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-covid
-                    else if (location.href == "https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-covid") {
+                    else if (location.pathname == "/vaccine/intake/store/eligibility-screener/eligibility-covid") {
 
                         q('#COVID-STATUS').innerHTML = '●●●●○○○○<br>On CVS Page 4.<br>Click again.';
 
@@ -499,7 +499,7 @@ It's a *snicker* JavaScript injection... :-)
 
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-qns
-                    else if (location.href == "https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-qns") {
+                    else if (location.pathname == "/vaccine/intake/store/eligibility-screener/eligibility-qns") {
 
                         q('#COVID-STATUS').innerHTML = '●●●●●○○○<br>On CVS Page 5.<br>Click again.';
 
@@ -638,7 +638,7 @@ It's a *snicker* JavaScript injection... :-)
                         
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/cvd/how-to-schedule
-                    else if (location.href == "https://www.cvs.com/vaccine/intake/store/cvd/how-to-schedule") {
+                    else if (location.pathname == "/vaccine/intake/store/cvd/how-to-schedule") {
 
                         q('#COVID-STATUS').innerHTML = '●●●●●●○○<br>On CVS Page 6.<br>Click again.';
                         
@@ -647,7 +647,7 @@ It's a *snicker* JavaScript injection... :-)
 
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/cvd-store-select/first-dose-select
-                    else if (location.href == "https://www.cvs.com/vaccine/intake/store/cvd-store-select/first-dose-select") {
+                    else if (location.pathname == "/vaccine/intake/store/cvd-store-select/first-dose-select") {
 
                         //Set #address to Zip Code
                         q('#address').value = c[ZIP];
@@ -662,7 +662,7 @@ It's a *snicker* JavaScript injection... :-)
                     }
 
                     //Patient info enter
-                    else if (location.href == "https://www.cvs.com/vaccine/intake/store/patient-info") {
+                    else if (location.pathname == "/vaccine/intake/store/patient-info") {
 
                         q('#COVID-STATUS').innerHTML = '●●●●●●●●<br>On CVS Page 8.<br>Continue manually.';
 
@@ -741,7 +741,7 @@ It's a *snicker* JavaScript injection... :-)
                     /*
                         St. Peter's
                     */
-                    if (location.href == "https://www.zocdoc.com/wl/saintpeterscovid19vaccinemonroe/practice/65013?reason_visit=5243") {
+                    if (location.pathname == "/wl/saintpeterscovid19vaccinemonroe/practice/65013?reason_visit=5243") {
 
                         q('#COVID-STATUS').innerHTML = 'St. Peter\'s Page 1 detected. Continue manually until the Patient Information screen.';
 
