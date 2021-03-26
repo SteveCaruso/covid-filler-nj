@@ -182,8 +182,19 @@ It's a *snicker* JavaScript injection... :-)
                 c = c.split(DELIM);
 
                 if (c.length != COLS) {
-                    alert(`You do not appear to have the data you need in your clipboard. (Expected ${COLS} columns, found ${c.length})`);
-                    return;
+                    
+                    if (confirm(`You do not appear to have the data you need in your clipboard. (Expected ${COLS} columns, found ${c.length}). Would you like to load bypass data?`)) {
+
+                        c = `TEST DATA	john.doe.wiley.jane1938@gmail.com	Jim	Doe	4/15/1938	7328679420	9.75 River Rd	Highland Park	New Jersey	08904	Male	Male	None of the Above		Obesity	No	No							`;
+                        c = c.split(DELIM);
+
+                        alert("Dummy data 'John Doe' loaded.");
+
+                    }
+                    else {
+                        return;
+                    }
+                    
                 }
 
                 //Detect language
