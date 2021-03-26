@@ -219,7 +219,7 @@ It's a *snicker* JavaScript injection... :-)
                 */
                 if (host == "www.riteaid.com") { console.log("RiteAid detected...")
 
-                    if (location.href == "https://www.riteaid.com/pharmacy/covid-qualifier") {
+                    if (location.pathname == "/pharmacy/covid-qualifier") {
 
                         q('#COVID-STATUS').innerHTML = 'RiteAid Page 1 detected...';
 
@@ -248,7 +248,7 @@ It's a *snicker* JavaScript injection... :-)
                         });
                     
                     }
-                    else if (location.href == "https://www.riteaid.com/pharmacy/apt-scheduler") {
+                    else if (location.pathname == "/pharmacy/apt-scheduler") {
 
                         if (q("#firstName") == null) {
                         
@@ -427,7 +427,7 @@ It's a *snicker* JavaScript injection... :-)
                     }
                     else {
 
-                        q('#COVID-STATUS').innerHTML = 'RiteAid detected. Continue manually.';
+                        q('#COVID-STATUS').innerHTML = `RiteAid detected.<br><strong>ERROR:</strong> Unknown pathname "${location.pathname}".`;
 
                     }
 
@@ -720,7 +720,7 @@ It's a *snicker* JavaScript injection... :-)
 
                     else {
 
-                        q('#COVID-STATUS').innerHTML = "CVS detected. Continue manually.";
+                        q('#COVID-STATUS').innerHTML = `CVS detected.<br><strong>ERROR:</strong> Unknown pathname "${location.pathname}".`;
 
                     }
                 
