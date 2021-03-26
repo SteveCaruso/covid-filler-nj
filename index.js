@@ -130,21 +130,21 @@ It's a *snicker* JavaScript injection... :-)
         const COLS = 25;
 
         //Data columns - These are the indexes (starting with 0) for each piece of user info we'll need. If you're using your own form, you'll need to change these to match your order.
-        const FNAME = 1;
-        const LNAME = 2;
-        const BDAY = 3;
+        const EMAIL = 1;
+        const FNAME = 2;
+        const LNAME = 3;
+        const BDAY = 4;
         const PHONE = 5;
         const ADDR = 6;
         const CITY = 7;
         const STATE = 8;
         const ZIP = 9;
-        const OCC = 10;
-        const HEALTH = 11;
-        const NOTES = 14;
-        const EMAIL = 15;
-        const SEX = 16;
-        const GEN = 17;
-        const EMP = 18;
+        const SEX = 10;
+        const GEN = 11;
+        const OCC = 12;
+        const EMP = 13;
+        const HEALTH = 14;
+        const NOTES = 17;
 
         //Construct the button
         var button = document.createElement("button");
@@ -734,7 +734,7 @@ It's a *snicker* JavaScript injection... :-)
                     */
                     if (location.href == "https://www.zocdoc.com/wl/saintpeterscovid19vaccinemonroe/practice/65013?reason_visit=5243") {
 
-                        q('#COVID-STATUS').innerHTML = 'St. Peter\'s Page 1 detected. Continue manually.';
+                        q('#COVID-STATUS').innerHTML = 'St. Peter\'s Page 1 detected. Continue manually until the Patient Information screen.';
 
                         pause(1000).then(() => {
                             q(`div#modal-root button[data-test="modal-primary-button"]`).click();
@@ -781,7 +781,7 @@ It's a *snicker* JavaScript injection... :-)
                                 q('div[class^="PatientInfoPageView"] button[type="submit"]').click();
                             });
                         }
-                        
+
                         else if (location.href.substr(0,pi.length) == pi) { console.log("Signup screen detected.");
 
                             q('#COVID-STATUS').innerHTML = 'St. Peter\'s Page 3 detected. Form autofilled. Click "Review and book" when ready.';
