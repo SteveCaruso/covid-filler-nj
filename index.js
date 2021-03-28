@@ -509,7 +509,7 @@ It's a *snicker* JavaScript injection... :-)
                         q('#q1_0').value = age;
 
                         //Fire the change event manually
-                        q('#q1_0').dispatchEvent(new Event('compositionend')); //Yep, that's what they use for checking.
+                        q('#q1_0').dispatchEvent(new Event('input'));
 
                         //March 22nd - q20-23 changed
                         /*
@@ -653,7 +653,7 @@ March 26th changes:
                             q('#qtext').value = c[EMP].length > 0 ? c[EMP] : ".";
 
                             //Fire the change event manually
-                            q('#qtext').dispatchEvent(new Event('compositionend'));
+                            q('#qtext').dispatchEvent(new Event('input'));
                         }
 
                         //Click #qconsent
@@ -680,6 +680,7 @@ March 26th changes:
                         q('#address').value = c[ZIP];
 
                         //Fire change event manually
+                        q('#address').dispatchEvent(new Event('input'));
                         q('#address').dispatchEvent(new Event('compositionend'));
 
                         //Click button[_ngcontent-kqo-c79]
@@ -695,14 +696,17 @@ March 26th changes:
 
                         //#firstName
                         q('#firstName').value = c[FNAME];
+                        q('#firstName').dispatchEvent(new Event('input'));
                         q('#firstName').dispatchEvent(new Event('compositionend'));
 
                         //#lastName
                         q('#lastName').value = c[LNAME];
+                        q('#lastName').dispatchEvent(new Event('input'));
                         q('#lastName').dispatchEvent(new Event('compositionend'));
 
                         //#dob -- MMDDYYYY without slashes
                         q('#dob').value = d.split("/").join("");
+                        q('#dob').dispatchEvent(new Event('input'));
                         q('#dob').dispatchEvent(new Event('compositionend'));
 
                         //#customRadio_F checkbox female
@@ -712,6 +716,7 @@ March 26th changes:
 
                         //#address
                         q('#address').value = c[ADDR];
+                        q('#address').dispatchEvent(new Event('input'));
                         q('#address').dispatchEvent(new Event('compositionend'));
 
                         //#addressLine2
@@ -719,6 +724,7 @@ March 26th changes:
 
                         //#city
                         q('#city').value = c[CITY];
+                        q('#city').dispatchEvent(new Event('input'));
                         q('#city').dispatchEvent(new Event('compositionend'));
 
                         //#state dropdown -- we're just gonna assume NJ
@@ -733,14 +739,17 @@ March 26th changes:
 
                         //#zip
                         q('#zip').value = c[ZIP];
+                        q('#zip').dispatchEvent(new Event('input'));
                         q('#zip').dispatchEvent(new Event('compositionend'));
 
                         //#email
                         q('#email').value = c[EMAIL];
+                        q('#email').dispatchEvent(new Event('input'));
                         q('#email').dispatchEvent(new Event('compositionend'));
 
                         //#phoneNumber -- all digits
                         q('#phoneNumber').value = c[PHONE].split("-").join("").split(" ").join("");
+                        q('#phoneNumber').dispatchEvent(new Event('input'));
                         q('#phoneNumber').dispatchEvent(new Event('compositionend'));
 
                     }
