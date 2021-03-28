@@ -187,7 +187,7 @@ It's a *snicker* JavaScript injection... :-)
 
                         alert(`You do not appear to have the data you need in your clipboard (column mismatch). Dummy data 'Jim Doe' has just been copied.`);
 
-                        button.click();
+                        pause(500).then(button.click);
 
                     } );
 
@@ -489,7 +489,7 @@ It's a *snicker* JavaScript injection... :-)
 
                         //Set #jurisdiction 's selected element to one with value=
                         //26: EID_NJ
-                        q('option[value="26: EID_NJ"]').setAttribute("selected","true");
+                        q('option[value*="EID_NJ"]').setAttribute("selected","true");
 
                         //Fire the change event manually
                         q('#jurisdiction').dispatchEvent(new Event('change'));
@@ -574,21 +574,21 @@ March 26th changes:
 
                             //K-12 & Childcare
                             if ( _(c[OCC]) == "Pre-Kindergarten -12th grade Educator & Staff" ) {
-                                q('option[value="1: Teachers and staff in PreK-12 Schools"]').setAttribute("selected", "true");
+                                q('option[value*="Teachers and staff in PreK-12 Schools"]').setAttribute("selected", "true");
                             }
                             //Childcare
                             else if ( _(c[OCC]) == "Childcare Worker" 
                                 || _(c[OCC]) == "Family Childcare Providers"
                             ) {
-                                q('option[value="2: Childcare centers and staff"]').setAttribute("selected", "true");
+                                q('option[value*="Childcare centers and staff"]').setAttribute("selected", "true");
                             }
                             //Head Start
                             else if ( _(c[OCC]) == "Head Start and Early Head Start" ) {
-                                q('option[value="3: Head Start, Part C Intervention &amp; licensed home"]').setAttribute("selected", "true");
+                                q('option[value*="Head Start"]').setAttribute("selected", "true");
                             }
                             //Healthcare Workers
                             else if ( _(c[OCC]) == "Health Care Worker") {
-                                q('option[value="4: Healthcare workers (paid and unpaid)"]').setAttribute("selected", "true");
+                                q('option[value*="Healthcare workers (paid and unpaid)"]').setAttribute("selected", "true");
                             }
                             //First Responders
                             else if ( _(c[OCC]) == "Emergency Medical Services (EMS)"
@@ -596,7 +596,7 @@ March 26th changes:
                                     || _(c[OCC]) == "First Responder"
                                     || _(c[OCC]) == "Law Enforcement"
                             ) {
-                                q('option[value="5: First responders including law enforcement and "]').setAttribute("selected", "true");
+                                q('option[value*="First responders including law enforcement and"]').setAttribute("selected", "true");
                             }
                             //Transit & Public Safety
                             else if ( _(c[OCC]) == "Local Transportation"
@@ -604,36 +604,36 @@ March 26th changes:
                                     || _(c[OCC]) == "Public Safety Workers"
                                     || _(c[OCC]) == "Public Transit Workers"
                             ) {
-                                q('option[value="6: Transit and public safety worker"]').setAttribute("selected", "true");
+                                q('option[value*="Transit and public safety worker"]').setAttribute("selected", "true");
                             }
                             //Migrant Farm Workers
                             else if ( _(c[OCC]) == "Migrant Farm Workers"
                                     || _(c[OCC]) == "Food and Agricultural Workers" 
                             ) {
-                                q('option[value="7: Migrant Farm Worker"]').setAttribute("selected", "true");
+                                q('option[value*="Migrant Farm Worker"]').setAttribute("selected", "true");
                             }
                             //Tribal
                             else if ( _(c[OCC]) == "Members of tribal communities") {
-                                q('option[value="8: Member of a tribal community"]').setAttribute("selected", "true");
+                                q('option[value*="Member of a tribal community"]').setAttribute("selected", "true");
                             }
                             //Homeless
                             else if ( _(c[OCC]) == "Persons experiencing homelessness"
                                     || _(c[OCC]) == "Persons living in shelters"
                             ) {
-                                q('option[value="9: Person experiencing homelessness or living in a"]').setAttribute("selected", "true");
+                                q('option[value*="Person experiencing homelessness or living in"]').setAttribute("selected", "true");
                             }
                             //Long Term Care
                             else if ( _(c[OCC]) == "Multigenerational Household"
                             ) {
-                                q('option[value="10: Residents of long-term and high risk congregat"]').setAttribute("selected", "true");
+                                q('option[value*="Residents of long-term and high risk congrega"]').setAttribute("selected", "true");
                             }
                             //Long Term Care Staff
                             else if ( _(c[OCC]) == "Long Term Care Facility Staff") {
-                                q('option[value="11: Healthcare workers or staff of long-term and h"]').setAttribute("selected", "true");
+                                q('option[value*="Healthcare workers or staff of long-term and"]').setAttribute("selected", "true");
                             }
                             //OTHER
                             else {
-                                q('option[value="12: None of the above"]').setAttribute("selected", "true");
+                                q('option[value*="None of the above"]').setAttribute("selected", "true");
                             }
 
                             //Fire the change event manually
