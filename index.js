@@ -157,9 +157,13 @@ It's a *snicker* JavaScript injection... :-)
         const HEALTH = 14;
         const NOTES = 17;
 
-        //Construct the button
-        var button = document.createElement("button");
-            button.id = "MakeTheMagicHappen";
+        //Construct and/or recognize the button
+        var button = q('#covidInjectionButton');
+
+        //If it's not there, let's add it
+        if (button == null) {
+            button = document.createElement("button");
+            button.id = "covidInjectionButton";
             button.innerHTML = `
                 <strong>CoVID Injector 💉</strong>
                 <div id="COVID-TARGET">
@@ -180,8 +184,9 @@ It's a *snicker* JavaScript injection... :-)
             button.style.boxShadow = "5px 5px 5px 5px rgba(0,0,0,.5)";
             //button.style.overflowWrap = "";
         
-        //Inject the button into the document
-        document.body.appendChild(button);
+            //Inject the button into the document
+            document.body.appendChild(button);
+        }
 
         //Add the function that fires when that button is clicked
         button.onclick = function() { try {
@@ -747,6 +752,8 @@ April 2nd changes:
                         //#dob -- MMDDYYYY without slashes
                         q('#dob').value = d.split("/").join("");
                         q('#dob').dispatchEvent(new Event('input'));
+                        q('#dob').dispatchEvent(new Event('change'));
+                        q('#dob').dispatchEvent(new Event('blur'));
                         q('#dob').dispatchEvent(new Event('compositionend'));
 
                         //#customRadio_F checkbox female
@@ -859,7 +866,7 @@ April 2nd changes:
                     }
 
                     //Vaccine review page
-                    else if (location.pathname == "/vaccine/intake/store/qns/review") {
+                    else if (location.pathname == "/vaccine/intake/store/review") {
 
                         q('#COVID-STATUS').innerHTML = '●●●●●●●●●●●●●○<br>On CVS Page 13.<br>Click again.';
 
@@ -869,7 +876,7 @@ April 2nd changes:
                     }
 
                     //Vaccine consent page
-                    else if (location.pathname == "/vaccine/intake/store/qns/consent") {
+                    else if (location.pathname == "/vaccine/intake/store/consent") {
 
                         //click #consentText
                         q('#consentText').click();
