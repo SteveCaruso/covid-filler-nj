@@ -182,6 +182,7 @@ It's a *snicker* JavaScript injection... :-)
             button.style.zIndex = 10000;
             button.style.borderRadius = "5px";
             button.style.boxShadow = "5px 5px 5px 5px rgba(0,0,0,.5)";
+            button.style.whiteSpace = "normal !important";
             //button.style.overflowWrap = "";
         
             //Inject the button into the document
