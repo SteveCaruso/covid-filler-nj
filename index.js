@@ -224,9 +224,11 @@ It's a *snicker* JavaScript injection... :-)
 
                 //Add a version of the birthdate so that it has leading zeroes
                 //A number of sites want it this way...
+                var d1;
                 var d = c[BDAY].split('/');
                     console.log(d);
-                    d = d[0].padStart(2,"0")+'/'+d[1].padStart(2,"0")+'/'+d[2]; 
+                    d1 = d[0].padStart(2,"0")+d[1].padStart(2,"0")+d[2];
+                    d = d[0].padStart(2,"0")+'/'+d[1].padStart(2,"0")+'/'+d[2];
 
 
 
@@ -750,7 +752,7 @@ April 2nd changes:
                         q('#lastName').dispatchEvent(new Event('compositionend'));
 
                         //#dob -- MMDDYYYY without slashes
-                        q('#dob').value = d.split("/").join("");
+                        q('#dob').value = d1;//.split("/").join("");
                         q('#dob').dispatchEvent(new Event('input'));
                         q('#dob').dispatchEvent(new Event('change'));
                         q('#dob').dispatchEvent(new Event('blur'));
