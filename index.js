@@ -754,7 +754,7 @@ April 2nd changes:
 
                         //#dob -- MMDDYYYY without slashes
                         q('#dob').value = d1;//.split("/").join("");
-                        q('#dob').dispatchEvent(new Event('input'));
+                        q('#dob').dispatchEvent(new Event('input'),{ bubbles: true });
                         q('#dob').dispatchEvent(new Event('change'));
                         q('#dob').dispatchEvent(new Event('blur'));
                         q('#dob').dispatchEvent(new Event('compositionend'));
