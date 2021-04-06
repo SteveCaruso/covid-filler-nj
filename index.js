@@ -24,7 +24,10 @@ It's a *snicker* JavaScript injection... :-)
             "Ninguna de las anteriores"                 : "None of the above",
 
             //Occupations
+            //""                                        : "Airport and Commercial Airlines",
             "Trabajador de cuidado infantil"            : "Childcare Worker",
+            //""                                        : "Clergy",
+            //""                                        : "Clergy and Other Essential Support for House of Worship",
             "Funcionario de prisiones"                  : "Correctional Officers",
             "Servicios médicos de emergencia (EMS)"     : "Emergency Medical Services (EMS)",
             "Trabajador esencial"                       : "Essential Worker",
@@ -36,19 +39,27 @@ It's a *snicker* JavaScript injection... :-)
             "Trabajador de bodegas/mercados "           : "Grocery Workers",
             "Asociación Head Start o Early Head Start"  : "Head Start and Early Head Start",
             "Trabajador de salud"                       : "Health Care Worker",
+            //""                                        : "Janitorial Staff",
+            //""                                        : "Judicial Staff",
+            //""                                        : "Judiciary",
             "Cumplimiento de la ley"                    : "Law Enforcement",
             "Transporte local"                          : "Local Transportation",
             "Personal del centro de atención a largo plazo" : "Long Term Care Facility Staff",
+            //""                                        : "Mail Carriers",
+            //""                                        : "Manufacturing Workers",
             "Miembro de comunidad tribal"               : "Members of tribal communities",
             "Trabajador agrícola migrante"              : "Migrant Farm Workers",
             "Hogar multigeneracional"                   : "Multigenerational Household",
             "Persona sin hogar"                         : "Persons experiencing homelessness",
             "Persona que vive en un refugio"            : "Persons living in shelters",
             "Trabajador de farmacia"                    : "Pharmacy Staff",
+            //""                                        : "Postal and Shipping Services",
             "Educador o empleado en escuela Pre-K a duodécimo grado" : "Pre-Kindergarten -12th grade Educator & Staff",
             "Empleado de salud pública"                 : "Public Health Employee",
             "Trabajador de seguridad pública"           : "Public Safety Workers",
             "Trabajador de transporte público"          : "Public Transit Workers",
+            //""                                        : "U.S. Postal Service",
+            //""                                        : "Veterinarians and Support Staff",
 
             //Health Conditions
             "Asma - con hospitalización"                : "Asthma-with hospitalization",
@@ -538,36 +549,30 @@ It's a *snicker* JavaScript injection... :-)
                             //wait(500);
 
                             /*
-<select _ngcontent-shj-c76="" id="qlist" aria-describedby="listErr" formcontrolname="list" class="dd-list ng-touched ng-pristine ng-invalid">
-<option _ngcontent-shj-c76="" disabled="" value="0: null">Select</option>
-<option _ngcontent-shj-c76="" value="1: Teachers K-12, Daycare and preschool workers, a"> Teachers K-12, Daycare and preschool workers, and staff members</option>
-<option _ngcontent-shj-c76="" value="2: Healthcare workers (paid and unpaid)"> Healthcare workers (paid and unpaid)</option>
-<option _ngcontent-shj-c76="" value="3: First responders including law enforcement and "> First responders including law enforcement and fire professionals</option>
-<option _ngcontent-shj-c76="" value="4: Transit and public safety worker"> Transit and public safety worker</option>
-<option _ngcontent-shj-c76="" value="5: Migrant Farm Worker"> Migrant Farm Worker</option>
-<option _ngcontent-shj-c76="" value="6: Member of a tribal community"> Member of a tribal community</option>
-<option _ngcontent-shj-c76="" value="7: Person experiencing homelessness or living in a"> Person experiencing homelessness or living in a shelter</option>
-<option _ngcontent-shj-c76="" value="8: Residents of long-term and high risk congregate"> Residents of long-term and high risk congregate care settings</option>
-<option _ngcontent-shj-c76="" value="9: Healthcare workers or staff of long-term and hi"> Healthcare workers or staff of long-term and high risk congregate care settings</option>
-<option _ngcontent-shj-c76="" value="10: None of the above"> None of the above</option><!----></select>
+April 2nd changes:
 
-
-March 26th changes:
-
-<select _ngcontent-wnb-c76="" id="qlist" aria-describedby="listErr" formcontrolname="list" class="dd-list ng-pristine ng-invalid ng-touched">
-<option _ngcontent-wnb-c76="" disabled="" value="0: null">Select</option>
-<option _ngcontent-wnb-c76="" value="1: Teachers and staff in PreK-12 Schools"> Teachers and staff in PreK-12 Schools</option>
-<option _ngcontent-wnb-c76="" value="2: Childcare centers and staff"> Childcare centers and staff</option>
-<option _ngcontent-wnb-c76="" value="3: Head Start, Part C Intervention &amp; licensed home"> Head Start, Part C Intervention &amp; licensed home visitors and staff</option>
-<option _ngcontent-wnb-c76="" value="4: Healthcare workers (paid and unpaid)"> Healthcare workers (paid and unpaid)</option>
-<option _ngcontent-wnb-c76="" value="5: First responders including law enforcement and "> First responders including law enforcement and fire professionals</option>
-<option _ngcontent-wnb-c76="" value="6: Transit and public safety worker"> Transit and public safety worker</option>
-<option _ngcontent-wnb-c76="" value="7: Migrant Farm Worker"> Migrant Farm Worker</option>
-<option _ngcontent-wnb-c76="" value="8: Member of a tribal community"> Member of a tribal community</option>
-<option _ngcontent-wnb-c76="" value="9: Person experiencing homelessness or living in a"> Person experiencing homelessness or living in a shelter</option>
-<option _ngcontent-wnb-c76="" value="10: Residents of long-term and high risk congregat"> Residents of long-term and high risk congregate care settings</option>
-<option _ngcontent-wnb-c76="" value="11: Healthcare workers or staff of long-term and h"> Healthcare workers or staff of long-term and high risk congregate care settings</option>
-<option _ngcontent-wnb-c76="" value="12: None of the above"> None of the above</option><!----></select>
+<select _ngcontent-sim-c76="" id="qlist" aria-describedby="listErr" formcontrolname="list" class="dd-list ng-pristine ng-invalid ng-touched"><option _ngcontent-sim-c76="" disabled="" value="0: null">Select</option>
+√ <option _ngcontent-sim-c76="" value="1: Teachers and staff in PreK-12 Schools"> Teachers and staff in PreK-12 Schools</option>
+√ <option _ngcontent-sim-c76="" value="2: Childcare centers and staff"> Childcare centers and staff</option>
+√ <option _ngcontent-sim-c76="" value="3: Head Start, Part C Intervention &amp; licensed home"> Head Start, Part C Intervention &amp; licensed home visitors and staff</option>
+√ <option _ngcontent-sim-c76="" value="4: Healthcare workers (paid and unpaid)"> Healthcare workers (paid and unpaid)</option>
+√ <option _ngcontent-sim-c76="" value="5: First responders including law enforcement and "> First responders including law enforcement and fire professionals</option>
+√ <option _ngcontent-sim-c76="" value="6: Transit and public safety worker"> Transit and public safety worker</option>
+√ <option _ngcontent-sim-c76="" value="7: Migrant Farm Worker"> Migrant Farm Worker</option>
+√ <option _ngcontent-sim-c76="" value="8: Member of a tribal community"> Member of a tribal community</option>
+√ <option _ngcontent-sim-c76="" value="9: Person experiencing homelessness or living in a"> Person experiencing homelessness or living in a shelter</option>
+√ <option _ngcontent-sim-c76="" value="10: Residents of long-term and high risk congregat"> Residents of long-term and high risk congregate care settings</option>
+√ <option _ngcontent-sim-c76="" value="11: Healthcare workers or staff of long-term and h"> Healthcare workers or staff of long-term and high risk congregate care settings</option>
+√ <option _ngcontent-sim-c76="" value="12: Elder care and support"> Elder care and support</option>
+? <option _ngcontent-sim-c76="" value="13: Warehousing and logistics worker"> Warehousing and logistics worker</option>
+? <option _ngcontent-sim-c76="" value="14: Social services support staff"> Social services support staff</option>
+? <option _ngcontent-sim-c76="" value="15: Elections personnel"> Elections personnel</option>
+√ <option _ngcontent-sim-c76="" value="16: Hospitality"> Hospitality</option>
+√ <option _ngcontent-sim-c76="" value="17: Medical supply chain"> Medical supply chain</option>
+√ <option _ngcontent-sim-c76="" value="18: Postal and shipping services"> Postal and shipping services</option>
+√ <option _ngcontent-sim-c76="" value="19: Clergy"> Clergy</option>
+√ <option _ngcontent-sim-c76="" value="20: Judicial system workers"> Judicial system workers</option>
+<option _ngcontent-sim-c76="" value="21: None of the above"> None of the above</option><!----></select>
 
                         */
 
@@ -588,7 +593,7 @@ March 26th changes:
                             }
                             //Healthcare Workers
                             else if ( _(c[OCC]) == "Health Care Worker") {
-                                q('option[value*="Healthcare workers (paid and unpaid)"]').setAttribute("selected", "true");
+                                q('option[value*="Healthcare workers"]').setAttribute("selected", "true");
                             }
                             //First Responders
                             else if ( _(c[OCC]) == "Emergency Medical Services (EMS)"
@@ -596,7 +601,7 @@ March 26th changes:
                                     || _(c[OCC]) == "First Responder"
                                     || _(c[OCC]) == "Law Enforcement"
                             ) {
-                                q('option[value*="First responders including law enforcement and"]').setAttribute("selected", "true");
+                                q('option[value*="First responders including law enforcement"]').setAttribute("selected", "true");
                             }
                             //Transit & Public Safety
                             else if ( _(c[OCC]) == "Local Transportation"
@@ -620,17 +625,52 @@ March 26th changes:
                             else if ( _(c[OCC]) == "Persons experiencing homelessness"
                                     || _(c[OCC]) == "Persons living in shelters"
                             ) {
-                                q('option[value*="Person experiencing homelessness or living in"]').setAttribute("selected", "true");
+                                q('option[value*="Person experiencing homelessness"]').setAttribute("selected", "true");
                             }
-                            //Long Term Care
+                            //Elder Care
                             else if ( _(c[OCC]) == "Multigenerational Household"
                             ) {
-                                q('option[value*="Residents of long-term and high risk congrega"]').setAttribute("selected", "true");
+                                q('option[value*="Elder care and support"]').setAttribute("selected", "true");
                             }
                             //Long Term Care Staff
                             else if ( _(c[OCC]) == "Long Term Care Facility Staff") {
                                 q('option[value*="Healthcare workers or staff of long-term and"]').setAttribute("selected", "true");
                             }
+                            //Warehousing and logistics worker??
+                                //I don't remember this on the list...
+                            //Social Services
+                                //Or this either...
+                            //Elections personnel
+                                //I *have* to be missing something...
+                            //Hospitality
+                            else if ( _(c[OCC]) == "Janitorial Staff") {
+                                q('option[value*="Hospitality"]').setAttribute("selected", "true");
+                            }
+                            //Medical supply chain
+                            else if ( _(c[OCC]) == "Pharmacy Staff") {
+                                q('option[value*="Medical supply chain"]').setAttribute("selected", "true");
+                            }
+                            //Postal and shipping services
+                            else if ( _(c[OCC]) == "Airport and Commercial Airlines"
+                                    || _(c[OCC]) == "Mail Carriers"
+                                    || _(c[OCC]) == "Postal and Shipping Services"
+                                    || _(c[OCC]) == "U.S. Postal Service"
+                            ) {
+                                q('option[value*="Postal and shipping services"]').setAttribute("selected", "true");
+                            }
+                            //Clergy
+                            else if ( _(c[OCC]) == "Clergy"
+                                    || _(c[OCC]) == "Clergy and Other Essential Support for House of Worship"
+                            ) {
+                                q('option[value*="Clergy"]').setAttribute("selected", "true");
+                            }
+                            //Judicial system workers
+                            else if ( _(c[OCC]) == "Judicial Staff"
+                                    || _(c[OCC]) == "Judiciary"
+                            ) {
+                                q('option[value*="Judicial system workers"]').setAttribute("selected", "true");
+                            }
+
                             //OTHER
                             else {
                                 q('option[value*="None of the above"]').setAttribute("selected", "true");
@@ -872,3 +912,12 @@ March 26th changes:
     };
 
 })();
+
+
+/*
+
+
+<ul class="typeahead__list"><li class="typeahead__item typeahead__group-group" data-group="group" data-index="0"><a href="javascript:;">Airport and Commercial Airlines</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="1"><a href="javascript:;">Childcare Worker</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="2"><a href="javascript:;">Clergy</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="3"><a href="javascript:;">Clergy and Other Essential Support for House of Worship</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="4"><a href="javascript:;">Correctional Officers</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="5"><a href="javascript:;">Emergency Medical Services (EMS)</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="6"><a href="javascript:;">Essential Worker</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="7"><a href="javascript:;">Family Childcare Providers</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="8"><a href="javascript:;">Firefighters</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="9"><a href="javascript:;">First Responder</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="10"><a href="javascript:;">Food and Agricultural Workers</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="11"><a href="javascript:;">Funeral Services</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="12"><a href="javascript:;">Grocery Workers</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="13"><a href="javascript:;">Head Start and Early Head Start</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="14"><a href="javascript:;">Health Care Worker</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="15"><a href="javascript:;">Janitorial Staff</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="16"><a href="javascript:;">Judicial Staff</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="17"><a href="javascript:;">Judiciary</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="18"><a href="javascript:;">Law Enforcement</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="19"><a href="javascript:;">Local Transportation</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="20"><a href="javascript:;">Long Term Care Facility Staff</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="21"><a href="javascript:;">Mail Carriers</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="22"><a href="javascript:;">Manufacturing Workers</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="23"><a href="javascript:;">Members of tribal communities</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="24"><a href="javascript:;">Migrant Farm Workers</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="25"><a href="javascript:;">Multigenerational Household</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="26"><a href="javascript:;">Persons experiencing homelessness</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="27"><a href="javascript:;">Persons living in shelters</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="28"><a href="javascript:;">Pharmacy Staff</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="29"><a href="javascript:;">Postal and Shipping Services</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="30"><a href="javascript:;">Pre-Kindergarten -12th grade Educator &amp; Staff</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="31"><a href="javascript:;">Public Health Employee</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="32"><a href="javascript:;">Public Safety Workers</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="33"><a href="javascript:;">Public Transit Workers</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="34"><a href="javascript:;">Sickle Cell Disease</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="35"><a href="javascript:;">U.S. Postal Service</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="36"><a href="javascript:;">Veterinarians and Support Staff</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="37"><a href="javascript:;">None of the Above</a></li></ul>
+
+
+*/
