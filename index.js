@@ -1187,6 +1187,9 @@ April 2nd changes:
                         //Figure out insurance later
                         document.querySelectorAll('div.checkbox')[1].click();
 
+                        //Click next
+                        q('button.btn-nephritis').click();
+
                         //Queue up next prompt
                         q('#COVID-STATUS').innerHTML = `Curogram VNA Step 10 detected.<br>Continue manually, &amp; sign with an X.`;
 
