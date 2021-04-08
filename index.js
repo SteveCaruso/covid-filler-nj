@@ -125,7 +125,8 @@ It's a *snicker* JavaScript injection... :-)
         const supported = [
             "www.riteaid.com",
             "www.cvs.com",
-            "www.zocdoc.com"
+            "www.zocdoc.com",
+            "curogram.com"
         ];
 
         //Check to see if we're *on* a supported host, otherwise we shouldn't mess with it.
@@ -156,6 +157,22 @@ It's a *snicker* JavaScript injection... :-)
         const EMP = 13;
         const HEALTH = 14;
         const NOTES = 17;
+
+        //Numerical month to Full Month
+        const FMONTH = {
+            1: "January",
+            2: "February",
+            3: "March",
+            4: "April",
+            5: "May",
+            6: "June",
+            7: "July",
+            8: "August",
+            9: "September",
+            10: "October",
+            11: "November",
+            12: "December",
+        }
 
         //Construct and/or recognize the button
         var button = q('#covidInjectionButton');
@@ -225,10 +242,11 @@ It's a *snicker* JavaScript injection... :-)
 
                 //Add a version of the birthdate so that it has leading zeroes
                 //A number of sites want it this way...
-                var d1;
+                var d1; var d2;
                 var d = c[BDAY].split('/');
                     console.log(d);
                     d1 = d[0].padStart(2,"0")+d[1].padStart(2,"0")+d[2];
+                    d2 = d;
                     d = d[0].padStart(2,"0")+'/'+d[1].padStart(2,"0")+'/'+d[2];
 
 
@@ -990,6 +1008,212 @@ April 2nd changes:
                     }
 
                 }
+
+
+                /*
+                    Curogram - VNA of Central Jersey, Inc.
+                */
+                else if (host == "curogram.com") {
+                    
+                    //Extract which step it is
+                    var step = q('div.step-header').innerText.split(" ")[1].split(' ')[0];
+
+                    q('#COVID-STATUS').innerHTML = `Curogram VNA Step ${step} detected.`;
+
+                    if (step === 1) {
+
+                        //Select English
+                        q('.languages .language').click();
+
+                        //Queue up next prompt
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 2 detected.<br>Click here again.`;
+
+                    }
+                    else if (step === 2) {
+
+                        //Select Get Started
+                        q('button.btn-nephritis').click();
+
+                        //Queue up next prompt
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 3 detected.<br>Select a time slot, then click here again.`;
+
+                    }
+                    else if (step === 4) { //Phone number
+                        
+                        //Input first name
+                        q('input[type="tel"]').value = c[PHONE];
+                        q('input[type="tel').dispatchEvent(new Event('input'),{ bubbles: true });
+
+                        //Click next
+                        q('button.btn-nephritis').click();
+
+                        //Queue up next prompt
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 5 detected.<br>Click here again.`;
+
+                    }
+                    else if (step === 5) { //Demographics
+
+                        //Input first name
+                        q('input[name="firstname"]').value = c[FNAME];
+                        q('input[name="firstname').dispatchEvent(new Event('input'),{ bubbles: true });
+
+                        //Input last name
+                        q('input[name="lastname"]').value = c[LNAME];
+                        q('input[name="lastname').dispatchEvent(new Event('input'),{ bubbles: true });
+
+                        //DOB -- !!! Insane
+                        //Month
+                        document.querySelectorAll('ng-select input')[0].value = FMONTH[parseInt(d2[0])];
+                        document.querySelectorAll('ng-select input')[0].dispatchEvent(new Event('input'),{ bubbles: true });
+                        document.querySelector('ng-select .ng-option-marked').click();
+
+                        //Day
+                        document.querySelectorAll('ng-select input')[1].value = parseInt(d2[1]);
+                        document.querySelectorAll('ng-select input')[1].dispatchEvent(new Event('input'),{ bubbles: true });
+                        document.querySelector('ng-select .ng-option-marked').click();
+
+                        //Year YYYY
+                        document.querySelectorAll('ng-select input')[2].value = d2[2];
+                        document.querySelectorAll('ng-select input')[2].dispatchEvent(new Event('input'),{ bubbles: true });
+                        document.querySelector('ng-select .ng-option-marked').click();
+
+                        //Input email
+                        q('input[type="email"]').value = c[EMAIL];
+                        q('input[type="lastname').dispatchEvent(new Event('input'),{ bubbles: true });
+
+                        //Sex
+                        document.querySelectorAll('ng-select input')[3].value = c[SEX];
+                        document.querySelectorAll('ng-select input')[3].dispatchEvent(new Event('input'),{ bubbles: true });
+                        document.querySelector('ng-select .ng-option-marked').click();
+
+                        //Race
+                        document.querySelectorAll('ng-select input')[4].value = "Prefer not to say";
+                        document.querySelectorAll('ng-select input')[4].dispatchEvent(new Event('input'),{ bubbles: true });
+                        document.querySelector('ng-select .ng-option-marked').click();
+
+                        //Ethnicity (assuming not Hispanic –– we don't collect this)
+                        document.querySelectorAll('ng-select input')[5].value = "Not Hispanic";
+                        document.querySelectorAll('ng-select input')[5].dispatchEvent(new Event('input'),{ bubbles: true });
+                        document.querySelector('ng-select .ng-option-marked').click();
+
+                        //Click next
+                        q('button.btn-nephritis').click();
+
+                        //Queue up next prompt
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 6 detected.<br>Click here again.`;
+
+                    }
+                    else if (step === 5) { //Address
+
+                        //Current address
+                        document.querySelectorAll('input[type="radio"]')[2].click();
+
+                        //Address
+                        q('input[name="address"]').value = c[ADDR];
+                        q('input[name="address"]').dispatchEvent(new Event('input'),{ bubbles: true });
+
+                        //City
+                        q('input[name="city"]').value = c[CITY];
+                        q('input[name="city"]').dispatchEvent(new Event('input'),{ bubbles: true });
+
+                        //State - ASSUMING NJ!!
+                        document.querySelectorAll('ng-select input')[0].value = "NJ";
+                        document.querySelectorAll('ng-select input')[0].dispatchEvent(new Event('input'),{ bubbles: true });
+                        document.querySelector('ng-select .ng-option-marked').click();
+
+                        //Zipcode
+                        q('input[name="zip"]').value = c[ZIP];
+                        q('input[name="zip"]').dispatchEvent(new Event('input'),{ bubbles: true });
+
+                        //Click next
+                        q('button.btn-nephritis').click();
+
+                        //Queue up next prompt
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 7 detected.<br>Click here again.`;
+
+                    }
+                    else if (step === 7) { //Screening
+
+                        //Not sick
+                        document.querySelectorAll('input[type="radio"]')[1].click();
+
+                        //No allergies
+                        document.querySelectorAll('input[type="radio"]')[3].click();
+
+                        //Vaccine reaction
+                        document.querySelectorAll('input[type="radio"]')[5].click();
+
+                        //Blood thinner
+                        document.querySelectorAll('input[type="radio"]')[7].click();
+
+                        //Immunocompromised
+                        document.querySelectorAll('input[type="radio"]')[9].click();
+
+                        //Antibody therapy
+                        document.querySelectorAll('input[type="radio"]')[11].click();
+
+                        //Pregnant
+                        document.querySelectorAll('input[type="radio"]')[13].click();
+
+                        //Breast feeding
+                        document.querySelectorAll('input[type="radio"]')[15].click();
+
+                        //Don't currently have covid
+                        document.querySelectorAll('input[type="radio"]')[17].click();
+
+                        //Yes! Gimmie the vaccine!
+                        document.querySelectorAll('input[type="radio"]')[18].click();
+
+                        //Click next
+                        q('button.btn-nephritis').click();
+
+                        //Queue up next prompt
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 8 detected.<br>Click here again.`;
+
+                    }
+                    else if (step === 8) {
+
+                        //Click skip!
+                        q('button.btn-outline-nephritis').click();
+
+                        //Queue up next prompt
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 9 detected.<br>Click here again.`;
+
+                    }
+                    else if (step === 9) {
+
+                        //Figure out insurance later
+                        document.querySelectorAll('div.checkbox')[1].click();
+
+                        //Queue up next prompt
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 10 detected.<br>Continue manually, &amp; sign with an X.`;
+
+                    }
+                    else if (step === 10) {
+
+                        //Read and accept
+                        q('#checkbox1').click();
+
+                        //Queue up next prompt
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 11 detected.<br>Continue manually, &amp; sign with an X.`;
+
+                    }
+                    else if (step === 11) {
+
+                        //Read and accept
+                        q('#checkbox2').click();
+
+                        //Queue up next prompt
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 11 detected.<br>Continue manually.`;
+
+                    }
+                    else {
+
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA detected.<br>Continue manually.`;
+
+                    }
+                
+                }//END VNA
 
             });
 
