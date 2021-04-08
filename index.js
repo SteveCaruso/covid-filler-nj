@@ -1016,7 +1016,9 @@ April 2nd changes:
                 else if (host == "curogram.com") {
                     
                     //Extract which step it is
-                    var step = q('div.step-header').innerText.split(" ")[1].split(' ')[0];
+                    var step = parseInt(q('div.step-header').innerText.split(" ")[1].split(' ')[0]);
+
+                    console.log("Step:",step);
 
                     q('#COVID-STATUS').innerHTML = `Curogram VNA Step ${step} detected.`;
 
