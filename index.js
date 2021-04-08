@@ -1019,30 +1019,37 @@ April 2nd changes:
                     
                     //Extract which step it is
                     var step = parseInt(q('div.step-header').innerText.split(" ")[1].split(' ')[0]);
+                    var title = q('div.step-header').innerText.split(", ")[1].trim();
 
-                    console.log("Step:",step);
+                    console.log("Step:",step,title);
 
                     q('#COVID-STATUS').innerHTML = `Curogram VNA Step ${step} detected.`;
 
-                    if (step === 1) {
+                    if (title === "Language Selection") {
 
                         //Select English
                         q('.languages .language').click();
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 2 detected.<br>Click here again.`;
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Language Selection filled out.<br>Click here again.`;
 
                     }
-                    else if (step === 2) {
+                    else if (title === "Introduction") {
 
                         //Select Get Started
                         q('button.btn-nephritis').click();
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 3 detected.<br>Select a time slot, then click here again.`;
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Introduction bypassed.<br>Select a time slot, then click here again.`;
 
                     }
-                    else if (step === 4) { //Phone number
+                    else if (title === "Pick A Time Slot") {
+
+                        //Queue up next prompt
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Time Slot Screen detected.<br>Select a time slot, then click here again.`;
+
+                    }
+                    else if (title === "Identification" && (step < 5)) { //Phone number
                         
                         //Input first name
                         q('input[type="tel"]').value = c[PHONE];
@@ -1052,10 +1059,10 @@ April 2nd changes:
                         q('button.btn-nephritis').click();
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 5 detected.<br>Click here again.`;
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Phone Number Entered.<br>Click here again.`;
 
                     }
-                    else if (step === 5) { //Demographics
+                    else if (title === "Demographics") { //Demographics
 
                         //Input first name
                         q('input[name="firstname"]').value = c[FNAME];
@@ -1104,10 +1111,10 @@ April 2nd changes:
                         q('button.btn-nephritis').click();
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 6 detected.<br>Click here again.`;
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Demographics entered.<br>Click here again.`;
 
                     }
-                    else if (step === 6) { //Address
+                    else if (title === "Patient Address") { //Address
 
                         //Current address
                         document.querySelectorAll('input[type="radio"]')[2].click();
@@ -1133,10 +1140,10 @@ April 2nd changes:
                         q('button.btn-nephritis').click();
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 7 detected.<br>Click here again.`;
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Address entered.<br>Click here again.`;
 
                     }
-                    else if (step === 7) { //Screening
+                    else if (title === "Screening") { //Screening
 
                         //Not sick
                         document.querySelectorAll('input[type="radio"]')[1].click();
@@ -1165,26 +1172,27 @@ April 2nd changes:
                         //Don't currently have covid
                         document.querySelectorAll('input[type="radio"]')[17].click();
 
-                        //Yes! Gimmie the vaccine!
-                        document.querySelectorAll('input[type="radio"]')[18].click();
+                        //Yes! Gimmie the vaccine! (click last as "YES!")
+                        let yes = document.querySelectorAll('input[type="radio"]').length-2;
+                        document.querySelectorAll('input[type="radio"]')[yes].click();
 
                         //Click next
                         q('button.btn-nephritis').click();
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 8 detected.<br>Click here again.`;
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Screening info entered.<br>Click here again.`;
 
                     }
-                    else if (step === 8) {
+                    else if (title === "Disability") {
 
                         //Click skip!
                         q('button.btn-outline-nephritis').click();
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 9 detected.<br>Click here again.`;
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Disability skipped.<br>Click here again.`;
 
                     }
-                    else if (step === 9) {
+                    else if (title === "Insurance Info") {
 
                         //Figure out insurance later
                         document.querySelectorAll('div.checkbox')[1].click();
@@ -1193,25 +1201,26 @@ April 2nd changes:
                         q('button.btn-nephritis').click();
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 10 detected.<br>Continue manually, &amp; sign with an X.`;
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Insurance info bypassed.<br>Click here again.`;
 
                     }
-                    else if (step === 10) {
+                    else if (title === "Identification") {
 
-                        //Read and accept
-                        q('#checkbox1').click();
+                        //Click skip!
+                        q('button.btn-outline-nephritis').click();
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 11 detected.<br>Continue manually, &amp; sign with an X.`;
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Identification skipped.<br>Click here again.`;
 
                     }
-                    else if (step === 11) {
+                    else if (title === "Consent") {
 
                         //Read and accept
-                        q('#checkbox2').click();
+                        if (q('#checkbox1')) q('#checkbox1').click();
+                        if (q('#checkbox2')) q('#checkbox2').click();
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Step 11 detected.<br>Continue manually.`;
+                        q('#COVID-STATUS').innerHTML = `Curogram VNA Consent checked.<br>Sign with an X and continue manually.`;
 
                     }
                     else {
