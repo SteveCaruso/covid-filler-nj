@@ -217,9 +217,11 @@ It's a *snicker* JavaScript injection... :-)
 
                 if (c.length != COLS) {
 
+                    var clength = c.length;
+
                     navigator.clipboard.writeText(`TEST DATA	john.doe.wiley.jane1938@gmail.com	Jim	Doe	4/15/1938	7328679420	9.75 River Rd	Highland Park	New Jersey	08904	Male	Male	None of the Above		Obesity	No	No	<strong>Remember to copy the real data into your clipboard when you're scheduling!</strong>						`).then( c => {
 
-                        alert(`You do not appear to have the data you need in your clipboard (column mismatch). Dummy data 'Jim Doe' has just been copied.`);
+                        alert(`You do not appear to have the data you need in your clipboard (column mismatch: ${clength} vs ${COLS}). Dummy data 'Jim Doe' has just been copied.`);
 
                         pause(500).then(button.click);
 
