@@ -1081,7 +1081,7 @@ April 2nd changes:
 
                         //Input email
                         q('input[type="email"]').value = c[EMAIL];
-                        q('input[type="lastname').dispatchEvent(new Event('input'),{ bubbles: true });
+                        q('input[type="email').dispatchEvent(new Event('input'),{ bubbles: true });
 
                         //Sex
                         document.querySelectorAll('ng-select input')[3].value = c[SEX];
@@ -1105,7 +1105,7 @@ April 2nd changes:
                         q('#COVID-STATUS').innerHTML = `Curogram VNA Step 6 detected.<br>Click here again.`;
 
                     }
-                    else if (step === 5) { //Address
+                    else if (step === 6) { //Address
 
                         //Current address
                         document.querySelectorAll('input[type="radio"]')[2].click();
