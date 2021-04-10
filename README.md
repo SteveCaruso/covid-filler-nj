@@ -1,7 +1,8 @@
 # CoVID Injection
 
 * [Website](https://covid-injection.netlify.app/)
-* [![Netlify Status](https://api.netlify.com/api/v1/badges/7447f05c-93a8-44ac-aef3-f20732e86808/deploy-status)](https://app.netlify.com/sites/covid-injection/deploys)
+* Main branch: [![Netlify Status](https://api.netlify.com/api/v1/badges/7447f05c-93a8-44ac-aef3-f20732e86808/deploy-status)](https://app.netlify.com/sites/covid-injection/deploys)
+* Dev branch: [![Netlify Status](https://api.netlify.com/api/v1/badges/253e9e6f-a428-4fbd-8ae6-0ddbd39a78c6/deploy-status)](https://app.netlify.com/sites/covid-injection-dev/deploys)
 
 ## A JavaScript Autofill Injection Bookmarklet For CoVID Vaccine Signups
 
@@ -14,6 +15,8 @@ Presently, it is only designed to work with the New Jersey CoVID elligibility re
 ### How Can I Use It?
 
 Visit the [website](https://covid-injection.netlify.app/) and you'll find instructions and the bookmarklet there.
+
+The dev branch can be found [here](https://covid-injection-dev.netlify.app/).
 
 ### Spreadsheet Description
 
