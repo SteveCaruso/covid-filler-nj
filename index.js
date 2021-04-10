@@ -105,7 +105,7 @@ It's a *snicker* JavaScript injection... :-)
     }
 
     //Do the thing!
-    async function inject() {
+    async function inject(numCols,colOrder) {
 
         //Pause function
         var pause = function (time) {
@@ -157,6 +157,12 @@ It's a *snicker* JavaScript injection... :-)
         const EMP = 13;
         const HEALTH = 14;
         const NOTES = 17;
+
+        //If different columns are passed, set them
+        if (colOrder) {
+            COLS = numCols;
+            [EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = colOrder;
+        }
 
         //Numerical month to Full Month
         const FMONTH = {
