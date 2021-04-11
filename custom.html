@@ -111,10 +111,10 @@
         //Generate the table
         var tab = `<table>`;
         var alph = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-        for (var i=0; i<48; i++) {
+        for (var i=0; i<26*2; i++) {
             tab += `<th>`;
-            if (i >= 24) tab += "A";
-            tab += alph[i%24];
+            if (i >= 26) tab += "A";
+            tab += alph[i%26];
             tab += `<br>`;
             tab += `<select id="col_${i}">
                     <option value="" selected>Other</option>
