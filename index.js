@@ -105,7 +105,7 @@ It's a *snicker* JavaScript injection... :-)
     }
 
     //Do the thing!
-    async function inject(numCols,colOrder) {
+    async function inject(colOrder) {
 
         //Pause function
         var pause = function (time) {
@@ -139,28 +139,29 @@ It's a *snicker* JavaScript injection... :-)
         const DELIM = "	";
 
         //The expected number of columns in the clipboard
-        const COLS = 24;
+        //const COLS = 24; //Unneeded now.
 
         //Data columns - These are the indexes (starting with 0) for each piece of user info we'll need. If you're using your own form, you'll need to change these to match your order.
-        const EMAIL = 1;
-        const FNAME = 2;
-        const LNAME = 3;
-        const BDAY = 4;
-        const PHONE = 5;
-        const ADDR = 6;
-        const CITY = 7;
-        const STATE = 8;
-        const ZIP = 9;
-        const SEX = 10;
-        const GEN = 11;
-        const OCC = 12;
-        const EMP = 13;
-        const HEALTH = 14;
-        const NOTES = 17;
+        var EMAIL = 1;
+        var FNAME = 2;
+        var LNAME = 3;
+        var BDAY = 4;
+        var PHONE = 5;
+        var ADDR = 6;
+        var CITY = 7;
+        var STATE = 8;
+        var ZIP = 9;
+        var SEX = 10;
+        var GEN = 11;
+        var OCC = 12;
+        var EMP = 13;
+        var HEALTH = 14;
+        var NOTES = 17;
+
+        const DEFAULT_COLS = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,17];
 
         //If different columns are passed, set them
         if (colOrder) {
-            COLS = numCols;
             [EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = colOrder;
         }
 
@@ -221,13 +222,17 @@ It's a *snicker* JavaScript injection... :-)
                 //Split the clipboard data by the delimiter
                 c = c.split(DELIM);
 
-                if (c.length != COLS) {
+                //Better check for now, instead of columns: See if the zip code is in the right place
+                //if (c.length != COLS) {
+                if (!isInteger(c[ZIP]) && c[ZIP].length != 5) {
 
                     var clength = c.length;
 
                     navigator.clipboard.writeText(`TEST DATA	john.doe.wiley.jane1938@gmail.com	Jim	Doe	4/15/1938	7328679420	9.75 River Rd	Highland Park	New Jersey	08904	Male	Male	None of the Above		Obesity	No	No	<strong>Remember to copy the real data into your clipboard when you're scheduling!</strong>						`).then( c => {
 
-                        alert(`You do not appear to have the data you need in your clipboard (column mismatch: ${clength} vs ${COLS}). Dummy data 'Jim Doe' has just been copied.`);
+                        alert(`You do not appear to have the data you need in your clipboard. (Zip code expected in column ${c[ZIP]}, but not found.) Dummy data 'Jim Doe' has just been copied.`);
+
+                        [EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = DEFAULT_COLS;
 
                         pause(500).then(button.click);
 
@@ -247,6 +252,45 @@ It's a *snicker* JavaScript injection... :-)
                 if (c[NOTES].length > 0) {
                     q('#COVID-TARGET').innerHTML += "<br>(<em>" + c[NOTES] + "</em>)";
                 }
+
+
+                //Here we need to tease out the given data into whatever different formats we may need
+
+                
+                
+                //Email
+                //First Name
+                //Last Name
+                //Birthday
+                //Phone Number
+                //Address
+                //City
+                //State
+                //Zip
+                //Sex
+                if (SEX == -1) SEX = GEN;
+                //Gender
+                //Occupation
+                if (OCC == -1) {
+                    OCC = c.length;
+                    c.push("None of the Above");
+                }
+                //Employer
+                if (EMP == -1) {
+                    EMP = c.length;
+                    c.push("Employer");
+                }
+                //Health Conditions
+                if (HEALTH == -1) {
+                    HEALTH = c.length;
+                    c.push("None of the Above");
+                }
+                //Notes
+                if (NOTES == -1) {
+                    NOTES = c.length;
+                    c.push("");
+                }
+
 
                 //Add a version of the birthdate so that it has leading zeroes
                 //A number of sites want it this way...

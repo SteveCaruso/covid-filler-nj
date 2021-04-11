@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoVID Injection: Custom Spreadsheet - JavaScript Data Injection Bookmarklet</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <style>
+        @keyframes fadein {
+            from { background-color: #FFF; color:#000; }
+            to   { background-color: #111; color:#EEE; }
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            padding-left:20%;
+            padding-right:20%;
+            background-color:#111;
+            color:#EEE;
+            animation: fadein 2s;
+        }
+        a {
+            color:darkgoldenrod;
+        }
+        @media (max-width: 767px) {
+
+            body {
+                padding-left:10%;
+                padding-right:10%;
+            }
+
+        }
+        #generator {
+            width:95%;
+            overflow:scroll;
+            padding-bottom:1em;
+        }
+        #generator select {
+            font-size:110%;
+            border-radius:3px;
+            border:3px solid #222;
+            background-color:#333;
+            color:darkgoldenrod;
+        }
+        #generator select option {
+            background-color:#333;
+            color:darkgoldenrod;
+        }
+        #create {
+            text-align:center;
+        }
+        #generate {
+            border-radius:3px;
+            border:3px solid #222;
+            background-color:#333;
+            color:darkgoldenrod;
+            font-size:120%;
+            padding:1ex;
+            margin:5ex;
+        }
+        .error, .notice {
+            color:red;
+            
+            /*background-color:#222;
+            padding:2px;
+            border:1px solid #222;
+            border-radius:1ex;*/
+        }
+        .notice {
+            color:darkgoldenrod;
+        }
+    </style>
+
+</head>
+<body>
+    
+    <h1>CoVID Injection</h1>
+    <h2>A JavaScript Autofill Injection Bookmarklet For CoVID Vaccine Signups</h2>
+
+    <h3>Custom Bookmarklet Generator</h3>
+
+    <p>If you don't need a custom bookmarklet, head <a href="index.html">back to the main page</a>.</p>
+
+    <p>If you're using a spreadsheet that does not use the <a href="https://github.com/SteveCaruso/covid-filler-nj#spreadsheet-description" target="_blank">default format that's described in the README.md on GitHub</a>, you can use this page to generate a custom one for your own system.</p>
+
+
+    <h3>Generate Bookmarklet: (Scroll horizontally for more cels)</h3>
+
+    <p>Fields marked with an * are required.</p>
+
+    <div id="generator"></div>
+
+    <script>
+
+        /* YES all of the code here is atrocious. But this is what happens when you do things peacemeal. */
+
+        //Generate the table
+        var tab = `<table>`;
+        var alph = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+        for (var i=0; i<48; i++) {
+            tab += `<th>`;
+            if (i >= 24) tab += "A";
+            tab += alph[i%24];
+            tab += `<br>`;
+            tab += `<select id="col_${i}">
+                    <option value="" selected>Other</option>
+                    <option value="EMAIL">Email*</option>
+                    <option value="FNAME">First Name*</option>
+                    <option value="LNAME">Last Name*</option>
+                    <option value="BDAY">Birthday (M/D/YYYY)*</option>
+                    <!--<option value="BDAY_MDYYYY">Birthday (M/D/YYYY)</option>
+                    <option value="BDAY_MMDDYYYY">Birthday (MM/DD/YYYY)</option>
+                    <option value="BDAY_MMDDYY">Birthday (MM/DD/YY)</option>-->
+                    <option value="PHONE">Phone*</option>
+                    <option value="ADDR">Address*</option>
+                    <option value="CITY">City*</option>
+                    <option value="STATE">State (New Jersey)*</option>
+                    <!--<option value="STATE_XX">State (New Jersey)</option>-->
+                    <option value="ZIP">Zip Code (#####)*</option>
+                    <option value="SEX">Sex (Male/Female)</option>
+                    <!--<option value="SEX">Sex (M/F)</option>-->
+                    <option value="GEN">Gender (Male/Female)*</option>
+                    <!--<option value="GEN">Gender (M/F)</option>-->
+                    <option value="OCC">Occupation (See List)</option>
+                    <option value="EMP">Employer</option>
+                    <option value="HEALTH">Health Cond. (See List)</option>
+                    <option value="NOTES">Notes</option>
+                </select>`;
+            tab += `</th>`;
+        }
+        tab += `</table>`;
+
+        document.querySelector('#generator').innerHTML = tab;
+
+    </script>
+
+    <div id="create">
+
+        <div id="generationResults"></div>
+
+        <button id="generate">Generate</button>
+
+    </div>
+
+    <script>
+
+        const fields = {"EMAIL":null, "FNAME":null, "LNAME":null, "BDAY":null, 
+                        "PHONE":null, "ADDR":null, "CITY":null, "STATE":null, 
+                        "ZIP":null, "SEX":null, "GEN":null, "OCC":null, "EMP":null, 
+                        "HEALTH":null, "NOTES":null};
+
+        const req = {"EMAIL":true, "FNAME":true, "LNAME":true, "BDAY":true, 
+                        "PHONE":true, "ADDR":true, "CITY":true, "STATE":true, 
+                        "ZIP":true, "SEX":false, "GEN":true, "OCC":false, "EMP":false, 
+                        "HEALTH":false, "NOTES":false};
+
+        const mess = {  "EMAIL": "An <strong>Email Address</strong> field is required.", 
+                        "FNAME": "A <strong>First Name</strong> field is required. You may have to manually break things up.", 
+                        "LNAME": "A <strong>Last Name</strong> field is required. You may have to manually break things up.",
+                        "BDAY": "A <strong>Birthday</strong> field in the format M/D/YYYY is required.", 
+                        "PHONE": "A <strong>Phone Number</strong> field is required.", 
+                        "ADDR": "An <strong>Address</strong> field is required. The current form does not support a second address field.", 
+                        "CITY": "A <strong>City</strong> field is required.", 
+                        "STATE": "Where the CoVID Injection system assumes <strong>New Jersey</strong>, it still requires a <strong>State</strong> field.", 
+                        "ZIP": "A 5-digit <strong>Zip Code</strong> is required.", 
+                        "SEX": "<strong>Biological Sex</strong> will default to <strong>Gender</strong>.", 
+                        "GEN": "A <strong>Gender</strong> field is required because many systems require it.", 
+                        "OCC": "Dummy data will be used for <strong>Occupation</strong>.", 
+                        "EMP": "Dummy data will be used for the <strong>Employer</strong>.", 
+                        "HEALTH": "Dummy data will be used for <strong>Health Conditions</strong>.", 
+                        "NOTES": "<strong>Notes</strong> are not required, but you can set this to any field you wish to be displayed under the patient's name while using the Injector."
+        };
+
+        document.querySelector('#generate').addEventListener('click',() => {
+
+            //Grab values
+            for (var i=0; i<48; i++) {
+                var e = document.querySelector(`#col_${i}`);
+                var s = e.selectedIndex;
+                var v = e.children[s].value;
+
+                if (v !== "") {
+                    fields[v] = i;
+                }
+
+            }
+
+            document.querySelector("#generationResults").innerHTML = "";
+
+            let errors = false;
+
+            let results = document.querySelector("#generationResults");
+
+            let finalSet = [];
+
+            //Check for missing fields
+            for (var f in fields) {
+
+                if (fields[f] == null) {
+                    if (req[f]) {
+                        results.innerHTML += `<p class="error">${mess[f]}</p>`;
+                        errors = true;
+                    }
+                    else results.innerHTML += `<p class="notice">${mess[f]}</p>`;
+                    finalSet.push(-1);
+                }
+                else finalSet.push(fields[f]);
+
+            }
+
+            if (errors) {
+
+                results.innerHTML += `<h3 class="error">Set the missing fields described above and hit the button again.</h3>`;
+
+            }
+            else {
+
+                results.innerHTML += `<h3>Here is your bookmarklet:</h3>`;
+
+                results.innerHTML += `<div><a href="javascript:(function()%7Bfunction%20callback()%7Bwindow.COVID.inject([${finalSet.join(',')}])%7Dvar%20s%3Ddocument.createElement(%22script%22)%3Bs.src%3D%22https%3A%2F%2Fcovid-injection.netlify.app%2Findex.js%22%3Bif(s.addEventListener)%7Bs.addEventListener(%22load%22%2Ccallback%2Cfalse)%7Delse%20if(s.readyState)%7Bs.onreadystatechange%3Dcallback%7Ddocument.body.appendChild(s)%3B%7D)()" style="border:3px solid #333; background-color:#333; color:darkgoldenrod; border-radius:3px; font-weight:bold; text-decoration:none;">CoVID Injection</a></div>`;
+
+                results.innerHTML += `<p>Drag it into your bookmark bar, and be sure to label it so to identify which form it's set to work with.</p>`;
+
+            }
+
+            console.log(finalSet.join(','));
+            
+
+        });
+
+    </script>
+
+    <h3>For Occupation and Health</h3>
+
+    <h4>The Occupation field only recognizes the following values:</h4>
+
+    <blockquote>"Airport and Commercial Airlines" <br> "Childcare Worker" <br> "Clergy" <br> "Clergy and Other Essential Support for House of Worship" <br> "Correctional Officers" <br> "Emergency Medical Services (EMS)" <br> "Essential Worker" <br> "Family Childcare Providers" <br> "Firefighters" <br> "First Responder" <br> "Food and Agricultural Workers" <br> "Funeral Services" <br> "Grocery Workers" <br> "Head Start and Early Head Start" <br> "Health Care Worker" <br> "Janitorial Staff" <br> "Judicial Staff" <br> "Judiciary" <br> "Law Enforcement" <br> "Local Transportation" <br> "Long Term Care Facility Staff" <br> "Mail Carriers" <br> "Manufacturing Workers" <br> "Members of tribal communities" <br> "Migrant Farm Workers" <br> "Multigenerational Household" <br> "Persons experiencing homelessness" <br> "Persons living in shelters" <br> "Pharmacy Staff" <br> "Postal and Shipping Services" <br> "Pre-Kindergarten -12th grade Educator & Staff" <br> "Public Health Employee" <br> "Public Safety Workers" <br> "Public Transit Workers" <br> "U.S. Postal Service" <br> "Veterinarians and Support Staff" <br> "None of the Above"</blockquote>
+
+    <p>Anything not on the above list will either be interpreted as "None of the Above" or substituted for dummy information.</p>
+
+    <h4>The Health Conditions field only recognizes the following values:</h4>
+
+    <blockquote>"Asthma-with hospitalization" <br> "Amyotrophic Lateral Asclerosis (ALS)" <br> "Asthma" <br> "Bone Marrow Transplant" <br> "COPD" <br> "Cancer" <br> "Cerebral Palsy" <br> "Cystic Fibrosis" <br> "Diabetes" <br> "Down Syndrome" <br> "Epilepsy" <br> "HIV" <br> "Heart Condition" <br> "Intellectual and Developmental Disabilities" <br> "Kidney Disease" <br> "Liver Disease" <br> "Metabolic Disorders" <br> "Muscular Dystrophy" <br> "Neurologic Condition" <br> "Obesity" <br> "Organ transplant" <br> "Pregnancy" <br> "Pulmonary Fibrosis" <br> "Severe Genetic Disorders" <br> "Sickle Cell Anemia" <br> "Smoking" <br> "Spina Bifida" <br> "Weakened Immune System" <br> "None of the Above"</blockquote>
+
+    <p>Anything not on the above list will either be interpreted as "None of the Above" or substituted for dummy information.</p>
+
+    <!--
+    <h3>How Can I Install It?</h3>
+
+    <h4>If you're using a spreadsheet that is compatible with the default column configuration:</h4>
+        
+    <p>Click and drag the 
+        
+        <a href="javascript:(function()%7Bfunction%20callback()%7Bwindow.COVID.inject()%7Dvar%20s%3Ddocument.createElement(%22script%22)%3Bs.src%3D%22https%3A%2F%2Fcovid-injection.netlify.app%2Findex.js%22%3Bif(s.addEventListener)%7Bs.addEventListener(%22load%22%2Ccallback%2Cfalse)%7Delse%20if(s.readyState)%7Bs.onreadystatechange%3Dcallback%7Ddocument.body.appendChild(s)%3B%7D)()" style="border:3px solid #333; background-color:#333; color:darkgoldenrod; border-radius:3px; font-weight:bold; text-decoration:none;">CoVID Injection</a>
+        
+        link into your bookmark bar. That's it.</p>
+
+    <h4>If you're using your own custom spreadsheet:</h4>
+
+    <p>Visit the custom <a href="custom.html">bookmarklet generator page here</a>.</p>
+
+    <h3>How Do I Uninstall It?</h3>
+
+    <p>When you want to get rid of it, simply delete the bookmark. That's it.</p>
+
+    <h3>How Can I Use It?</h3>
+
+    <p>Three easy steps:</p>
+
+    <ol>
+        <li>Copy the line of the spreadsheet that has the user's information you wish to sign up with into your clipboard.</li>
+        <li>Go to the vaccine portal.</li>
+        <li>Click on the bookmarklet you put in your bookmarks bar.</li>
+    </ol>
+
+    <h3>Which Vaccine Portals Are Supported?</h3>
+
+    <p>Presently only these portals are supported:</p>
+
+    <ul>
+        <li><a href="https://www.riteaid.com/pharmacy/covid-qualifier" target="_blank">Rite Aid</a></li>
+        <li><a href="https://www.cvs.com/immunizations/covid-19-vaccine" target="_blank">CVS</a></li>
+    </ul>
+
+    <h3>Is Any Spreadsheet Supported?</h3>
+
+    <p>Right now this is being built and maintained for the Christ Church New Brunswick (CCNB) CoVID-19 Vaccine Signup. This spreadsheet assumes that the data in your clipboard is tab-delimited and that the columns come in a specific order.</p>
+        
+    <p>However, <a href="https://github.com/SteveCaruso/covid-filler-nj">it can be forked on GitHub</a> and adapted, if you have sufficient coding skills.</p>
+
+    -->
+
+</body>
+</html>
