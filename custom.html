@@ -270,7 +270,7 @@
 
         //Fix link if in dev branch
         if (location.host == "covid-injection-dev.netlify.app") {
-            var hrefs = document.querySelectorAll("a");
+            var hrefs = document.querySelectorAll("a.vaxbutton");
             for (var h=0; h<hrefs.length; h++) {
                 hrefs[h].href = hrefs[h].href.replace("covid-injection.netlify.app","covid-injection-dev.netlify.app");
                 hrefs[h].innerHTML = "(DEV) " + hrefs[h].innerHTML;
