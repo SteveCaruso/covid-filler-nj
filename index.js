@@ -761,7 +761,8 @@ April 2nd changes:
 
                         //None of the above
                         else {
-                            q('#q23').click();
+                            q('#q21').click(); //Elligible anyways.
+                            //q('#q23').click();
                         }
 
                         //Check if employer field is active
