@@ -105,7 +105,7 @@ It's a *snicker* JavaScript injection... :-)
     }
 
     //Do the thing!
-    async function inject() {
+    async function inject(colOrder) {
 
         //Pause function
         var pause = function (time) {
@@ -139,24 +139,31 @@ It's a *snicker* JavaScript injection... :-)
         const DELIM = "	";
 
         //The expected number of columns in the clipboard
-        const COLS = 24;
+        //const COLS = 24; //Unneeded now.
 
         //Data columns - These are the indexes (starting with 0) for each piece of user info we'll need. If you're using your own form, you'll need to change these to match your order.
-        const EMAIL = 1;
-        const FNAME = 2;
-        const LNAME = 3;
-        const BDAY = 4;
-        const PHONE = 5;
-        const ADDR = 6;
-        const CITY = 7;
-        const STATE = 8;
-        const ZIP = 9;
-        const SEX = 10;
-        const GEN = 11;
-        const OCC = 12;
-        const EMP = 13;
-        const HEALTH = 14;
-        const NOTES = 17;
+        var EMAIL = 1;
+        var FNAME = 2;
+        var LNAME = 3;
+        var BDAY = 4;
+        var PHONE = 5;
+        var ADDR = 6;
+        var CITY = 7;
+        var STATE = 8;
+        var ZIP = 9;
+        var SEX = 10;
+        var GEN = 11;
+        var OCC = 12;
+        var EMP = 13;
+        var HEALTH = 14;
+        var NOTES = 17;
+
+        const DEFAULT_COLS = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,17];
+
+        //If different columns are passed, set them
+        if (colOrder) {
+            [EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = colOrder;
+        }
 
         //Numerical month to Full Month
         const FMONTH = {
@@ -215,13 +222,17 @@ It's a *snicker* JavaScript injection... :-)
                 //Split the clipboard data by the delimiter
                 c = c.split(DELIM);
 
-                if (c.length != COLS) {
+                //Better check for now, instead of columns: See if the zip code is in the right place
+                //if (c.length != COLS) {
+                if ( !/^\d\d\d\d\d$/.test(c[ZIP]) ) {
 
                     var clength = c.length;
 
                     navigator.clipboard.writeText(`TEST DATA	john.doe.wiley.jane1938@gmail.com	Jim	Doe	4/15/1938	7328679420	9.75 River Rd	Highland Park	New Jersey	08904	Male	Male	None of the Above		Obesity	No	No	<strong>Remember to copy the real data into your clipboard when you're scheduling!</strong>						`).then( c => {
 
-                        alert(`You do not appear to have the data you need in your clipboard (column mismatch: ${clength} vs ${COLS}). Dummy data 'Jim Doe' has just been copied.`);
+                        alert(`You do not appear to have the data you need in your clipboard. (Zip code expected in column ${ZIP}, but not found.) Dummy data 'Jim Doe' has just been copied.`);
+
+                        [EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = DEFAULT_COLS;
 
                         pause(500).then(button.click);
 
@@ -242,14 +253,214 @@ It's a *snicker* JavaScript injection... :-)
                     q('#COVID-TARGET').innerHTML += "<br>(<em>" + c[NOTES] + "</em>)";
                 }
 
+
+                //Here we need to tease out the given data into whatever different formats we may need
+
+                
+                
+                //Email (already OK)
+
+                //First Name
+                //Last Name
+                
+                //Birthday
+                //Let's break it down to its constituent parts
+
                 //Add a version of the birthdate so that it has leading zeroes
                 //A number of sites want it this way...
                 var d1; var d2;
                 var d = c[BDAY].split('/');
-                    console.log(d);
+
+                    // MMDDYYYY
                     d1 = d[0].padStart(2,"0")+d[1].padStart(2,"0")+d[2];
                     d2 = d;
+
+                    // MM/DD/YYYY
                     d = d[0].padStart(2,"0")+'/'+d[1].padStart(2,"0")+'/'+d[2];
+                
+
+                //Phone Number (ok so far)
+
+                //Address
+
+                //City
+
+                //State
+                var stateName;
+                var stateCode;
+
+                var stateNames = {
+                    "AL": "Alabama",
+                    "AK": "Alaska",
+                    "AS": "American Samoa",
+                    "AZ": "Arizona",
+                    "AR": "Arkansas",
+                    "CA": "California",
+                    "CO": "Colorado",
+                    "CT": "Connecticut",
+                    "DE": "Delaware",
+                    "DC": "District Of Columbia",
+                    "FM": "Federated States Of Micronesia",
+                    "FL": "Florida",
+                    "GA": "Georgia",
+                    "GU": "Guam",
+                    "HI": "Hawaii",
+                    "ID": "Idaho",
+                    "IL": "Illinois",
+                    "IN": "Indiana",
+                    "IA": "Iowa",
+                    "KS": "Kansas",
+                    "KY": "Kentucky",
+                    "LA": "Louisiana",
+                    "ME": "Maine",
+                    "MH": "Marshall Islands",
+                    "MD": "Maryland",
+                    "MA": "Massachusetts",
+                    "MI": "Michigan",
+                    "MN": "Minnesota",
+                    "MS": "Mississippi",
+                    "MO": "Missouri",
+                    "MT": "Montana",
+                    "NE": "Nebraska",
+                    "NV": "Nevada",
+                    "NH": "New Hampshire",
+                    "NJ": "New Jersey",
+                    "NM": "New Mexico",
+                    "NY": "New York",
+                    "NC": "North Carolina",
+                    "ND": "North Dakota",
+                    "MP": "Northern Mariana Islands",
+                    "OH": "Ohio",
+                    "OK": "Oklahoma",
+                    "OR": "Oregon",
+                    "PW": "Palau",
+                    "PA": "Pennsylvania",
+                    "PR": "Puerto Rico",
+                    "RI": "Rhode Island",
+                    "SC": "South Carolina",
+                    "SD": "South Dakota",
+                    "TN": "Tennessee",
+                    "TX": "Texas",
+                    "UT": "Utah",
+                    "VT": "Vermont",
+                    "VI": "Virgin Islands",
+                    "VA": "Virginia",
+                    "WA": "Washington",
+                    "WV": "West Virginia",
+                    "WI": "Wisconsin",
+                    "WY": "Wyoming"
+                };
+
+                var stateCodes = {
+                    'Alabama': 'AL',
+                    'Alaska': 'AK',
+                    'American Samoa': 'AS',
+                    'Arizona': 'AZ',
+                    'Arkansas': 'AR',
+                    'California': 'CA',
+                    'Colorado': 'CO',
+                    'Connecticut': 'CT',
+                    'Delaware': 'DE',
+                    'District Of Columbia': 'DC',
+                    'Federated States Of Micronesia': 'FM',
+                    'Florida': 'FL',
+                    'Georgia': 'GA',
+                    'Guam': 'GU',
+                    'Hawaii': 'HI',
+                    'Idaho': 'ID',
+                    'Illinois': 'IL',
+                    'Indiana': 'IN',
+                    'Iowa': 'IA',
+                    'Kansas': 'KS',
+                    'Kentucky': 'KY',
+                    'Louisiana': 'LA',
+                    'Maine': 'ME',
+                    'Marshall Islands': 'MH',
+                    'Maryland': 'MD',
+                    'Massachusetts': 'MA',
+                    'Michigan': 'MI',
+                    'Minnesota': 'MN',
+                    'Mississippi': 'MS',
+                    'Missouri': 'MO',
+                    'Montana': 'MT',
+                    'Nebraska': 'NE',
+                    'Nevada': 'NV',
+                    'New Hampshire': 'NH',
+                    'New Jersey': 'NJ',
+                    'New Mexico': 'NM',
+                    'New York': 'NY',
+                    'North Carolina': 'NC',
+                    'North Dakota': 'ND',
+                    'Northern Mariana Islands': 'MP',
+                    'Ohio': 'OH',
+                    'Oklahoma': 'OK',
+                    'Oregon': 'OR',
+                    'Palau': 'PW',
+                    'Pennsylvania': 'PA',
+                    'Puerto Rico': 'PR',
+                    'Rhode Island': 'RI',
+                    'South Carolina': 'SC',
+                    'South Dakota': 'SD',
+                    'Tennessee': 'TN',
+                    'Texas': 'TX',
+                    'Utah': 'UT',
+                    'Vermont': 'VT',
+                    'Virgin Islands': 'VI',
+                    'Virginia': 'VA',
+                    'Washington': 'WA',
+                    'West Virginia': 'WV',
+                    'Wisconsin': 'WI',
+                    'Wyoming': 'WY'
+                };
+
+                if (c[STATE].length > 2) {
+                    stateName = c[STATE];
+                    stateCode = stateCodes[stateName];
+                }
+                else {
+                    stateCode = c[STATE];
+                    stateName = stateNames[stateCode];
+                }
+                
+                //Zip (this is OK)
+
+                //Sex
+                if (SEX == -1) SEX = GEN;
+                if (c[SEX] == "M") c[SEX] = "Male";
+                else if (c[SEX] == "F") c[SEX] = "Female";
+                else if (c[SEX] == "O") c[SEX] = "Other or prefer not to say";
+                
+                //Gender
+                if (c[GEN] == "M") c[GEN] = "Male";
+                else if (c[GEN] == "F") c[GEN] = "Female";
+                else if (c[GEN] == "O") c[GEN] = "Other or prefer not to say";
+
+                //Occupation
+                if (OCC == -1) {
+                    OCC = c.length;
+                    c.push("None of the Above");
+                }
+                
+                //Employer
+                if (EMP == -1) {
+                    EMP = c.length;
+                    c.push("Employer");
+                }
+                
+                //Health Conditions
+                if (HEALTH == -1) {
+                    HEALTH = c.length;
+                    c.push("None of the Above");
+                }
+                
+                //Notes
+                if (NOTES == -1) {
+                    NOTES = c.length;
+                    c.push("");
+                }
+
+
+                
 
 
 
@@ -265,8 +476,8 @@ It's a *snicker* JavaScript injection... :-)
                         //Add in everything to the appropriate fields
                         q("#dateOfBirth").value =           d;
                         q("#city").value =                  c[CITY];
-                        q("#state").value =                 c[STATE];
-                        q("#eligibility_state").value =     c[STATE];
+                        q("#state").value =                 stateName;//c[STATE];
+                        q("#eligibility_state").value =     stateName;//c[STATE];
                         q("#zip").value =                   c[ZIP];
                         
                         q("#Occupation").value =            _(c[OCC]);
@@ -322,7 +533,7 @@ It's a *snicker* JavaScript injection... :-)
                             q("#city").value = c[CITY];
 
                             //#patient_state
-                            q("#patient_state").value = "New Jersey";
+                            q("#patient_state").value = stateName;//"New Jersey";
 
                             /*
 <ul class="typeahead__list"><li class="typeahead__item typeahead__group-group" data-group="group" data-index="0"><a href="javascript:;">Alaska</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="1"><a href="javascript:;">Alabama</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="2"><a href="javascript:;">Arkansas</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="3"><a href="javascript:;">Arizona</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="4"><a href="javascript:;">California</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="5"><a href="javascript:;">Colorado</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="6"><a href="javascript:;">Connecticut</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="7"><a href="javascript:;">District Of Columbia</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="8"><a href="javascript:;">Delaware</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="9"><a href="javascript:;">Florida</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="10"><a href="javascript:;">Georgia</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="11"><a href="javascript:;">Hawaii</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="12"><a href="javascript:;">Iowa</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="13"><a href="javascript:;">Idaho</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="14"><a href="javascript:;">Illinois</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="15"><a href="javascript:;">Indiana</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="16"><a href="javascript:;">Kansas</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="17"><a href="javascript:;">Kentucky</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="18"><a href="javascript:;">Louisiana</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="19"><a href="javascript:;">Massachusetts</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="20"><a href="javascript:;">Maryland</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="21"><a href="javascript:;">Maine</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="22"><a href="javascript:;">Michigan</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="23"><a href="javascript:;">Minnesota</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="24"><a href="javascript:;">Missouri</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="25"><a href="javascript:;">Mississippi</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="26"><a href="javascript:;">Montana</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="27"><a href="javascript:;">North Carolina</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="28"><a href="javascript:;">North Dakota</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="29"><a href="javascript:;">Nebraska</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="30"><a href="javascript:;">New Hampshire</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="31"><a href="javascript:;">New Jersey</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="32"><a href="javascript:;">New Mexico</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="33"><a href="javascript:;">Nevada</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="34"><a href="javascript:;">New York</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="35"><a href="javascript:;">Ohio</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="36"><a href="javascript:;">Oklahoma</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="37"><a href="javascript:;">Oregon</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="38"><a href="javascript:;">Pennsylvania</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="39"><a href="javascript:;">Rhode Island</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="40"><a href="javascript:;">South Carolina</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="41"><a href="javascript:;">South Dakota</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="42"><a href="javascript:;">Tennessee</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="43"><a href="javascript:;">Texas</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="44"><a href="javascript:;">Utah</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="45"><a href="javascript:;">Virginia</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="46"><a href="javascript:;">Vermont</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="47"><a href="javascript:;">Washington</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="48"><a href="javascript:;">Wisconsin</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="49"><a href="javascript:;">West Virginia</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="50"><a href="javascript:;">Wyoming</a></li></ul>
@@ -711,7 +922,8 @@ April 2nd changes:
 
                         //None of the above
                         else {
-                            q('#q23').click();
+                            q('#q21').click(); //Elligible anyways.
+                            //q('#q23').click();
                         }
 
                         //Check if employer field is active
@@ -798,7 +1010,7 @@ April 2nd changes:
                         q('#city').dispatchEvent(new Event('compositionend'));
 
                         //#state dropdown -- we're just gonna assume NJ
-                        q('option[value="35: NJ"]').setAttribute("selected","true");
+                        q(`option[value*="${stateCode}"]`).setAttribute("selected","true");
                         q('#state').dispatchEvent(new Event('change'));
 
                         //#zip
@@ -1127,8 +1339,8 @@ April 2nd changes:
                         q('input[name="city"]').value = c[CITY];
                         q('input[name="city"]').dispatchEvent(new Event('input'),{ bubbles: true });
 
-                        //State - ASSUMING NJ!!
-                        document.querySelectorAll('ng-select input')[0].value = "NJ";
+                        //State
+                        document.querySelectorAll('ng-select input')[0].value = stateCode;
                         document.querySelectorAll('ng-select input')[0].dispatchEvent(new Event('input'),{ bubbles: true });
                         document.querySelector('ng-select .ng-option-marked').click();
 
