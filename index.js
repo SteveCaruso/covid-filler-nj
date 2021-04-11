@@ -258,33 +258,201 @@ It's a *snicker* JavaScript injection... :-)
 
                 
                 
-                //Email
+                //Email (already OK)
+
                 //First Name
                 //Last Name
+                
                 //Birthday
-                //Phone Number
+                //Let's break it down to its constituent parts
+
+                //Add a version of the birthdate so that it has leading zeroes
+                //A number of sites want it this way...
+                var d1; var d2;
+                var d = c[BDAY].split('/');
+
+                    // MMDDYYYY
+                    d1 = d[0].padStart(2,"0")+d[1].padStart(2,"0")+d[2];
+                    d2 = d;
+
+                    // MM/DD/YYYY
+                    d = d[0].padStart(2,"0")+'/'+d[1].padStart(2,"0")+'/'+d[2];
+                
+
+                //Phone Number (ok so far)
+
                 //Address
+                
                 //City
+
                 //State
-                //Zip
+                var stateName;
+                var stateCode;
+
+                var stateNames = {
+                    "AL": "Alabama",
+                    "AK": "Alaska",
+                    "AS": "American Samoa",
+                    "AZ": "Arizona",
+                    "AR": "Arkansas",
+                    "CA": "California",
+                    "CO": "Colorado",
+                    "CT": "Connecticut",
+                    "DE": "Delaware",
+                    "DC": "District Of Columbia",
+                    "FM": "Federated States Of Micronesia",
+                    "FL": "Florida",
+                    "GA": "Georgia",
+                    "GU": "Guam",
+                    "HI": "Hawaii",
+                    "ID": "Idaho",
+                    "IL": "Illinois",
+                    "IN": "Indiana",
+                    "IA": "Iowa",
+                    "KS": "Kansas",
+                    "KY": "Kentucky",
+                    "LA": "Louisiana",
+                    "ME": "Maine",
+                    "MH": "Marshall Islands",
+                    "MD": "Maryland",
+                    "MA": "Massachusetts",
+                    "MI": "Michigan",
+                    "MN": "Minnesota",
+                    "MS": "Mississippi",
+                    "MO": "Missouri",
+                    "MT": "Montana",
+                    "NE": "Nebraska",
+                    "NV": "Nevada",
+                    "NH": "New Hampshire",
+                    "NJ": "New Jersey",
+                    "NM": "New Mexico",
+                    "NY": "New York",
+                    "NC": "North Carolina",
+                    "ND": "North Dakota",
+                    "MP": "Northern Mariana Islands",
+                    "OH": "Ohio",
+                    "OK": "Oklahoma",
+                    "OR": "Oregon",
+                    "PW": "Palau",
+                    "PA": "Pennsylvania",
+                    "PR": "Puerto Rico",
+                    "RI": "Rhode Island",
+                    "SC": "South Carolina",
+                    "SD": "South Dakota",
+                    "TN": "Tennessee",
+                    "TX": "Texas",
+                    "UT": "Utah",
+                    "VT": "Vermont",
+                    "VI": "Virgin Islands",
+                    "VA": "Virginia",
+                    "WA": "Washington",
+                    "WV": "West Virginia",
+                    "WI": "Wisconsin",
+                    "WY": "Wyoming"
+                };
+
+                var stateCodes = {
+                    'Alabama': 'AL',
+                    'Alaska': 'AK',
+                    'American Samoa': 'AS',
+                    'Arizona': 'AZ',
+                    'Arkansas': 'AR',
+                    'California': 'CA',
+                    'Colorado': 'CO',
+                    'Connecticut': 'CT',
+                    'Delaware': 'DE',
+                    'District Of Columbia': 'DC',
+                    'Federated States Of Micronesia': 'FM',
+                    'Florida': 'FL',
+                    'Georgia': 'GA',
+                    'Guam': 'GU',
+                    'Hawaii': 'HI',
+                    'Idaho': 'ID',
+                    'Illinois': 'IL',
+                    'Indiana': 'IN',
+                    'Iowa': 'IA',
+                    'Kansas': 'KS',
+                    'Kentucky': 'KY',
+                    'Louisiana': 'LA',
+                    'Maine': 'ME',
+                    'Marshall Islands': 'MH',
+                    'Maryland': 'MD',
+                    'Massachusetts': 'MA',
+                    'Michigan': 'MI',
+                    'Minnesota': 'MN',
+                    'Mississippi': 'MS',
+                    'Missouri': 'MO',
+                    'Montana': 'MT',
+                    'Nebraska': 'NE',
+                    'Nevada': 'NV',
+                    'New Hampshire': 'NH',
+                    'New Jersey': 'NJ',
+                    'New Mexico': 'NM',
+                    'New York': 'NY',
+                    'North Carolina': 'NC',
+                    'North Dakota': 'ND',
+                    'Northern Mariana Islands': 'MP',
+                    'Ohio': 'OH',
+                    'Oklahoma': 'OK',
+                    'Oregon': 'OR',
+                    'Palau': 'PW',
+                    'Pennsylvania': 'PA',
+                    'Puerto Rico': 'PR',
+                    'Rhode Island': 'RI',
+                    'South Carolina': 'SC',
+                    'South Dakota': 'SD',
+                    'Tennessee': 'TN',
+                    'Texas': 'TX',
+                    'Utah': 'UT',
+                    'Vermont': 'VT',
+                    'Virgin Islands': 'VI',
+                    'Virginia': 'VA',
+                    'Washington': 'WA',
+                    'West Virginia': 'WV',
+                    'Wisconsin': 'WI',
+                    'Wyoming': 'WY'
+                };
+
+                if (c[STATE].length > 2) {
+                    stateName = c[STATE];
+                    stateCode = stateCodes[stateName];
+                }
+                else {
+                    stateCode = c[STATE];
+                    stateName = stateNames[stateCode];
+                }
+                
+                //Zip (this is OK)
+
                 //Sex
                 if (SEX == -1) SEX = GEN;
+                if (c[SEX] == "M") c[SEX] = "Male";
+                else if (c[SEX] == "F") c[SEX] = "Female";
+                else if (c[SEX] == "O") c[SEX] = "Other or prefer not to say";
+                
                 //Gender
+                if (c[GEN] == "M") c[GEN] = "Male";
+                else if (c[GEN] == "F") c[GEN] = "Female";
+                else if (c[GEN] == "O") c[GEN] = "Other or prefer not to say";
+
                 //Occupation
                 if (OCC == -1) {
                     OCC = c.length;
                     c.push("None of the Above");
                 }
+                
                 //Employer
                 if (EMP == -1) {
                     EMP = c.length;
                     c.push("Employer");
                 }
+                
                 //Health Conditions
                 if (HEALTH == -1) {
                     HEALTH = c.length;
                     c.push("None of the Above");
                 }
+                
                 //Notes
                 if (NOTES == -1) {
                     NOTES = c.length;
@@ -292,14 +460,7 @@ It's a *snicker* JavaScript injection... :-)
                 }
 
 
-                //Add a version of the birthdate so that it has leading zeroes
-                //A number of sites want it this way...
-                var d1; var d2;
-                var d = c[BDAY].split('/');
-                    console.log(d);
-                    d1 = d[0].padStart(2,"0")+d[1].padStart(2,"0")+d[2];
-                    d2 = d;
-                    d = d[0].padStart(2,"0")+'/'+d[1].padStart(2,"0")+'/'+d[2];
+                
 
 
 
