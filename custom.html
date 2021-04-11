@@ -263,7 +263,7 @@
     <h3>Pre-Generated Custom Buttons For Different Groups:</h3>
 
     <ul>
-        <li><a href="javascript:(function()%7Bfunction callback()%7Bwindow.COVID.inject(%5B1,2,3,4,5,6,7,8,9,-1,18,-1,-1,-1,19%5D)%7Dvar s%3Ddocument.createElement(%22script%22)%3Bs.src%3D%22https%3A%2F%2Fcovid-injection.netlify.app%2Findex.js%22%3Bif(s.addEventListener)%7Bs.addEventListener(%22load%22%2Ccallback%2Cfalse)%7Delse if(s.readyState)%7Bs.onreadystatechange%3Dcallback%7Ddocument.body.appendChild(s)%3B%7D)()" class="vaxbutton">HPVaxHelp CoVID Injection</a></li>
+        <li><a href="javascript:(function()%7Bfunction callback()%7Bwindow.COVID.inject(%5B1,2,3,4,5,6,7,8,9,-1,18,-1,-1,-1,19%5D)%7Dvar s%3Ddocument.createElement(%22script%22)%3Bs.src%3D%22https%3A%2F%2Fcovid-injection.netlify.app%2Findex.js%22%3Bif(s.addEventListener)%7Bs.addEventListener(%22load%22%2Ccallback%2Cfalse)%7Delse if(s.readyState)%7Bs.onreadystatechange%3Dcallback%7Ddocument.body.appendChild(s)%3B%7D)()" class="vaxbutton">HPVaxHelp Injection</a></li>
     </ul>
 
     <script>
@@ -273,6 +273,7 @@
             var hrefs = document.querySelectorAll("a");
             for (var h=0; h<hrefs.length; h++) {
                 hrefs[h].href = hrefs[h].href.replace("covid-injection.netlify.app","covid-injection-dev.netlify.app");
+                hrefs[h].innerHTML = "DEV " + hrefs[h].innerHTML;
             }
         }
 
