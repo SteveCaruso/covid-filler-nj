@@ -224,7 +224,7 @@ It's a *snicker* JavaScript injection... :-)
 
                 //Better check for now, instead of columns: See if the zip code is in the right place
                 //if (c.length != COLS) {
-                if (!isInteger(c[ZIP]) && c[ZIP].length != 5) {
+                if ( !/^\d\d\d\d\d$/.test(c[ZIP]) ) {
 
                     var clength = c.length;
 
