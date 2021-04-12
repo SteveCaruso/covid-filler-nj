@@ -734,11 +734,19 @@ It's a *snicker* JavaScript injection... :-)
                             q("#ptHispanic").value = "Unknown ethnicity";
                             q('#ptHispanic').dispatchEvent(new Event('input',{ bubbles: true }));
                             q('#ptHispanic').dispatchEvent(new Event('change',{ bubbles: true }));
+                            //#mi_origin
+                            q("#mi_origin").value = "Unknown ethnicity";
+                            q('#mi_origin').dispatchEvent(new Event('input',{ bubbles: true }));
+                            q('#mi_origin').dispatchEvent(new Event('change',{ bubbles: true }));
 
                             //#ptRace
                             q("#ptRace").value = "Unknown";
                             q('#ptRace').dispatchEvent(new Event('input',{ bubbles: true }));
                             q('#ptRace').dispatchEvent(new Event('change',{ bubbles: true }));
+                            //#mi_represents
+                            q("#mi_represents").value = "Unknown";
+                            q('#mi_represents').dispatchEvent(new Event('input',{ bubbles: true }));
+                            q('#mi_represents').dispatchEvent(new Event('change',{ bubbles: true }));
 
 
                             //Do you have a long-term health problem with heart disease, kidney disease, metabolic disorder (e.g. diabetes), anemia, or blood disorders?
