@@ -617,16 +617,35 @@ It's a *snicker* JavaScript injection... :-)
 
                         //Add in everything to the appropriate fields
                         q("#dateOfBirth").value =           d;
+                        q('#dateOfBirth').dispatchEvent(new Event('input',{ bubbles: true }));
+
                         q("#city").value =                  c[CITY];
+                        q('#city').dispatchEvent(new Event('input',{ bubbles: true }));
+
                         q("#state").value =                 stateName;//c[STATE];
+                        q('#state').dispatchEvent(new Event('input',{ bubbles: true }));
+                        q('#state').dispatchEvent(new Event('change',{ bubbles: true }));
+
                         q("#eligibility_state").value =     stateName;//c[STATE];
+                        q('#eligibility_state').dispatchEvent(new Event('input',{ bubbles: true }));
+                        q('#eligibility_state').dispatchEvent(new Event('change',{ bubbles: true }));
+
                         q("#zip").value =                   c[ZIP];
+                        q('#zip').dispatchEvent(new Event('input',{ bubbles: true }));
                         
                         q("#Occupation").value =            _(c[OCC]);
+                        q('#Occupation').dispatchEvent(new Event('input',{ bubbles: true }));
+                        q('#Occupation').dispatchEvent(new Event('change',{ bubbles: true }));
                         q("#occu").value =                  _(c[OCC]);
+                        q('#occu').dispatchEvent(new Event('input',{ bubbles: true }));
+                        q('#occu').dispatchEvent(new Event('change',{ bubbles: true }));
 
                         q("#mediconditions").value =        _(c[HEALTH]);
+                        q('#mediconditions').dispatchEvent(new Event('input',{ bubbles: true }));
+                        q('#mediconditions').dispatchEvent(new Event('change',{ bubbles: true }));
                         q("#medcond").value =               _(c[HEALTH]);
+                        q('#medcond').dispatchEvent(new Event('input',{ bubbles: true }));
+                        q('#medcond').dispatchEvent(new Event('change',{ bubbles: true }));
 
                         //Since there are no fields that need manual filling, click next
                         q("#continue").disabled = false;
