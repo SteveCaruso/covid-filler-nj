@@ -8,6 +8,123 @@ It's a *snicker* JavaScript injection... :-)
 
 (function() {
 
+    //What occupations qualify? This reverse hash tree is designed to collapse all former field data into the official categories.
+    //It'll be properly hashed in the next assignment
+    var qualifiedOccs = {
+        "Childcare workers in licensed and registered settings" : [
+            "Childcare Worker",
+            "Family Childcare Providers"
+        ],
+        "Clergy" : [
+            "Clergy and Other Essential Support for House of Worship"
+        ],
+        "Communications, IT, and media workers" : [
+
+        ],
+        "Educators and staff, including pre-K to 12 and higher education" : [
+            "Head Start and Early Head Start",
+            "Pre-Kindergarten -12th grade Educator & Staff"
+        ],
+        "Eldercare and support workers" : [
+            "Multigenerational Household"
+        ],
+        "Elections personnel" : [
+
+        ],
+        "First responders" : [
+            "Emergency Medical Services (EMS)",
+            "Firefighters",
+            "First Responder",
+            "Law Enforcement",
+            "Veterinarians and Support Staff"
+        ],
+        "Healthcare workers" : [
+            "Health Care Worker",
+            "Public Health Employee",
+            "Funeral Services"
+        ],
+        "Hospitality workers" : [
+            "Grocery Workers",
+            "Janitorial Staff"
+        ],
+        "Individuals experiencing homelessness and those living in shelters" : [
+            "Persons experiencing homelessness",
+            "Persons living in shelters"
+        ],
+        "Judicial system workers" : [
+            "Judicial Staff",
+            "Judiciary"
+        ],
+        "Laundry services workers" : [
+
+        ],
+        "Librarians and library support staff" : [
+
+        ],
+        "Long-term care and high-risk congregate care facility residents and staff" : [
+            "Long Term Care Facility Staff"
+        ],
+        "Medical supply chain employees" : [
+            "Pharmacy Staff"
+        ],
+        "Members of tribal communities" : [
+            "Members of tribal communities"
+        ],
+        "Migrant farm workers" : [
+            "Food and Agricultural Workers",
+            "Migrant Farm Workers"
+        ],
+        "Postal and shipping service workers" : [
+            "Mail Carriers",
+            "Postal and Shipping Services",
+            "U.S. Postal Service"
+        ],
+        "Public safety workers" : [
+            "Correctional Officers",
+            "Public Safety Workers"
+        ],
+        "Real estate, building, and home services workers" : [
+
+        ],
+        "Retail financial institution workers" : [
+
+        ],
+        "Sanitation workers" : [
+
+        ],
+        "Social service workers and support staff" : [
+
+        ],
+        "Transportation workers" : [
+            "Airport and Commercial Airlines",
+            "Local Transportation",
+            "Public Transit Workers"
+        ],
+        "Utilities workers" : [
+
+        ],
+        "Warehousing and logistics workers" : [
+
+        ]
+    };
+
+    //Unfold the hash
+    var occs = {};
+    for (var i in qualifiedOccs) {
+        occs[i] = i;
+        for (var j in qualifiedOccs[i]) {
+            occs[ qualifiedOccs[i][j] ] = i;
+        }
+    }
+    qualifiedOccs = occs;
+
+    /*
+        Where to put :
+            Essential Worker
+            Manufacturing Workers
+    */
+
+
     //Translation text for data given in forms other than English
     //YES it would be better to change the form so it's all in English or has a language neutral internal state
     // ... but we went with Google Forms and that's not possible. So we need to work around it.
@@ -93,7 +210,6 @@ It's a *snicker* JavaScript injection... :-)
 
         }
     };
-
 
     //Language input data
     const LANG = "en";
@@ -183,6 +299,7 @@ It's a *snicker* JavaScript injection... :-)
 
         //Construct and/or recognize the button
         var button = q('#covidInjectionButton');
+        var cconsole = q('#covidInjectionConsole');
 
         //If it's not there, let's add it
         if (button == null) {
@@ -211,6 +328,31 @@ It's a *snicker* JavaScript injection... :-)
         
             //Inject the button into the document
             document.body.appendChild(button);
+
+            //Let's also make a debug console that is separate from the regular console, so that helpers can submit bug reports more easily
+            cconsole = document.createElement("div");
+            cconsole.id = "covidInjectionConsole";
+            cconsole.innerHTML = `<strong>CoVID Injector 💉 Error Console</strong>`;
+            cconsole.style.fontFamily = "Arial";
+            cconsole.style.position = "fixed";
+            cconsole.style.left="20%";
+            cconsole.style.top="20%";
+            cconsole.style.right="20%";
+            cconsole.style.bottom="20%";
+            cconsole.style.border="3px solid white";
+            cconsole.style.color = "white";
+            cconsole.style.backgroundColor = `rgba(0,0,0,.5)`;
+            cconsole.style.zIndex = 10001;
+            cconsole.style.borderRadius = "5px";
+            cconsole.style.whiteSpace = "normal !important";
+            cconsole.style.display = "none";
+
+            //document.addEventListener('keydown', (e) => {
+            //    if (e.code == "Comma" && hist.length > 0) {
+            //
+            //    }
+            //});
+
         }
 
         //Add the function that fires when that button is clicked
@@ -513,34 +655,43 @@ It's a *snicker* JavaScript injection... :-)
 
                             //#firstName
                             q("#firstName").value = c[FNAME];
+                            q('#firstName').dispatchEvent(new Event('input',{ bubbles: true }));
 
                             //#lastName
                             q("#lastName").value = c[LNAME];
+                            q('#lastName').dispatchEvent(new Event('input',{ bubbles: true }));
 
                             //#dateOfBirth MM/DD/YYYY
                             q("#dateOfBirth").value = d;
+                            q('#dateOfBirth').dispatchEvent(new Event('input',{ bubbles: true }));
 
                             //#phone
                             q("#phone").value = c[PHONE];
+                            q('#phone').dispatchEvent(new Event('input',{ bubbles: true }));
 
                             //#addr1
                             q("#addr1").value = c[ADDR];
+                            q('#addr1').dispatchEvent(new Event('input',{ bubbles: true }));
 
                             //#email
                             q("#email").value = c[EMAIL];
+                            q('#email').dispatchEvent(new Event('input',{ bubbles: true }));
 
                             //#city
                             q("#city").value = c[CITY];
+                            q('#city').dispatchEvent(new Event('input',{ bubbles: true }));
 
                             //#patient_state
                             q("#patient_state").value = stateName;//"New Jersey";
-
-                            /*
-<ul class="typeahead__list"><li class="typeahead__item typeahead__group-group" data-group="group" data-index="0"><a href="javascript:;">Alaska</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="1"><a href="javascript:;">Alabama</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="2"><a href="javascript:;">Arkansas</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="3"><a href="javascript:;">Arizona</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="4"><a href="javascript:;">California</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="5"><a href="javascript:;">Colorado</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="6"><a href="javascript:;">Connecticut</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="7"><a href="javascript:;">District Of Columbia</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="8"><a href="javascript:;">Delaware</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="9"><a href="javascript:;">Florida</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="10"><a href="javascript:;">Georgia</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="11"><a href="javascript:;">Hawaii</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="12"><a href="javascript:;">Iowa</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="13"><a href="javascript:;">Idaho</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="14"><a href="javascript:;">Illinois</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="15"><a href="javascript:;">Indiana</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="16"><a href="javascript:;">Kansas</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="17"><a href="javascript:;">Kentucky</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="18"><a href="javascript:;">Louisiana</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="19"><a href="javascript:;">Massachusetts</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="20"><a href="javascript:;">Maryland</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="21"><a href="javascript:;">Maine</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="22"><a href="javascript:;">Michigan</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="23"><a href="javascript:;">Minnesota</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="24"><a href="javascript:;">Missouri</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="25"><a href="javascript:;">Mississippi</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="26"><a href="javascript:;">Montana</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="27"><a href="javascript:;">North Carolina</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="28"><a href="javascript:;">North Dakota</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="29"><a href="javascript:;">Nebraska</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="30"><a href="javascript:;">New Hampshire</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="31"><a href="javascript:;">New Jersey</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="32"><a href="javascript:;">New Mexico</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="33"><a href="javascript:;">Nevada</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="34"><a href="javascript:;">New York</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="35"><a href="javascript:;">Ohio</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="36"><a href="javascript:;">Oklahoma</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="37"><a href="javascript:;">Oregon</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="38"><a href="javascript:;">Pennsylvania</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="39"><a href="javascript:;">Rhode Island</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="40"><a href="javascript:;">South Carolina</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="41"><a href="javascript:;">South Dakota</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="42"><a href="javascript:;">Tennessee</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="43"><a href="javascript:;">Texas</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="44"><a href="javascript:;">Utah</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="45"><a href="javascript:;">Virginia</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="46"><a href="javascript:;">Vermont</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="47"><a href="javascript:;">Washington</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="48"><a href="javascript:;">Wisconsin</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="49"><a href="javascript:;">West Virginia</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="50"><a href="javascript:;">Wyoming</a></li></ul>
-                            */
+                            q('#patient_state').dispatchEvent(new Event('input',{ bubbles: true }));
+                            q('#patient_state').dispatchEvent(new Event('change',{ bubbles: true }));
 
                             //#zip
                             q("#zip").value = c[ZIP];
+                            q('#zip').dispatchEvent(new Event('input',{ bubbles: true }));
+
+                            //ssnNotProvided
+                            q("#ssnNotProvided").click();
 
                             //#sendReminderEmail
                             q('label[for="sendReminderEmail"]').click();
@@ -557,30 +708,18 @@ It's a *snicker* JavaScript injection... :-)
                             if ( _(c[SEX]) == "Female" ) q("#mi_gender").value = "Female";
                             else if ( _(c[SEX]) == "Male" ) q("#mi_gender").value = "Male";
                             else q("#mi_gender").value = "Decline to Answer";
-                            /*
+                            q('#mi_gender').dispatchEvent(new Event('input',{ bubbles: true }));
+                            q('#mi_gender').dispatchEvent(new Event('change',{ bubbles: true }));
 
-<input type="text" class="medical-information__gender form__input error" id="mi_gender" name="mi_gender" aria-label="Select Gender" autocomplete="false" ptsexassignedatbirth="true">
+                            //#ptHispanic
+                            q("#ptHispanic").value = "Unknown ethnicity";
+                            q('#ptHispanic').dispatchEvent(new Event('input',{ bubbles: true }));
+                            q('#ptHispanic').dispatchEvent(new Event('change',{ bubbles: true }));
 
-<ul class="typeahead__list"><li class="typeahead__item typeahead__group-group" data-group="group" data-index="0"><a href="javascript:;"><span class="typeahead__display">Decline to Answer</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="1"><a href="javascript:;"><span class="typeahead__display">Female</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="2"><a href="javascript:;"><span class="typeahead__display">Male</span></a></li></ul>
-
-                            */
-
-                            //#ptWeight  <-- weight if less than 110 lbs
-                            //Ignore
-
-                            //#mi_origin <-- latino
-                            /*
-
-<input type="text" class="medical-information__origin form__input" id="mi_origin" name="mi_origin" aria-label="Select Race" autocomplete="false" pthispanic="true">
-
-<ul class="typeahead__list"><li class="typeahead__item typeahead__group-group" data-group="group" data-index="0"><a href="javascript:;"><span class="typeahead__display">Hispanic or Latino</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="1"><a href="javascript:;"><span class="typeahead__display">Not Hispanic or Latino</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="2"><a href="javascript:;"><span class="typeahead__display">Unknown ethnicity</span></a></li></ul>
-*/
-
-                            /*
-<input type="text" class="medical-information__represents form__input error" id="mi_represents" name="mi_represents" aria-label="Select Hispanic" autocomplete="false" ptrace="true">
-
-<ul class="typeahead__list"><li class="typeahead__item typeahead__group-group" data-group="group" data-index="0"><a href="javascript:;"><span class="typeahead__display">American Indian or Alaska Native</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="1"><a href="javascript:;"><span class="typeahead__display">Asian</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="2"><a href="javascript:;"><span class="typeahead__display">Black or African American</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="3"><a href="javascript:;"><span class="typeahead__display">Native Hawaiian or Other Pacific Islander</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="4"><a href="javascript:;"><span class="typeahead__display">White</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="5"><a href="javascript:;"><span class="typeahead__display">Other</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="6"><a href="javascript:;"><span class="typeahead__display">Unknown</span></a></li></ul>
-                            */
+                            //#ptRace
+                            q("#ptRace").value = "Unknown";
+                            q('#ptRace').dispatchEvent(new Event('input',{ bubbles: true }));
+                            q('#ptRace').dispatchEvent(new Event('change',{ bubbles: true }));
 
 
                             //Do you have a long-term health problem with heart disease, kidney disease, metabolic disorder (e.g. diabetes), anemia, or blood disorders?
@@ -625,6 +764,9 @@ It's a *snicker* JavaScript injection... :-)
                             //ysptHasSeizureHistory
                             //etc
                             q('#naptHasSeizureHistory').click();
+
+                            //Do you have cancer, leukemia, AIDS, or any other immune system problem? (in some circumstances you may be referred to your physician)
+                            q('#naptHasImmuneProblem').click();
 
                             //Do you take prednisone, other steroids, or anticancer drugs, or have you had radiation treatments?
                             //ysptTakesCancerDrugs
@@ -871,11 +1013,13 @@ April 2nd changes:
                             ) {
                                 q('option[value*="Elder care and support"]').setAttribute("selected", "true");
                             }
+                            //Residents of long-term and high risk congregate care settings
+                                // *="Residents of long-term and high risk"
                             //Long Term Care Staff
                             else if ( _(c[OCC]) == "Long Term Care Facility Staff") {
                                 q('option[value*="Healthcare workers or staff of long-term and"]').setAttribute("selected", "true");
                             }
-                            //Warehousing and logistics worker??
+                            //Warehousing and logistics worker
                                 //I don't remember this on the list...
                             //Social Services
                                 //Or this either...
@@ -909,6 +1053,19 @@ April 2nd changes:
                             ) {
                                 q('option[value*="Judicial system workers"]').setAttribute("selected", "true");
                             }
+                            //Higher education workers
+                                //ADD
+                            //Critical infrastructure workers
+                                //ADD
+                            //Real estate, building, and home service worker
+                                //ADD
+                            //Laundry service workers
+                                //ADD
+                            //Librarians and support staff
+                                //ADD
+                            //Financial institution workers
+                                //ADD
+                            
 
                             //OTHER
                             else {
