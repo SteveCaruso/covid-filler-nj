@@ -544,29 +544,7 @@ It's a *snicker* JavaScript injection... :-)
                 //Split the clipboard data by the delimiter
                 c = c.split(DELIM);
 
-                //Better check for now, instead of columns: See if the zip code is in the right place
-                //if (c.length != COLS) {
-                if ( !/^\d\d\d\d\d$/.test(u_zip) ) {
-
-                    var clength = c.length;
-
-                    navigator.clipboard.writeText(`TEST DATA	john.doe.wiley.jane1938@gmail.com	Jim	Doe	4/15/1938	7328679420	9.75 River Rd	Highland Park	New Jersey	08904	Male	Male	None of the Above		Obesity	No	No	<strong>Remember to copy the real data into your clipboard when you're scheduling!</strong>						`).then( c => {
-
-                        alert(`You do not appear to have the data you need in your clipboard. (Zip code expected in column ${ZIP}, but not found.) Dummy data 'Jim Doe' has just been copied.`);
-
-                        //[EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = DEFAULT_COLS;
-
-                        IDX = {}; for (var i in DEFAULT_IDX) IDX[i] = DEFAULT_IDX[i];
-
-                        pause(500).then(function () {
-                            button.click();
-                        });
-
-                    } );
-
-                    return;
-                    
-                }
+                
 
                 //Detect language
                 //figure that out... still...
@@ -826,6 +804,33 @@ It's a *snicker* JavaScript injection... :-)
                     "u_a_sun":u_a_sun, "u_a_mon":u_a_mon, "u_a_tue":u_a_tue, "u_a_wed":u_a_wed, 
                     "u_a_thu":u_a_thu, "u_a_fri":u_a_fri, "u_a_sat":u_a_sat
                 }).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+
+
+                //Better check for now, instead of columns: See if the zip code is in the right place
+                //if (c.length != COLS) {
+                if ( !/^\d\d\d\d\d$/.test(u_zip) ) {
+
+                    var clength = c.length;
+
+                    navigator.clipboard.writeText(`TEST DATA	john.doe.wiley.jane1938@gmail.com	Jim	Doe	4/15/1938	7328679420	9.75 River Rd	Highland Park	New Jersey	08904	Male	Male	None of the Above		Obesity	No	No	<strong>Remember to copy the real data into your clipboard when you're scheduling!</strong>						`).then( c => {
+
+                        alert(`You do not appear to have the data you need in your clipboard. (Zip code expected in column ${ZIP}, but not found.) Dummy data 'Jim Doe' has just been copied.`);
+
+                        //[EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = DEFAULT_COLS;
+
+                        IDX = {}; for (var i in DEFAULT_IDX) IDX[i] = DEFAULT_IDX[i];
+
+                        pause(500).then(function () {
+                            button.click();
+                        });
+
+                    } );
+
+                    return;
+                    
+                }
+
 
 
                 /* 
