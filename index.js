@@ -359,11 +359,15 @@ It's a *snicker* JavaScript injection... :-)
             cconsole.style.whiteSpace = "normal !important";
             cconsole.style.display = "none";
 
-            //document.addEventListener('keydown', (e) => {
-            //    if (e.code == "Comma" && hist.length > 0) {
-            //
-            //    }
-            //});
+            //Inject the console into the document
+            document.body.appendChild(button);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.code == "Backquote") {
+                    if (cconsole.style.display == "none") cconsole.style.display = "block";
+                    else cconsole.style.display = "none";
+                }
+            });
 
         }
 
