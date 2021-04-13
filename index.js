@@ -385,6 +385,7 @@ It's a *snicker* JavaScript injection... :-)
         //Construct and/or recognize the button
         var button = q('#covidInjectionButton');
         var cconsole = q('#covidInjectionConsole');
+        var output = q('#covidInjectionOutput');
 
         //If it's not there, let's add it
         if (button == null) {
@@ -457,7 +458,7 @@ It's a *snicker* JavaScript injection... :-)
             //And here is the output form
             output = document.createElement("div");
             output.id = "covidInjectionOutput";
-            output.innerHTML = `<strong>CoVID Injector Output</strong>
+            output.innerHTML = `<strong>Vaccination Information</strong>
                 <br>
                 <label for="covidInjectionOutput_vac_vol">Volunteer Name:<br>
                 <input id="covidInjectionOutput_vac_vol" type="text"></label>
@@ -909,7 +910,24 @@ It's a *snicker* JavaScript injection... :-)
 
 
 
-                
+                //Link up output button
+                q('#covidInjectionOutput_copy').addEventListener("click",() => {
+
+                    //Find largest index
+                    let bigindex = 0;
+                    for (var i in ODX) if (ODX[i] > bigindex) bigindex = ODX[i];
+
+                    let clipdata = new Array(bigindex);
+
+                    console.log(clipdata);
+
+                    alert("This feature isn't implemented yet.")
+
+                    return;
+
+                    
+
+                });
 
 
 
