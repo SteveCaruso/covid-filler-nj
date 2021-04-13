@@ -312,7 +312,6 @@ It's a *snicker* JavaScript injection... :-)
             notes2:-1,
             notes3:-1,
             notes4:-1,
-            notes5:-1,
             a_sun:-1,
             a_mon:-1,
             a_tue:-1,
