@@ -1209,7 +1209,7 @@ It's a *snicker* JavaScript injection... :-)
                         set('#address',u_address);
 
                         //#addressLine2
-                        set('#addressLine2',u_address_2);
+                        if (u_address_2 != "") set('#addressLine2',u_address_2);
 
                         //#city
                         set('#city',u_city);
@@ -1226,6 +1226,9 @@ It's a *snicker* JavaScript injection... :-)
 
                         //#phoneNumber -- all digits
                         set('#phoneNumber',u_phone);
+
+                        //click button type="submit"
+                        click('button.btn-control');
 
                     }
 
