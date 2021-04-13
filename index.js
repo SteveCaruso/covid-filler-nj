@@ -382,6 +382,7 @@ It's a *snicker* JavaScript injection... :-)
             button.style.whiteSpace = "normal !important";
             button.style.overflowWrap = "normal !important";
             button.style.wordWrap = "break-word !important";
+            button.style.backgroundColor = "#EEE";
         
             //Inject the button into the document
             document.body.appendChild(button);
@@ -428,10 +429,11 @@ It's a *snicker* JavaScript injection... :-)
             output.id = "covidInjectionOutput";
             output.innerHTML = `<strong>CoVID Injector Output</strong>
                 <div>When you're done, fill in the appointment information here, and click the button below to copy the results to the clipboard. (This will overwrite what you currently have in it.)</div>
-                <label for="covidInjectionOutput_vac_vol">Volunteer Name:
+                <br>
+                <label for="covidInjectionOutput_vac_vol">Volunteer Name:<br>
                 <input id="covidInjectionOutput_vac_vol" type="text"></label>
                 <br>
-                <label for="covidInjectionOutput_vac_type">Vaccine Type:
+                <label for="covidInjectionOutput_vac_type">Vaccine Type:<br>
                 <select id="covidInjectionOutput_vac_type">
                     <option value="">Choose</option>
                     <option value="Moderna">Moderna</option>
@@ -440,14 +442,16 @@ It's a *snicker* JavaScript injection... :-)
                     <option value="Unknown">Unknown</option>
                 </select></label>
                 <br>
-                <label for="covidInjectionOutput_vac_loc">Location:
+                <label for="covidInjectionOutput_vac_loc">Location:<br>
                 <input id="covidInjectionOutput_vac_loc" type="text"></label>
                 <br>
-                <label for="covidInjectionOutput_vac_date">First Dose Date:
+                <label for="covidInjectionOutput_vac_date">First Dose Date:<br>
                 <input id="covidInjectionOutput_vac_date" type="datetime-local"></label>
                 <br>
-                <label for="covidInjectionOutput_vac_date_2">Second Dose Date:
-                <input id="covidInjectionOutput_vac_date_2" type="datetime-local"></label>`;
+                <label for="covidInjectionOutput_vac_date_2">Second Dose Date:<br>
+                <input id="covidInjectionOutput_vac_date_2" type="datetime-local"></label>
+                <br>
+                <button id="covidInjectionOutput_copy">Copy to Clipboard</button>`;
             output.style.fontFamily = "Arial";
             output.style.textAlign = "center";
             output.style.position = "fixed";
@@ -462,6 +466,7 @@ It's a *snicker* JavaScript injection... :-)
             output.style.overflowWrap = "normal !important";
             output.style.wordWrap = "break-word !important";
             output.style.display = "none";
+            output.style.backgroundColor = "#EEE";
 
             //Inject the console into the document
             document.body.appendChild(output);
