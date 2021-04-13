@@ -221,7 +221,7 @@ It's a *snicker* JavaScript injection... :-)
     }
 
     //Do the thing!
-    async function inject(colOrder) {
+    async function inject(colOrder,outOrder) {
 
         //Pause function
         var pause = function (time) {
@@ -321,15 +321,31 @@ It's a *snicker* JavaScript injection... :-)
         };
 
         //The new INDEX! -- copy defaults
-        var IDX = {}; for (var i in DEFAULT_IDX) IDX[i] = DEFAULT_IDX[i];
+        var IDX = {}; for (var i in DEFAULT_IDX) IDX[i] = -1;
+
+        //The new OUTDEX
+        var ODX = {};
+
+        //Invalidate all of the old bookmarklets
+        if (colOrder == null && outOrder == null) {
+            alert("You are using an outdated bookmarklet. Head over the the CoVID Injection website and install or create a new one.");
+        }
+
+        //Read in columns
+        for (var i in colOrder) IDX[i] = colOrder[i];
+
+        //Read out columns
+        for (var i in ourOrder) ODX[i] = outOrder[i];
 
         //If different columns are passed, set them
-        if (colOrder) {
-            [EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = colOrder;
+        //if (colOrder) {
+            //[EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = colOrder;
             
             //When the new IDX system goes live, everything will be set to -1 and this will over-write the IDX values.
             //When that happens, we'll need to check to see if an array of numbers is passed, or if no array is passed, and throw an error, telling the user that they need to update their bookmarklet.
-        }
+
+            //We'll also need a new index for output with scheduling information.
+        //}
 
         //Numerical month to Full Month
         const FMONTH = {
@@ -397,6 +413,7 @@ It's a *snicker* JavaScript injection... :-)
             cconsole.style.color = "darkgoldenrod";
             cconsole.style.padding = "20px";
             cconsole.style.backgroundColor = `rgba(0,0,0,.9)`;
+            cconsole.style.boxShadow = "5px 5px 5px 5px rgba(0,0,0,.5)";
             cconsole.style.zIndex = 10001;
             cconsole.style.borderRadius = "5px";
             cconsole.style.whiteSpace = "normal !important";
@@ -529,7 +546,7 @@ It's a *snicker* JavaScript injection... :-)
 
                 //Better check for now, instead of columns: See if the zip code is in the right place
                 //if (c.length != COLS) {
-                if ( !/^\d\d\d\d\d$/.test(c[ZIP]) ) {
+                if ( !/^\d\d\d\d\d$/.test(u_zip) ) {
 
                     var clength = c.length;
 
@@ -537,9 +554,9 @@ It's a *snicker* JavaScript injection... :-)
 
                         alert(`You do not appear to have the data you need in your clipboard. (Zip code expected in column ${ZIP}, but not found.) Dummy data 'Jim Doe' has just been copied.`);
 
-                        [EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = DEFAULT_COLS;
+                        //[EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = DEFAULT_COLS;
 
-
+                        IDX = {}; for (var i in DEFAULT_IDX) IDX[i] = DEFAULT_IDX[i];
 
                         pause(500).then(function () {
                             button.click();
@@ -552,15 +569,9 @@ It's a *snicker* JavaScript injection... :-)
                 }
 
                 //Detect language
-                //figure that out...
+                //figure that out... still...
 
-                //Display name of person the data is from
-                q('#COVID-TARGET').innerHTML = "<strong><em>" + c[FNAME] + " " + c[LNAME] + "</em></strong>";
-
-                //Check if there are any considerations
-                if (c[NOTES].length > 0) {
-                    q('#COVID-TARGET').innerHTML += "<br>(<em>" + c[NOTES] + "</em>)";
-                }
+                
 
 
                 //Here we need to tease out the given data into whatever different formats we may need
@@ -568,19 +579,19 @@ It's a *snicker* JavaScript injection... :-)
                 
                 
                 //Email (already OK)
-                var u_email = c[EMAIL];
+                var u_email = c[IDX["email"]];
 
                 //First Name
-                var u_fname = c[FNAME];
+                var u_fname = c[IDX["fname"]];
 
                 //Last Name
-                var u_lname = c[LNAME];
+                var u_lname = c[IDX["lname"]];
                 
                 //Birthday
-                var u_bday = c[BDAY];
+                var u_bday = c[IDX["bday"]];
 
                 //Let's break it down to its constituent parts
-                var u_bday_arr = c[BDAY].split('/');
+                var u_bday_arr = u_bday.split('/');
                 var u_bday_MMDDYYYY = u_bday_arr[0].padStart(2,"0")+u_bday_arr[1].padStart(2,"0")+u_bday_arr[2];
                 var u_bday_MM_DD_YYYY = u_bday_arr[0].padStart(2,"0")+'/'+u_bday_arr[1].padStart(2,"0")+'/'+u_bday_arr[2];;
                 var u_bday_Month = FMONTH[parseInt(u_bday_arr[0])];
@@ -592,16 +603,16 @@ It's a *snicker* JavaScript injection... :-)
                 var u_bday_YYYY = u_bday_arr[2];
 
                 //Phone Number (ok so far)
-                var u_phone = c[PHONE];
+                var u_phone = c[IDX["phone"]];
 
                 //Address
-                var u_address = c[ADDR];
+                var u_address = c[IDX["addr"]];
                 var u_address_2; 
-                    if (ADDR2 == -1) u_address_2 = "";
-                    else u_address_2 = c[ADDR2];
+                    if (IDX["addr2"] == -1) u_address_2 = "";
+                    else u_address_2 = c[IDX["addr2"]];
 
                 //City
-                var u_city = c[CITY];
+                var u_city = c[IDX["city"]];
 
                 //State
                 var u_state_name;
@@ -731,71 +742,77 @@ It's a *snicker* JavaScript injection... :-)
                     'Wyoming': 'WY'
                 };
 
-                c[STATE] = c[STATE].trim();
+                c[IDX["state"]] = c[IDX["state"]].trim();
 
                 //Check if the State is properly formed
-                if ( stateCodes[c[STATE]] == undefined && stateNames[c[STATE]] == undefined ) {
-                    alert(`The State "${c[STATE]}" is improperly spelled or is in the wrong field. Please check your user's data and try again.`);
+                if ( stateCodes[c[IDX["state"]]] == undefined && stateNames[c[IDX["state"]]] == undefined ) {
+                    alert(`The State "${c[IDX["state"]]}" is improperly spelled or is in the wrong field. Please check your user's data and try again.`);
                     return;
                 }
 
-                if (c[STATE].length > 2) {
-                    u_state_name = c[STATE];
+                if (c[IDX["state"]].length > 2) {
+                    u_state_name = c[IDX["state"]];
                     u_state_code = stateCodes[u_state_name];
                 }
                 else {
-                    u_state_code = c[STATE];
+                    u_state_code = c[IDX["state"]];
                     u_state_name = stateNames[u_state_code];
                 }
                 
                 //Zip (this is OK)
-                var u_zip = c[ZIP];
+                var u_zip = c[IDX["zip"]];
 
                 //Sex
-                if (SEX == -1) SEX = GEN;
-                var u_sex = _(c[SEX]);
+                if (IDX["sex"] == -1) IDX["sex"] = IDX["gen"];
+                var u_sex = _(c[IDX["sex"]]);
                 if ( u_sex == "M") u_sex = "Male";
                 else if ( u_sex == "F") u_sex = "Female";
                 else if ( u_sex == "O") u_sex = "Other";
                 
                 //Gender
-                var u_gender = _(c[GEN]);
+                var u_gender = _(c[IDX["gen"]]);
                 if (u_gender == "M") u_gender = "Male";
                 else if (u_gender == "F") u_gender = "Female";
                 else if (u_gender == "O") u_gender = "Other";
 
                 //Occupation
-                if (OCC == -1) {
-                    OCC = c.length;
-                    c.push("None of the Above");
-                }
-                var u_occupation = _(c[OCC]);
+                var u_occupation = IDX["occ"] != -1 ? _(c[IDX["occ"]]) : "None of the above";
 
                 //Employer
-                if (EMP == -1) {
-                    EMP = c.length;
-                    c.push("Employer");
-                }
-                var u_employer = _(c[EMP]);
+                var u_employer = IDX["emp"] != -1 ? _(c[IDX["emp"]]) : "Employer";
                 
                 //Health Conditions
-                if (HEALTH == -1) {
-                    HEALTH = c.length;
-                    c.push("None of the Above");
-                }
-                var u_health_conditions = _(c[HEALTH]);
+                var u_health_conditions = IDX["health"] != -1 ? _(c[IDX["health"]]) : "None of the above";
                 
                 //Notes
-                if (NOTES == -1) {
-                    NOTES = c.length;
-                    c.push("");
-                }
-                var u_notes = c[NOTES];
-
-                var u_notes_2 = ""; //Push these, too
-                var u_notes_3 = "";
+                var u_notes = IDX["notes"] != -1 ? _(c[IDX["notes"]]) : "";
+                var u_notes_2 = IDX["notes2"] != -1 ? _(c[IDX["notes2"]]) : "";
+                var u_notes_3 = IDX["notes3"] != -1 ? _(c[IDX["notes3"]]) : "";
+                var u_notes_4 = IDX["notes4"] != -1 ? _(c[IDX["notes4"]]) : "";
 
                 var u_temp_password = "Volunteer1!";
+
+                //Availability grid
+                var u_a_sun = IDX["a_sun"] != -1 ? c[IDX["a_sun"]] : null;
+                var u_a_mon = IDX["a_mon"] != -1 ? c[IDX["a_mon"]] : null;
+                var u_a_tue = IDX["a_tue"] != -1 ? c[IDX["a_tue"]] : null;
+                var u_a_wed = IDX["a_wed"] != -1 ? c[IDX["a_wed"]] : null;
+                var u_a_thu = IDX["a_thu"] != -1 ? c[IDX["a_thu"]] : null;
+                var u_a_fri = IDX["a_fri"] != -1 ? c[IDX["a_fri"]] : null;
+                var u_a_sat = IDX["a_sat"] != -1 ? c[IDX["a_sat"]] : null;
+
+
+                //Display name of person the data is from
+                q('#COVID-TARGET').innerHTML = "<strong><em>" + u_fname + " " + u_lname + "</em></strong>";
+
+                //Check if there are any considerations
+                if (u_notes.length   > 0) q('#COVID-TARGET').innerHTML += "<br><em>" + u_notes   + "</em>";
+                if (u_notes_2.length > 0) q('#COVID-TARGET').innerHTML += "<br><em>" + u_notes_2 + "</em>";
+                if (u_notes_3.length > 0) q('#COVID-TARGET').innerHTML += "<br><em>" + u_notes_3 + "</em>";
+                if (u_notes_4.length > 0) q('#COVID-TARGET').innerHTML += "<br><em>" + u_notes_4 + "</em>";
+
+
+                //Display availability grid -- pending
 
 
                 //Set datastate
@@ -805,7 +822,9 @@ It's a *snicker* JavaScript injection... :-)
                     "u_address":u_address, "u_address_2":u_address_2,
                     "u_city":u_city, "u_state_name":u_state_name, "u_state_code":u_state_code, "u_zip":u_zip,
                     "u_sex":u_sex, "u_gender":u_gender, "u_occupation":u_occupation, "u_health_conditions":u_health_conditions,
-                    "u_notes":u_notes, "u_notes_2":u_notes_2, "u_notes_3":u_notes_3
+                    "u_notes":u_notes, "u_notes_2":u_notes_2, "u_notes_3":u_notes_3, "u_notes_4":u_notes_4,
+                    "u_a_sun":u_a_sun, "u_a_mon":u_a_mon, "u_a_tue":u_a_tue, "u_a_wed":u_a_wed, 
+                    "u_a_thu":u_a_thu, "u_a_fri":u_a_fri, "u_a_sat":u_a_sat
                 }).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
 
@@ -1436,7 +1455,7 @@ It's a *snicker* JavaScript injection... :-)
                             set('input[name="birthYear"]',u_bday_YYYY);
 
                             //Male/female
-                            if ( _(c[SEX]) == "Male" )  click('input[value="male"]');
+                            if ( u_sex == "Male" )      click('input[value="male"]');
                             else                        click('input[value="female"]');
 
                             //Wait and submit
