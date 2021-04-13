@@ -234,8 +234,8 @@ It's a *snicker* JavaScript injection... :-)
 
         //Shorten some commonly-used stuff
         var host = document.location.host;
-        var el = document.getElementById.bind(document);
-        var q = document.querySelector.bind(document);
+        const el = document.getElementById.bind(document);
+        const q = document.querySelector.bind(document);
 
         //List of supported hosts
         const supported = [
