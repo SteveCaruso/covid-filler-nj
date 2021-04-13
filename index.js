@@ -386,7 +386,7 @@ It's a *snicker* JavaScript injection... :-)
             cconsole.innerHTML = `<strong>CoVID Injector 💉 Message Console <a href="javascript:navigator.clipboard.writeText(document.getElementById('covidInjectionConsole').innerText);">[copy to clipboard]</a></strong>
                 <div id="covidInjectionConsoleDataState" style="font-size:50%"></div>
                 <div><strong>Actions:</strong></div>
-                <div id="covidInjectionConsoleMessages"></div>`;
+                <div id="covidInjectionConsoleMessages" style="font-size:75%"></div>`;
             cconsole.style.fontFamily = "Arial";
             cconsole.style.position = "fixed";
             cconsole.style.left="20%";
