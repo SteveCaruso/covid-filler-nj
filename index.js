@@ -426,9 +426,30 @@ It's a *snicker* JavaScript injection... :-)
             //And here is the output form
             output = document.createElement("div");
             output.id = "covidInjectionOutput";
-            output.innerHTML = `<strong>CoVID Injector 💉 Output</strong>
-                <div>When you're done, fill in the appointment information here, and click the button below to copy the results to the clipboard. (This will overwrite what you currently have in it.)</div>`;
+            output.innerHTML = `<strong>CoVID Injector Output</strong>
+                <div>When you're done, fill in the appointment information here, and click the button below to copy the results to the clipboard. (This will overwrite what you currently have in it.)</div>
+                <label for="covidInjectionOutput_vac_vol">Volunteer Name:
+                <input id="covidInjectionOutput_vac_vol" type="text"></label>
+                <br>
+                <label for="covidInjectionOutput_vac_type">Vaccine Type:
+                <select id="covidInjectionOutput_vac_type">
+                    <option value="">Choose</option>
+                    <option value="Moderna">Moderna</option>
+                    <option value="Pfizer">Pfizer</option>
+                    <option value="JnJ">J&amp;J</option>
+                    <option value="Unknown">Unknown</option>
+                </select></label>
+                <br>
+                <label for="covidInjectionOutput_vac_loc">Location:
+                <input id="covidInjectionOutput_vac_loc" type="text"></label>
+                <br>
+                <label for="covidInjectionOutput_vac_date">First Dose Date:
+                <input id="covidInjectionOutput_vac_date" type="datetime-local"></label>
+                <br>
+                <label for="covidInjectionOutput_vac_date_2">Second Dose Date:
+                <input id="covidInjectionOutput_vac_date_2" type="datetime-local"></label>`;
             output.style.fontFamily = "Arial";
+            output.style.textAlign = "center";
             output.style.position = "fixed";
             output.style.width="250px";
             output.style.right="10px";
