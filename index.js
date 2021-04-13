@@ -914,14 +914,16 @@ It's a *snicker* JavaScript injection... :-)
                 q('#covidInjectionOutput_copy').addEventListener("click",() => {
 
                     //Find largest index
-                    let bigindex = 0;
+                    let bigindex = -1;
                     for (var i in ODX) if (ODX[i] > bigindex) bigindex = ODX[i];
 
-                    let clipdata = new Array(bigindex);
+                    let clipdata = new Array(bigindex+1);
+
+                    for (var i in ODX) clipdata[ODX[i]] = i;
 
                     console.log(clipdata);
 
-                    alert("This feature isn't implemented yet.")
+                    alert("This feature isn't implemented yet.");
 
                     return;
 
