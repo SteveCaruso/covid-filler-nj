@@ -1209,7 +1209,7 @@ It's a *snicker* JavaScript injection... :-)
                         set('#address',u_address);
 
                         //#addressLine2
-                        if (u_address_2.length > 0) set('#addressLine2',u_address_2);
+                        //if (u_address_2.length > 0) set('#addressLine2',u_address_2);
 
                         //#city
                         set('#city',u_city);
