@@ -371,6 +371,7 @@ It's a *snicker* JavaScript injection... :-)
                     Then click here.
                 </div>`;
             button.style.fontFamily = "Arial";
+            button.style.padding = "1ex";
             button.style.width="250px";
             button.style.position = "fixed";
             button.style.left="10px";
@@ -453,6 +454,7 @@ It's a *snicker* JavaScript injection... :-)
                 <br>
                 <button id="covidInjectionOutput_copy">Copy to Clipboard</button>`;
             output.style.fontFamily = "Arial";
+            output.style.padding = "1ex";
             output.style.textAlign = "center";
             output.style.position = "fixed";
             output.style.width="250px";
