@@ -337,6 +337,7 @@ It's a *snicker* JavaScript injection... :-)
             button.style.boxShadow = "5px 5px 5px 5px rgba(0,0,0,.5)";
             button.style.whiteSpace = "normal !important";
             button.style.overflowWrap = "normal !important";
+            button.style.wordWrap = "break-word !important";
         
             //Inject the button into the document
             document.body.appendChild(button);
@@ -388,25 +389,19 @@ It's a *snicker* JavaScript injection... :-)
                 return false;
             }
 
-            log(`Setting ${query} to "${value}"...`);
+            if (events == null) events = ["input","change"];
+
+            log(`Set ${query} to "${value}" with events [${events.join(',')}].`);
 
             //Set the element's value accordingly
             q(query).value = value;
 
             //Then fire off appropriate events
-            //If specifics are passed...
             if (events) {
                 for (var e in events) {
                     log(`Firing event "${events[e]}" on ${query}...`);
                     q(query).dispatchEvent(new Event(events[e],{ bubbles: true }));
                 }
-            }
-            //Otherwise automatically fire "input" and "change" and make sure they bubble.
-            else {
-                log(`Firing event "input" on ${query}...`);
-                q(query).dispatchEvent(new Event('input',{ bubbles: true }));
-                log(`Firing event "change" on ${query}...`);
-                q(query).dispatchEvent(new Event('change',{ bubbles: true }));
             }
 
         };
