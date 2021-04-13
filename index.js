@@ -806,7 +806,7 @@ It's a *snicker* JavaScript injection... :-)
                     "u_city":u_city, "u_state_name":u_state_name, "u_state_code":u_state_code, "u_zip":u_zip,
                     "u_sex":u_sex, "u_gender":u_gender, "u_occupation":u_occupation, "u_health_conditions":u_health_conditions,
                     "u_notes":u_notes, "u_notes_2":u_notes_2, "u_notes_3":u_notes_3
-                }.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+                }).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
 
                 /* 
