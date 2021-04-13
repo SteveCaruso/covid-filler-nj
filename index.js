@@ -399,12 +399,76 @@ It's a *snicker* JavaScript injection... :-)
             //Then fire off appropriate events
             if (events) {
                 for (var e in events) {
-                    log(`Firing event "${events[e]}" on ${query}...`);
                     q(query).dispatchEvent(new Event(events[e],{ bubbles: true }));
                 }
             }
 
         };
+
+        var setqai = function(query,index,value,events) {
+
+            let theSet = document.querySelectorAll(query);
+
+            if (theSet.length == 0) {
+                log(`ERROR: querySelectorAll(${query}) not found in the document.`);
+                return false;
+            }
+            if (index >= theSet.length) {
+                log(`ERROR: Index ${index} is out of bounds in setqai.`);
+                return false;
+            }
+
+            let elem = theSet[index];
+
+            if (events == null) events = ["input","change"];
+
+            log(`Set ${query}{${index}} to "${value}" with events [${events.join(',')}].`);
+
+            //Set the element's value accordingly
+            elem.value = value;
+
+            //Then fire off appropriate events
+            if (events) {
+                for (var e in events) {
+                    elem.dispatchEvent(new Event(events[e],{ bubbles: true }));
+                }
+            }
+
+        };
+
+        var click = function(query,index) {
+
+            log(`Click ${query}.`);
+
+            if (q(query) == null) {
+                log(`ERROR: ${query} not found in the document.`);
+                return false;
+            }
+
+            q(query).click();
+
+        }
+
+        var clickqai = function(query) {
+
+            log(`Click ${query}{${index}}.`);
+
+            let theSet = document.querySelectorAll(query);
+
+            if (theSet.length == 0) {
+                log(`ERROR: querySelectorAll(${query}) not found in the document.`);
+                return false;
+            }
+            if (index >= theSet.length) {
+                log(`ERROR: Index ${index} is out of bounds in clickqai.`);
+                return false;
+            }
+
+            let elem = theSet[index];
+
+            elem.click();
+
+        }
 
         var stat = function(str) {
 
@@ -688,6 +752,7 @@ It's a *snicker* JavaScript injection... :-)
                 var u_notes_2 = "";
                 var u_notes_3 = "";
 
+                var u_temp_password = "Volunteer1!";
 
                 
 
@@ -719,12 +784,12 @@ It's a *snicker* JavaScript injection... :-)
 
                         //Since there are no fields that need manual filling, click next
                         q("#continue").disabled = false;
-                        q("#continue").click();
+                        click("#continue");
 
                         pause(2000).then(() => {
 
                             //Click forward
-                            q("#learnmorebttn").click();
+                            click("#learnmorebttn");
 
                         });
                     
@@ -768,13 +833,13 @@ It's a *snicker* JavaScript injection... :-)
                             set("#zip",u_zip);
 
                             //ssnNotProvided
-                            q("#ssnNotProvided").click();
+                            click("#ssnNotProvided");
 
                             //#sendReminderEmail
-                            q('label[for="sendReminderEmail"]').click();
+                            click('label[for="sendReminderEmail"]');
 
                             //Physician details, hide
-                            q('.primarycareprovider label.physcian-details__switch').click();
+                            click('.primarycareprovider label.physcian-details__switch');
 
                             //#continue switch disabled to false
                             q('#continue').setAttribute("disabled","false");
@@ -798,57 +863,57 @@ It's a *snicker* JavaScript injection... :-)
 
 
                             //Do you have a long-term health problem with heart disease, kidney disease, metabolic disorder (e.g. diabetes), anemia, or blood disorders?
-                            q('#naptHasHealthProblem').click();
+                            click('#naptHasHealthProblem');
 
                             //Do you have a long-term health problem with lung disease or asthma?
-                            q('#naptHasLungProblem').click();
+                            click('#naptHasLungProblem');
 
                             //Do you use any nicotine products?
-                            q('#naptUsesNicotine').click();
+                            click('#naptUsesNicotine');
 
                             //Do you have allergies to medications, food (i.e. eggs), latex or any vaccine component (e.g. neomycin, formaldehyde, gentamicin, thimerosal, bovine protein, phenol, polymyxin, gelatin, baker's yeast or yeast)?
-                            q('#naptHasVaxAllergy').click();
+                            click('#naptHasVaxAllergy');
 
                             //Have you received any vaccinations in the past 4 weeks?
-                            q('#naptGotVaxInLast4Weeks').click();
+                            click('#naptGotVaxInLast4Weeks');
 
                             //Have you ever had a serious reaction after receiving a vaccination?
-                            q('#naptHasPriorVaxReaction').click();
+                            click('#naptHasPriorVaxReaction');
 
                             //Do you have a neurological disorder such as seizures or other disorders that affect the brain or have had a disorder that resulted from vaccine (e.g. Guillain-Barre Syndrome)?
-                            q('#naptHasSeizureHistory').click();
+                            click('#naptHasSeizureHistory');
 
                             //Do you have cancer, leukemia, AIDS, or any other immune system problem? (in some circumstances you may be referred to your physician)
-                            q('#naptHasImmuneProblem').click();
+                            click('#naptHasImmuneProblem');
 
                             //Do you take prednisone, other steroids, or anticancer drugs, or have you had radiation treatments?
-                            q('#naptTakesCancerDrugs').click();
+                            click('#naptTakesCancerDrugs');
 
                             //During the past year, have you received a transfusion of blood or blood products, including anti bodies?
-                            q('#naptReceivedTransfusion').click();
+                            click('#naptReceivedTransfusion');
 
                             //Are you parent, family member, or caregiver to a new born infant?
-                            q('#naptIsInfantCaregiver').click();
+                            click('#naptIsInfantCaregiver');
 
                             //Are you pregnant or could you become pregnant in the next three months?
-                            q('#naptIsPregnant').click();
+                            click('#naptIsPregnant');
 
                             //Will you bring your Immunization Record Card with you?
-                            q('#naptHasImmRecCard').click();
+                            click('#naptHasImmRecCard');
 
                             //Are you currently enrolled in one of our medication adherence programs at Rite Aid (OneTrip Refill, Automated Courtesy Refills, or Rx Messaging - Text, Email, Phone)?
-                            q('#naptHasMedAdherenceProgram').click();
+                            click('#naptHasMedAdherenceProgram');
 
                             //Have you had a pneumococcal vaccine? (You may need two different pneumococcal shots)
-                            q('#naptHadFluShot').click();
+                            click('#naptHadFluShot');
 
                             //Have you had a shingles vaccine?
-                            q('#naptHadShinglesShot').click();
+                            click('#naptHadShinglesShot');
 
                             //Have you had a whooping cough(Tdap/Td) vaccine?
-                            q('#naptHadWhoopShot').click();
+                            click('#naptHadWhoopShot');
 
-                            q('#continue').click();
+                            click('#continue');
 
                             //// SCREENING AND CONSENT
 
@@ -879,13 +944,13 @@ It's a *snicker* JavaScript injection... :-)
                         stat('●○○○○○○○○○○○○○<br>CVS Page 1 detected...');
                     
                         //Click: a[data-analytics-name="New York"]
-                        q('a[data-analytics-name="New York"]').click();
+                        click('a[data-analytics-name="New York"]');
 
                         //wait
                         //await pause(500);
 
                         //Click: a[data-analytics-name="Schedule an appointment now"]
-                        q('a[data-analytics-name="Schedule an appointment now"]').click();
+                        click('a[data-analytics-name="Schedule an appointment now"]');
 
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/covid-screener/covid-qns
@@ -894,14 +959,14 @@ It's a *snicker* JavaScript injection... :-)
                         stat('●●○○○○○○○○○○○○<br>On CVS Page 2.<br>Click again.');
 
                         //Click #q7_2
-                        q('#q7_2').click();
+                        click('#q7_2');
                         //Click #q8_2
-                        q('#q8_2').click();
+                        click('#q8_2');
                         //Click #q9_2
-                        q('#q9_2').click();
+                        click('#q9_2');
 
                         //Click button[_ngcontent-hll-c70]
-                        q('button.btn-control').click();
+                        click('button.btn-control');
                    
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/cvd/dose-select
@@ -910,10 +975,10 @@ It's a *snicker* JavaScript injection... :-)
                         stat('●●●○○○○○○○○○○○<br>On CVS Page 3.<br>Click again.');
 
                         //Click #customRadio_1
-                        q('#customRadio_1').click();
+                        click('#customRadio_1');
 
                         //Click button[_ngcontent-kqo-c72][type="submit"]
-                        q('button[type="submit"].btn-control').click();
+                        click('button[type="submit"].btn-control');
 
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-covid
@@ -928,7 +993,7 @@ It's a *snicker* JavaScript injection... :-)
                         q('#jurisdiction').dispatchEvent(new Event('change'));
 
                         //Click button!
-                        q('button[type="submit"].btn-control').click();
+                        click('button[type="submit"].btn-control');
 
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-qns
@@ -943,18 +1008,18 @@ It's a *snicker* JavaScript injection... :-)
 
                         //Over 65
                         if (age >= 65) {
-                            q('#q20').click();
+                            click('#q20');
                         }
 
                         //Health conditions
                         else if ( u_health_conditions != "None of the Above" && u_health_conditions != "") {
-                            q('#q21').click();
+                            click('#q21');
                         }
 
                         //Priority group
                         else if ( u_occupation != "None of the Above" && u_occupation != "") {
 
-                            q('#q22').click();
+                            click('#q22');
                             
                             //K-12 & Childcare
                             if ( u_occupation == "Pre-Kindergarten -12th grade Educator & Staff" ) {
@@ -1077,8 +1142,7 @@ It's a *snicker* JavaScript injection... :-)
 
                         //None of the above
                         else {
-                            q('#q21').click(); //Elligible anyways.
-                            //q('#q23').click();
+                            click('#q21'); //Elligible anyways.
                         }
 
                         //Check if employer field is active
@@ -1090,10 +1154,10 @@ It's a *snicker* JavaScript injection... :-)
                         }
 
                         //Click #qconsent
-                        q('#qconsent').click();
+                        click('#qconsent');
 
                         //Click button[_ngcontent-kqo-c76].btn-control
-                        q('button.btn-control').click();
+                        click('button.btn-control');
 
                         
                     }
@@ -1103,7 +1167,7 @@ It's a *snicker* JavaScript injection... :-)
                         stat('●●●●●●○○○○○○○○<br>On CVS Page 6.<br>Click again.');
                         
                         //Click button[_ngcontent-kqo-c74].btn-control
-                        q('button.btn-control').click();
+                        click('button.btn-control');
 
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/cvd-store-select/first-dose-select
@@ -1113,7 +1177,7 @@ It's a *snicker* JavaScript injection... :-)
                         set('#address',u_zip,['input','compositionend']);
 
                         //Click button[_ngcontent-kqo-c79]
-                        q('button').click();
+                        click('button');
 
                         stat('●●●●●●●○○○○○○○<br>On CVS Page 7.<br>Continue manually until the <em>Please Provide Details</em> screen. Then click here again.');
                     }
@@ -1137,9 +1201,9 @@ It's a *snicker* JavaScript injection... :-)
                         //q('#dob').dispatchEvent(new Event('compositionend'));
 
                         //#customRadio_F checkbox female
-                        if ( u_sex == "Female") q("#customRadio_F").click();
+                        if ( u_sex == "Female") click("#customRadio_F");
                         //#customRadio_M checkbox male
-                        else q("#customRadio_M").click();
+                        else click("#customRadio_M");
 
                         //#address
                         set('#address',u_address);
@@ -1171,10 +1235,10 @@ It's a *snicker* JavaScript injection... :-)
                         stat('●●●●●●●●●○○○○○<br>On CVS Page 9.<br>Click again.');
                     
                         //click #customRadio_7
-                        q('#customRadio_7').click();
+                        click('#customRadio_7');
 
                         //click button type="submit"
-                        q('button.btn-control').click();
+                        click('button.btn-control');
                     }
 
                     //No insurance screen
@@ -1183,10 +1247,10 @@ It's a *snicker* JavaScript injection... :-)
                         stat('●●●●●●●●●●○○○○<br>On CVS Page 10.<br>Click again.');
                     
                         //click #consentText
-                        q('#consentText').click();
+                        click('#consentText');
 
                         //click button type="submit"
-                        q('button.btn-control').click();
+                        click('button.btn-control');
 
                     }
 
@@ -1196,26 +1260,26 @@ It's a *snicker* JavaScript injection... :-)
                         stat('●●●●●●●●●●●○○○<br>On CVS Page 11.<br>Click again.');
                     
                         //click #q2_3
-                        q('#q2_3').click();
+                        click('#q2_3');
                         //click #q3_3
-                        q('#q3_3').click();
+                        click('#q3_3');
                         //click #q4_3
-                        q('#q4_3').click();
+                        click('#q4_3');
                         //click #q5_3
-                        q('#q5_3').click();
+                        click('#q5_3');
                         //click #q6_3
-                        q('#q6_3').click();
+                        click('#q6_3');
                         //click #q7_3
-                        q('#q7_3').click();
+                        click('#q7_3');
                         //click #q11_3
-                        q('#q11_3').click();
+                        click('#q11_3');
                         //click #q12_3
-                        q('#q12_3').click();
+                        click('#q12_3');
                         //click #q13_3
-                        q('#q13_3').click();
+                        click('#q13_3');
 
                         //click button type="submit"
-                        q('button.btn-control').click();
+                        click('button.btn-control');
                         
                     }
 
@@ -1225,13 +1289,13 @@ It's a *snicker* JavaScript injection... :-)
                         stat('●●●●●●●●●●●●○○<br>On CVS Page 12.<br>Click again.');
                     
                         //click #qrace_2131-1
-                        q('#qrace_2131-1').click();
+                        click('#qrace_2131-1');
 
                         //click #qethnicity_U
-                        q('#qethnicity_U').click();
+                        click('#qethnicity_U');
 
                         //click button type="submit"
-                        q('button.btn-control').click();
+                        click('button.btn-control');
                         
                     }
 
@@ -1241,7 +1305,7 @@ It's a *snicker* JavaScript injection... :-)
                         stat('●●●●●●●●●●●●●○<br>On CVS Page 13.<br>Click again.');
 
                         //click button type="submit"
-                        q('button.btn-control').click();
+                        click('button.btn-control');
                         
                     }
 
@@ -1249,10 +1313,10 @@ It's a *snicker* JavaScript injection... :-)
                     else if (location.pathname == "/vaccine/intake/store/consent") {
 
                         //click #consentText
-                        q('#consentText').click();
+                        click('#consentText');
 
                         //click button type="submit"
-                        q('button.btn-control').click();
+                        click('button.btn-control');
 
                         stat('●●●●●●●●●●●●●●<br>On CVS Page 14.<br>Print out confirmation page and save it for your signee\'s records.');
                         
@@ -1284,73 +1348,65 @@ It's a *snicker* JavaScript injection... :-)
                     */
                     if (location.pathname == "/wl/saintpeterscovid19vaccinemonroe/practice/65013?reason_visit=5243") {
 
-                        q('#COVID-STATUS').innerHTML = 'St. Peter\'s Page 1 detected. Continue manually until the Patient Information screen.';
+                        stat('St. Peter\'s Page 1 detected. Continue manually until the Patient Information screen.');
 
                         pause(1000).then(() => {
-                            q(`div#modal-root button[data-test="modal-primary-button"]`).click();
+                            click(`div#modal-root button[data-test="modal-primary-button"]`);
                         });
 
                     }
 
                     //There may be multiples here
-                    else if (location.href.substr(0,pi.length) == pi) { console.log("PatientInfoScreen detected.");
+                    else if (location.href.substr(0,pi.length) == pi) { log("PatientInfoScreen detected.");
 
                         //Detect St. Peters...
                         if ( q('img[src="https://d2gmqy7n86tnsf.cloudfront.net/c8beebd4-d6b3-4b40-a066-a3bd3bf819f2/bookingLogo.jpeg"]') != null ) {
 
-                            q('#COVID-STATUS').innerHTML = 'St. Peter\'s Page 2 detected.';
+                            stat('St. Peter\'s Page 2 detected.');
 
                             //First name
-                            q('input[name="firstName"]').value = c[FNAME];
-                            q('input[name="firstName"]').dispatchEvent(new Event('input',{ bubbles: true }));
+                            set('input[name="firstName"]',u_fname);
 
                             //Last name
-                            q('input[name="lastName"]').value = c[LNAME];
-                            q('input[name="lastName"]').dispatchEvent(new Event('input',{ bubbles: true }));
+                            set('input[name="lastName"]',u_lname);
 
                             let bd = d.split("/");
 
                             //Birth Month
-                            q('input[name="birthMonth"]').value = bd[0];
-                            q('input[name="birthMonth"]').dispatchEvent(new Event('input',{ bubbles: true }));
+                            set('input[name="birthMonth"]',u_bday_M);
 
                             //Birth Month
-                            q('input[name="birthDay"]').value = bd[1];
-                            q('input[name="birthDay"]').dispatchEvent(new Event('input',{ bubbles: true }));
+                            set('input[name="birthDay"]',u_bday_D);
 
                             //Birth Year
-                            q('input[name="birthYear"]').value = bd[2];
-                            q('input[name="birthYear"]').dispatchEvent(new Event('input',{ bubbles: true }));
+                            set('input[name="birthYear"]',u_bday_YYYY);
 
                             //Male/female
-                            if ( _(c[SEX]) == "Male" ) q('input[value="male"]').click();
-                            else q('input[value="female"]').click();
+                            if ( _(c[SEX]) == "Male" )  click('input[value="male"]');
+                            else                        click('input[value="female"]');
 
                             //Wait and submit
                             pause(500).then( () => {
-                                q('div[class^="PatientInfoPageView"] button[type="submit"]').click();
+                                click('div[class^="PatientInfoPageView"] button[type="submit"]');
                             });
                         }
 
-                        else if (location.href.substr(0,pi.length) == pi) { console.log("Signup screen detected.");
+                        else if (location.href.substr(0,pi.length) == pi) { log("Signup screen detected.");
 
-                            q('#COVID-STATUS').innerHTML = 'St. Peter\'s Page 3 detected. Form autofilled. Click "Review and book" when ready.';
+                            stat('St. Peter\'s Page 3 detected. Form autofilled. Click "Review and book" when ready.');
 
                             //Email
-                            q('input[name="email"]').value = c[EMAIL];
-                            q('input[name="email"]').dispatchEvent(new Event('input',{ bubbles: true }));
-                            q('input[name="confirmEmail"]').value = c[EMAIL];
-                            q('input[name="confirmEmail"]').dispatchEvent(new Event('input',{ bubbles: true }));
+                            set('input[name="email"]',u_email);
+                            set('input[name="confirmEmail"]',u_email);
 
                             //Password
-                            q('input[name="password"]').value = 'Volunteer1!';
-                            q('input[name="password"]').dispatchEvent(new Event('input',{ bubbles: true }));
+                            set('input[name="password"]',u_temp_password);
 
                             //TOS
-                            q('input[name="termsOfService"]').click();
+                            click('input[name="termsOfService"]');
 
                             //Uncheck keep me logged in
-                            q('input[name="rememberMe"]').click();
+                            click('input[name="rememberMe"]');
 
                         }
 
@@ -1368,14 +1424,12 @@ It's a *snicker* JavaScript injection... :-)
                     var step = parseInt(q('div.step-header').innerText.split(" ")[1].split(' ')[0]);
                     var title = q('div.step-header').innerText.split(", ")[1].trim();
 
-                    log("Step:",step,title);
-
                     stat(`Curogram VNA Step ${step} : ${title} detected.`);
 
                     if (title === "Language Selection") {
 
                         //Select English
-                        q('.languages .language').click();
+                        click('.languages .language');
 
                         //Queue up next prompt
                         stat(`Curogram VNA Language Selection filled out.<br>Click here again.`);
@@ -1384,7 +1438,7 @@ It's a *snicker* JavaScript injection... :-)
                     else if (title === "Introduction") {
 
                         //Select Get Started
-                        q('button.btn-nephritis').click();
+                        click('button.btn-nephritis');
 
                         //Queue up next prompt
                         stat(`Curogram VNA Introduction bypassed.<br>Select a time slot, then click here again.`);
@@ -1402,7 +1456,7 @@ It's a *snicker* JavaScript injection... :-)
                         set('input[type="tel"]',u_phone);
 
                         //Click next
-                        q('button.btn-nephritis').click();
+                        click('button.btn-nephritis');
 
                         //Queue up next prompt
                         stat(`Curogram VNA Phone Number Entered.<br>Click here again.`);
@@ -1418,40 +1472,52 @@ It's a *snicker* JavaScript injection... :-)
 
                         //DOB -- !!! Insane
                         //Month
-                        document.querySelectorAll('ng-select input')[0].value = u_bday_Month;
-                        document.querySelectorAll('ng-select input')[0].dispatchEvent(new Event('input'),{ bubbles: true });
-                        document.querySelector('ng-select .ng-option-marked').click();
+                        //document.querySelectorAll('ng-select input')[0].value = u_bday_Month;
+                        //document.querySelectorAll('ng-select input')[0].dispatchEvent(new Event('input'),{ bubbles: true });
+                        //document.querySelector('ng-select .ng-option-marked').click();
+                        setqai('ng-select input', 0, u_bday_Month);
+                        click('ng-select .ng-option-marked');
 
                         //Day
-                        document.querySelectorAll('ng-select input')[1].value = u_bday_D
-                        document.querySelectorAll('ng-select input')[1].dispatchEvent(new Event('input'),{ bubbles: true });
-                        document.querySelector('ng-select .ng-option-marked').click();
+                        //document.querySelectorAll('ng-select input')[1].value = u_bday_D
+                        //document.querySelectorAll('ng-select input')[1].dispatchEvent(new Event('input'),{ bubbles: true });
+                        //document.querySelector('ng-select .ng-option-marked').click();
+                        setqai('ng-select input', 1, u_bday_D);
+                        click('ng-select .ng-option-marked');
 
                         //Year YYYY
-                        document.querySelectorAll('ng-select input')[2].value = u_bday_YYYY;
-                        document.querySelectorAll('ng-select input')[2].dispatchEvent(new Event('input'),{ bubbles: true });
-                        document.querySelector('ng-select .ng-option-marked').click();
+                        //document.querySelectorAll('ng-select input')[2].value = u_bday_YYYY;
+                        //document.querySelectorAll('ng-select input')[2].dispatchEvent(new Event('input'),{ bubbles: true });
+                        //document.querySelector('ng-select .ng-option-marked').click();
+                        setqai('ng-select input', 2, u_bday_YYYY);
+                        click('ng-select .ng-option-marked');
 
                         //Input email
                         set('input[type="email"]',u_email);
 
                         //Sex
-                        document.querySelectorAll('ng-select input')[3].value = u_sex
-                        document.querySelectorAll('ng-select input')[3].dispatchEvent(new Event('input'),{ bubbles: true });
-                        document.querySelector('ng-select .ng-option-marked').click();
+                        //document.querySelectorAll('ng-select input')[3].value = u_sex
+                        //document.querySelectorAll('ng-select input')[3].dispatchEvent(new Event('input'),{ bubbles: true });
+                        //document.querySelector('ng-select .ng-option-marked').click();
+                        setqai('ng-select input', 3, u_sex);
+                        click('ng-select .ng-option-marked');
 
                         //Race
-                        document.querySelectorAll('ng-select input')[4].value = "Prefer not to say";
-                        document.querySelectorAll('ng-select input')[4].dispatchEvent(new Event('input'),{ bubbles: true });
-                        document.querySelector('ng-select .ng-option-marked').click();
+                        //document.querySelectorAll('ng-select input')[4].value = "Prefer not to say";
+                        //document.querySelectorAll('ng-select input')[4].dispatchEvent(new Event('input'),{ bubbles: true });
+                        //document.querySelector('ng-select .ng-option-marked').click();
+                        setqai('ng-select input', 4, "Prefer not to say");
+                        click('ng-select .ng-option-marked');
 
                         //Ethnicity (assuming not Hispanic –– we don't collect this)
-                        document.querySelectorAll('ng-select input')[5].value = "Not Hispanic";
-                        document.querySelectorAll('ng-select input')[5].dispatchEvent(new Event('input'),{ bubbles: true });
-                        document.querySelector('ng-select .ng-option-marked').click();
+                        //document.querySelectorAll('ng-select input')[5].value = "Not Hispanic";
+                        //document.querySelectorAll('ng-select input')[5].dispatchEvent(new Event('input'),{ bubbles: true });
+                        //document.querySelector('ng-select .ng-option-marked').click();
+                        setqai('ng-select input', 5, "Not Hispanic");
+                        click('ng-select .ng-option-marked');
 
                         //Click next
-                        q('button.btn-nephritis').click();
+                        click('button.btn-nephritis');
 
                         //Queue up next prompt
                         stat(`Curogram VNA Demographics entered.<br>Click here again.`);
@@ -1460,7 +1526,8 @@ It's a *snicker* JavaScript injection... :-)
                     else if (title === "Patient Address") { //Address
 
                         //Current address
-                        document.querySelectorAll('input[type="radio"]')[2].click();
+                        //document.querySelectorAll('input[type="radio"]')[2].click();
+                        clickqai('input[type="radio"]',2);
 
                         //Address
                         set('input[name="address"]',u_address);
@@ -1469,15 +1536,17 @@ It's a *snicker* JavaScript injection... :-)
                         set('input[name="city"]',u_city);
 
                         //State
-                        document.querySelectorAll('ng-select input')[0].value = u_state_code;
-                        document.querySelectorAll('ng-select input')[0].dispatchEvent(new Event('input'),{ bubbles: true });
-                        document.querySelector('ng-select .ng-option-marked').click();
+                        //document.querySelectorAll('ng-select input')[0].value = u_state_code;
+                        //document.querySelectorAll('ng-select input')[0].dispatchEvent(new Event('input'),{ bubbles: true });
+                        //document.querySelector('ng-select .ng-option-marked').click();
+                        setqai('ng-select input',0,u_state_code);
+                        click('ng-select .ng-option-marked');
 
                         //Zipcode
                         set('input[name="zip"]',u_zip);
 
                         //Click next
-                        q('button.btn-nephritis').click();
+                        click('button.btn-nephritis');
 
                         //Queue up next prompt
                         stat(`Curogram VNA Address entered.<br>Click here again.`);
@@ -1486,38 +1555,48 @@ It's a *snicker* JavaScript injection... :-)
                     else if (title === "Screening") { //Screening
 
                         //Not sick
-                        document.querySelectorAll('input[type="radio"]')[1].click();
+                        //document.querySelectorAll('input[type="radio"]')[1].click();
+                        clickqai('input[type="radio"]',1);
 
                         //No allergies
-                        document.querySelectorAll('input[type="radio"]')[3].click();
+                        //document.querySelectorAll('input[type="radio"]')[3].click();
+                        clickqai('input[type="radio"]',3);
 
                         //Vaccine reaction
-                        document.querySelectorAll('input[type="radio"]')[5].click();
+                        //document.querySelectorAll('input[type="radio"]')[5].click();
+                        clickqai('input[type="radio"]',5);
 
                         //Blood thinner
-                        document.querySelectorAll('input[type="radio"]')[7].click();
+                        //document.querySelectorAll('input[type="radio"]')[7].click();
+                        clickqai('input[type="radio"]',7);
 
                         //Immunocompromised
-                        document.querySelectorAll('input[type="radio"]')[9].click();
+                        //document.querySelectorAll('input[type="radio"]')[9].click();
+                        clickqai('input[type="radio"]',9);
 
                         //Antibody therapy
-                        document.querySelectorAll('input[type="radio"]')[11].click();
+                        //document.querySelectorAll('input[type="radio"]')[11].click();
+                        clickqai('input[type="radio"]',11);
 
                         //Pregnant
-                        document.querySelectorAll('input[type="radio"]')[13].click();
+                        //document.querySelectorAll('input[type="radio"]')[13].click();
+                        clickqai('input[type="radio"]',13);
 
                         //Breast feeding
-                        document.querySelectorAll('input[type="radio"]')[15].click();
+                        //document.querySelectorAll('input[type="radio"]')[15].click();
+                        clickqai('input[type="radio"]',15);
 
                         //Don't currently have covid
-                        document.querySelectorAll('input[type="radio"]')[17].click();
+                        //document.querySelectorAll('input[type="radio"]')[17].click();
+                        clickqai('input[type="radio"]',17);
 
                         //Yes! Gimmie the vaccine! (click last as "YES!")
                         let yes = document.querySelectorAll('input[type="radio"]').length-2;
-                        document.querySelectorAll('input[type="radio"]')[yes].click();
+                        //document.querySelectorAll('input[type="radio"]')[yes].click();
+                        clickqai('input[type="radio"]',yes);
 
                         //Click next
-                        q('button.btn-nephritis').click();
+                        click('button.btn-nephritis');
 
                         //Queue up next prompt
                         stat(`Curogram VNA Screening info entered.<br>Click here again.`);
@@ -1526,7 +1605,7 @@ It's a *snicker* JavaScript injection... :-)
                     else if (title === "Disability") {
 
                         //Click skip!
-                        q('button.btn-outline-nephritis').click();
+                        click('button.btn-outline-nephritis');
 
                         //Queue up next prompt
                         stat(`Curogram VNA Disability skipped.<br>Click here again.`);
@@ -1535,10 +1614,11 @@ It's a *snicker* JavaScript injection... :-)
                     else if (title === "Insurance Info") {
 
                         //Figure out insurance later
-                        document.querySelectorAll('div.checkbox')[1].click();
+                        //document.querySelectorAll('div.checkbox')[1].click();
+                        clickqai('div.checkbox',1);
 
                         //Click next
-                        q('button.btn-nephritis').click();
+                        click('button.btn-nephritis');
 
                         //Queue up next prompt
                         stat(`Curogram VNA Insurance info bypassed.<br>Click here again.`);
@@ -1547,7 +1627,7 @@ It's a *snicker* JavaScript injection... :-)
                     else if (title === "Identification") {
 
                         //Click skip!
-                        q('button.btn-outline-nephritis').click();
+                        click('button.btn-outline-nephritis');
 
                         //Queue up next prompt
                         stat(`Curogram VNA Identification skipped.<br>Click here again.`);
@@ -1556,8 +1636,8 @@ It's a *snicker* JavaScript injection... :-)
                     else if (title === "Consent") {
 
                         //Read and accept
-                        if (q('#checkbox1')) q('#checkbox1').click();
-                        if (q('#checkbox2')) q('#checkbox2').click();
+                        if (q('#checkbox1')) click('#checkbox1');
+                        if (q('#checkbox2')) click('#checkbox2');
 
                         //Queue up next prompt
                         stat(`Curogram VNA Consent checked.<br>Sign with an X and continue manually.`);
