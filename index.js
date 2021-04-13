@@ -373,7 +373,7 @@ It's a *snicker* JavaScript injection... :-)
 
         //Logging function
         var log = function(str) {
-            cconsole.innerHTML += `<div>${str}</div>`;
+            q('#covidInjectionConsole').innerHTML += `<div>${str}</div>`;
         }
 
         //Add set function - this makes things easier
