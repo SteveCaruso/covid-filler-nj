@@ -347,14 +347,14 @@ It's a *snicker* JavaScript injection... :-)
             
             for (var i in IDX) {
                 console.log(`Setting ${i} to col ${IDX[i]}`);
-                q('#col_'+IDX[i]).value = i;
+                if (q('#col_'+IDX[i])) q('#col_'+IDX[i]).value = i;
             }
 
             if (ODX.length > 0) {
 
                 q('#output_toggle').checked = true;
 
-                for (var i=0; i<52; i++) q('#out_col_'+i).value = "";
+                for (var i=0; i<52; i++) if('#out_col_'+i) q('#out_col_'+i).value = "";
 
                 for (var i in IDX) {
                     console.log(`Setting ${i} to out_col ${IDX[i]}`);
