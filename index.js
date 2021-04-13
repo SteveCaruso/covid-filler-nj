@@ -258,6 +258,7 @@ It's a *snicker* JavaScript injection... :-)
         //const COLS = 24; //Unneeded now.
 
         //Data columns - These are the indexes (starting with 0) for each piece of user info we'll need. If you're using your own form, you'll need to change these to match your order.
+        //THESE will soon be obsolete.
         var EMAIL = 1;
         var FNAME = 2;
         var LNAME = 3;
@@ -288,9 +289,46 @@ It's a *snicker* JavaScript injection... :-)
 
         const DEFAULT_COLS = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,17];
 
+        //New default columns system!
+        const DEFAULT_IDX = {
+            email:1,
+            fname:2,
+            lname:3,
+            bday:4,
+            phone:5,
+            addr:6,
+            addr2:-1,
+            city:7,
+            state:8,
+            zip:9,
+            sex:10,
+            gen:11,
+            occ:12,
+            emp:13,
+            health:14,
+            notes:17,
+            notes2:-1,
+            notes3:-1,
+            notes4:-1,
+            notes5:-1,
+            a_sun:-1,
+            a_mon:-1,
+            a_tue:-1,
+            a_wed:-1,
+            a_thu:-1,
+            a_fri:-1,
+            a_sat:-1
+        };
+
+        //The new INDEX! -- copy defaults
+        var IDX = {}; for (var i in DEFAULT_IDX) IDX[i] = DEFAULT_IDX[i];
+
         //If different columns are passed, set them
         if (colOrder) {
             [EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = colOrder;
+            
+            //When the new IDX system goes live, everything will be set to -1 and this will over-write the IDX values.
+            //When that happens, we'll need to check to see if an array of numbers is passed, or if no array is passed, and throw an error, telling the user that they need to update their bookmarklet.
         }
 
         //Numerical month to Full Month
@@ -345,7 +383,9 @@ It's a *snicker* JavaScript injection... :-)
             //Let's also make a debug console that is separate from the regular console, so that helpers can submit bug reports more easily
             cconsole = document.createElement("div");
             cconsole.id = "covidInjectionConsole";
-            cconsole.innerHTML = `<strong>CoVID Injector 💉 Message Console <a href="javascript:navigator.clipboard.writeText(document.getElementById('covidInjectionConsole').innerText);">[copy to clipboard]</a></strong>`;
+            cconsole.innerHTML = `<strong>CoVID Injector 💉 Message Console <a href="javascript:navigator.clipboard.writeText(document.getElementById('covidInjectionConsole').innerText);">[copy to clipboard]</a></strong>
+                <div id="covidInjectionConsoleDataState"></div>
+                <div id="covidInjectionConsoleMessages"></div>`;
             cconsole.style.fontFamily = "Arial";
             cconsole.style.position = "fixed";
             cconsole.style.left="20%";
@@ -378,7 +418,7 @@ It's a *snicker* JavaScript injection... :-)
 
         //Logging function
         var log = function(str) {
-            q('#covidInjectionConsole').innerHTML += `<div>${str}</div>`;
+            q('#covidInjectionConsoleMessages').innerHTML += `<div>${str}</div>`;
         }
 
         //Add set function - this makes things easier
@@ -555,7 +595,9 @@ It's a *snicker* JavaScript injection... :-)
 
                 //Address
                 var u_address = c[ADDR];
-                var u_address_2 = c[ADDR2];
+                var u_address_2; 
+                    if (ADDR2 == -1) u_address_2 = "";
+                    else u_address_2 = c[ADDR2];
 
                 //City
                 var u_city = c[CITY];
@@ -749,13 +791,21 @@ It's a *snicker* JavaScript injection... :-)
                 }
                 var u_notes = c[NOTES];
 
-                var u_notes_2 = "";
+                var u_notes_2 = ""; //Push these, too
                 var u_notes_3 = "";
 
                 var u_temp_password = "Volunteer1!";
 
-                
 
+                //Set datastate
+                q('#covidInjectionConsoleDataState').innerHTML = JSON.stringify({
+                    "u_email":u_email, "u_fname":u_fname, "u_lname":u_lname,
+                    "u_bday":u_bday, "u_phone":u_phone, 
+                    "u_address":u_address, "u_address_2":u_address_2,
+                    "u_city":u_city, "u_state_name":u_state_name, "u_state_code":u_state_code, "u_zip":u_zip,
+                    "u_sex":u_sex, "u_gender":u_gender, "u_occupation":u_occupation, "u_health_conditions":u_health_conditions,
+                    "u_notes":u_notes, "u_notes_2":u_notes_2, "u_notes_3":u_notes_3
+                });
 
 
                 /* 
