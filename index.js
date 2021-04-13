@@ -243,7 +243,7 @@ It's a *snicker* JavaScript injection... :-)
             "www.cvs.com",
             "www.zocdoc.com",
             "curogram.com",
-            "covid-injector-dev.netlify.app"
+            "covid-injection-dev.netlify.app"
         ];
 
         //Check to see if we're *on* a supported host, otherwise we shouldn't mess with it.
