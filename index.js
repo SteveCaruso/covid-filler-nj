@@ -345,7 +345,10 @@ It's a *snicker* JavaScript injection... :-)
 
             for (var i=0; i<52; i++) q('#col_'+i).value = "";
             
-            for (var i in IDX) q('#col_'+IDX[i]).value = i;
+            for (var i in IDX) {
+                console.log(`Setting ${i} to col ${IDX[i]}`);
+                q('#col_'+IDX[i]).value = i;
+            }
 
             if (ODX.length > 0) {
 
@@ -353,7 +356,10 @@ It's a *snicker* JavaScript injection... :-)
 
                 for (var i=0; i<52; i++) q('#out_col_'+i).value = "";
 
-                for (var i in IDX) q('#out_col_'+ODX[i]).value = i;
+                for (var i in IDX) {
+                    console.log(`Setting ${i} to out_col ${IDX[i]}`);
+                    q('#out_col_'+ODX[i]).value = i;
+                }
 
             }
 
