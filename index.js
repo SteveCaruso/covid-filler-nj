@@ -242,7 +242,8 @@ It's a *snicker* JavaScript injection... :-)
             "www.riteaid.com",
             "www.cvs.com",
             "www.zocdoc.com",
-            "curogram.com"
+            "curogram.com",
+            "covid-injector-dev.netlify.app"
         ];
 
         //Check to see if we're *on* a supported host, otherwise we shouldn't mess with it.
@@ -259,6 +260,7 @@ It's a *snicker* JavaScript injection... :-)
 
         //Data columns - These are the indexes (starting with 0) for each piece of user info we'll need. If you're using your own form, you'll need to change these to match your order.
         //THESE will soon be obsolete.
+        /*
         var EMAIL = 1;
         var FNAME = 2;
         var LNAME = 3;
@@ -287,7 +289,7 @@ It's a *snicker* JavaScript injection... :-)
         var A_FRI = -1;
         var A_SAT = -1;
 
-        const DEFAULT_COLS = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,17];
+        const DEFAULT_COLS = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,17];*/
 
         //New default columns system!
         const DEFAULT_IDX = {
@@ -336,6 +338,28 @@ It's a *snicker* JavaScript injection... :-)
 
         //Read out columns
         for (var i in outOrder) ODX[i] = outOrder[i];
+
+        //If you're on the bookmarklet page, load everything in, and then return.
+        if (location.href == "https://covid-injection-dev.netlify.app/custom.html" || location.href == "https://covid-injection.netlify.app/custom.html") {
+
+            alert("Loading this bookmarklet's configuration into the custom bookmarklet maker...");
+
+            for (var i=0; i<52; i++) q('#col_'+i).value = "";
+            
+            for (var i in IDX) q('#col_'+IDX[i]).value = i;
+
+            if (ODX.length > 0) {
+
+                q('#output_toggle').checked = true;
+
+                for (var i=0; i<52; i++) q('#out_col_'+i).value = "";
+
+                for (var i in IDX) q('#out_col_'+ODX[i]).value = i;
+
+            }
+
+            return;
+        }
 
         //Numerical month to Full Month
         const FMONTH = {
@@ -429,7 +453,6 @@ It's a *snicker* JavaScript injection... :-)
             output = document.createElement("div");
             output.id = "covidInjectionOutput";
             output.innerHTML = `<strong>CoVID Injector Output</strong>
-                <div>When you're done, fill in the appointment information here, and click the button below to copy the results to the clipboard. (This will overwrite what you currently have in it.)</div>
                 <br>
                 <label for="covidInjectionOutput_vac_vol">Volunteer Name:<br>
                 <input id="covidInjectionOutput_vac_vol" type="text"></label>
@@ -452,7 +475,8 @@ It's a *snicker* JavaScript injection... :-)
                 <label for="covidInjectionOutput_vac_date_2">Second Dose Date:<br>
                 <input id="covidInjectionOutput_vac_date_2" type="datetime-local"></label>
                 <br>
-                <button id="covidInjectionOutput_copy">Copy to Clipboard</button>`;
+                <button id="covidInjectionOutput_copy">Copy to Clipboard</button><br>
+                (This will overwrite what you currently have in it.)`;
             output.style.fontFamily = "Arial";
             output.style.padding = "1ex";
             output.style.textAlign = "center";
