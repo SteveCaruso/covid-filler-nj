@@ -1194,7 +1194,7 @@ It's a *snicker* JavaScript injection... :-)
                         set('#lastName',u_lname);//,['input','compositionend']);
 
                         //#dob -- MMDDYYYY without slashes
-                        set('#dob',u_bday_MMDDYYYY);//.value = d1;//.split("/").join("");
+                        set('#dob',u_bday_MMDDYYYY.trim(),['input','change','blur','compositionend']);//.value = d1;//.split("/").join("");
                         //q('#dob').dispatchEvent(new Event('input'),{ bubbles: true });
                         //q('#dob').dispatchEvent(new Event('change'));
                         //q('#dob').dispatchEvent(new Event('blur'));
@@ -1209,7 +1209,7 @@ It's a *snicker* JavaScript injection... :-)
                         set('#address',u_address);
 
                         //#addressLine2
-                        if (u_address_2 != "") set('#addressLine2',u_address_2);
+                        if (u_address_2.length > 0) set('#addressLine2',u_address_2);
 
                         //#city
                         set('#city',u_city);
