@@ -437,7 +437,9 @@ It's a *snicker* JavaScript injection... :-)
 
 
 
-                        pause(500).then(button.click);
+                        pause(500).then(function () {
+                            button.click();
+                        });
 
                     } );
 
