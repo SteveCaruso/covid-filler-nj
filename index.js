@@ -335,7 +335,7 @@ It's a *snicker* JavaScript injection... :-)
         for (var i in colOrder) IDX[i] = colOrder[i];
 
         //Read out columns
-        for (var i in ourOrder) ODX[i] = outOrder[i];
+        for (var i in outOrder) ODX[i] = outOrder[i];
 
         //If different columns are passed, set them
         //if (colOrder) {
