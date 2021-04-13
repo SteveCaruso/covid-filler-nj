@@ -344,16 +344,17 @@ It's a *snicker* JavaScript injection... :-)
             //Let's also make a debug console that is separate from the regular console, so that helpers can submit bug reports more easily
             cconsole = document.createElement("div");
             cconsole.id = "covidInjectionConsole";
-            cconsole.innerHTML = `<strong>CoVID Injector 💉 Message Console <a href="javascript:navigator.clipboard.writeText(document.getElementByID('covidInjectionConsole').innerText);">[copy to clipboard]</a></strong>`;
+            cconsole.innerHTML = `<strong>CoVID Injector 💉 Message Console <a href="javascript:navigator.clipboard.writeText(document.getElementById('covidInjectionConsole').innerText);">[copy to clipboard]</a></strong>`;
             cconsole.style.fontFamily = "Arial";
             cconsole.style.position = "fixed";
             cconsole.style.left="20%";
             cconsole.style.top="20%";
             cconsole.style.right="20%";
             cconsole.style.bottom="20%";
-            cconsole.style.border="3px solid white";
-            cconsole.style.color = "white";
-            cconsole.style.backgroundColor = `rgba(0,0,0,.5)`;
+            cconsole.style.border="3px solid darkgoldenrod";
+            cconsole.style.color = "darkgoldenrod";
+            cconsole.style.padding = "20px";
+            cconsole.style.backgroundColor = `rgba(0,0,0,.9)`;
             cconsole.style.zIndex = 10001;
             cconsole.style.borderRadius = "5px";
             cconsole.style.whiteSpace = "normal !important";
