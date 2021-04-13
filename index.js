@@ -336,7 +336,7 @@ It's a *snicker* JavaScript injection... :-)
             button.style.borderRadius = "5px";
             button.style.boxShadow = "5px 5px 5px 5px rgba(0,0,0,.5)";
             button.style.whiteSpace = "normal !important";
-            //button.style.overflowWrap = "";
+            button.style.overflowWrap = "normal !important";
         
             //Inject the button into the document
             document.body.appendChild(button);
@@ -344,7 +344,7 @@ It's a *snicker* JavaScript injection... :-)
             //Let's also make a debug console that is separate from the regular console, so that helpers can submit bug reports more easily
             cconsole = document.createElement("div");
             cconsole.id = "covidInjectionConsole";
-            cconsole.innerHTML = `<strong>CoVID Injector 💉 Error Console</strong>`;
+            cconsole.innerHTML = `<strong>CoVID Injector 💉 Message Console</strong>`;
             cconsole.style.fontFamily = "Arial";
             cconsole.style.position = "fixed";
             cconsole.style.left="20%";
@@ -357,6 +357,8 @@ It's a *snicker* JavaScript injection... :-)
             cconsole.style.zIndex = 10001;
             cconsole.style.borderRadius = "5px";
             cconsole.style.whiteSpace = "normal !important";
+            cconsole.style.overflowWrap = "normal !important";
+            cconsole.style.overflow = "scroll";
             cconsole.style.display = "none";
 
             //Inject the console into the document
