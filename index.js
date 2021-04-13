@@ -360,7 +360,7 @@ It's a *snicker* JavaScript injection... :-)
             cconsole.style.display = "none";
 
             //Inject the console into the document
-            document.body.appendChild(button);
+            document.body.appendChild(cconsole);
 
             document.addEventListener('keydown', (e) => {
                 if (e.code == "Backquote") {
