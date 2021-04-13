@@ -574,6 +574,33 @@ It's a *snicker* JavaScript injection... :-)
 
                 //Here we need to tease out the given data into whatever different formats we may need
 
+
+                //Do zip code first
+                var u_zip = c[IDX["zip"]];
+
+                //Better check for now, instead of columns: See if the zip code is in the right place
+                //if (c.length != COLS) {
+                if ( !/^\d\d\d\d\d$/.test(u_zip) ) {
+
+                    var clength = c.length;
+
+                    navigator.clipboard.writeText(`TEST DATA	john.doe.wiley.jane1938@gmail.com	Jim	Doe	4/15/1938	7328679420	9.75 River Rd	Highland Park	New Jersey	08904	Male	Male	None of the Above		Obesity	No	No	<strong>Remember to copy the real data into your clipboard when you're scheduling!</strong>						`).then( c => {
+
+                        alert(`You do not appear to have the data you need in your clipboard. (Zip code expected in column ${ZIP}, but not found.) Dummy data 'Jim Doe' has just been copied.`);
+
+                        //[EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = DEFAULT_COLS;
+
+                        IDX = {}; for (var i in DEFAULT_IDX) IDX[i] = DEFAULT_IDX[i];
+
+                        pause(500).then(function () {
+                            button.click();
+                        });
+
+                    } );
+
+                    return;
+                    
+                }
                 
                 
                 //Email (already OK)
@@ -756,9 +783,6 @@ It's a *snicker* JavaScript injection... :-)
                     u_state_code = c[IDX["state"]];
                     u_state_name = stateNames[u_state_code];
                 }
-                
-                //Zip (this is OK)
-                var u_zip = c[IDX["zip"]];
 
                 //Sex
                 if (IDX["sex"] == -1) IDX["sex"] = IDX["gen"];
@@ -828,29 +852,7 @@ It's a *snicker* JavaScript injection... :-)
 
 
 
-                //Better check for now, instead of columns: See if the zip code is in the right place
-                //if (c.length != COLS) {
-                if ( !/^\d\d\d\d\d$/.test(u_zip) ) {
-
-                    var clength = c.length;
-
-                    navigator.clipboard.writeText(`TEST DATA	john.doe.wiley.jane1938@gmail.com	Jim	Doe	4/15/1938	7328679420	9.75 River Rd	Highland Park	New Jersey	08904	Male	Male	None of the Above		Obesity	No	No	<strong>Remember to copy the real data into your clipboard when you're scheduling!</strong>						`).then( c => {
-
-                        alert(`You do not appear to have the data you need in your clipboard. (Zip code expected in column ${ZIP}, but not found.) Dummy data 'Jim Doe' has just been copied.`);
-
-                        //[EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = DEFAULT_COLS;
-
-                        IDX = {}; for (var i in DEFAULT_IDX) IDX[i] = DEFAULT_IDX[i];
-
-                        pause(500).then(function () {
-                            button.click();
-                        });
-
-                    } );
-
-                    return;
-                    
-                }
+                
 
 
 
