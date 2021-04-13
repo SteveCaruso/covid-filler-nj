@@ -337,16 +337,6 @@ It's a *snicker* JavaScript injection... :-)
         //Read out columns
         for (var i in outOrder) ODX[i] = outOrder[i];
 
-        //If different columns are passed, set them
-        //if (colOrder) {
-            //[EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = colOrder;
-            
-            //When the new IDX system goes live, everything will be set to -1 and this will over-write the IDX values.
-            //When that happens, we'll need to check to see if an array of numbers is passed, or if no array is passed, and throw an error, telling the user that they need to update their bookmarklet.
-
-            //We'll also need a new index for output with scheduling information.
-        //}
-
         //Numerical month to Full Month
         const FMONTH = {
             1: "January",
@@ -429,6 +419,36 @@ It's a *snicker* JavaScript injection... :-)
                 if (e.code == "Backquote") {
                     if (cconsole.style.display == "none") cconsole.style.display = "block";
                     else cconsole.style.display = "none";
+                }
+            });
+
+
+            //And here is the output form
+            output = document.createElement("div");
+            output.id = "covidInjectionOutput";
+            output.innerHTML = `<strong>CoVID Injector 💉 Output</strong>
+                <div>When you're done, fill in the appointment information here, and click the button below to copy the results to the clipboard. (This will overwrite what you currently have in it.)</div>`;
+            output.style.fontFamily = "Arial";
+            output.style.position = "fixed";
+            output.style.width="250px";
+            output.style.right="10px";
+            output.style.top="10px";
+            output.style.border="3px solid red";
+            output.style.zIndex = 10000;
+            output.style.borderRadius = "5px";
+            output.style.boxShadow = "5px 5px 5px 5px rgba(0,0,0,.5)";
+            output.style.whiteSpace = "normal !important";
+            output.style.overflowWrap = "normal !important";
+            output.style.wordWrap = "break-word !important";
+            output.style.display = "none";
+
+            //Inject the console into the document
+            document.body.appendChild(output);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.code == "Equal") {
+                    if (output.style.display == "none") output.style.display = "block";
+                    else output.style.display = "none";
                 }
             });
 
@@ -791,6 +811,7 @@ It's a *snicker* JavaScript injection... :-)
 
 
                 //Display availability grid -- pending
+                //This feature's gonna rock.
 
 
                 //Set datastate
