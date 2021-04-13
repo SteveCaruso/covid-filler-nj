@@ -344,7 +344,7 @@ It's a *snicker* JavaScript injection... :-)
             //Let's also make a debug console that is separate from the regular console, so that helpers can submit bug reports more easily
             cconsole = document.createElement("div");
             cconsole.id = "covidInjectionConsole";
-            cconsole.innerHTML = `<strong>CoVID Injector 💉 Message Console</strong>`;
+            cconsole.innerHTML = `<strong>CoVID Injector 💉 Message Console <a href="javascript:navigator.clipboard.writeText(document.getElementByID('covidInjectionConsole').innerText);">[copy to clipboard]</a></strong>`;
             cconsole.style.fontFamily = "Arial";
             cconsole.style.position = "fixed";
             cconsole.style.left="20%";
@@ -359,6 +359,7 @@ It's a *snicker* JavaScript injection... :-)
             cconsole.style.whiteSpace = "normal !important";
             cconsole.style.overflowWrap = "normal !important";
             cconsole.style.overflow = "scroll";
+            cconsole.style.height="300px";
             cconsole.style.display = "none";
 
             //Inject the console into the document
