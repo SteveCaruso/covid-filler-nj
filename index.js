@@ -468,7 +468,7 @@ It's a *snicker* JavaScript injection... :-)
                     <option value="">Choose</option>
                     <option value="Moderna">Moderna</option>
                     <option value="Pfizer">Pfizer</option>
-                    <option value="JnJ">J&amp;J</option>
+                    <option value="JnJ">J&amp;J/Jansen</option>
                     <option value="Unknown">Unknown</option>
                 </select></label>
                 <br>
@@ -913,13 +913,37 @@ It's a *snicker* JavaScript injection... :-)
                 //Link up output button
                 q('#covidInjectionOutput_copy').addEventListener("click",() => {
 
+                    //Grab output data
+                    var od = {
+                        vac_vol     : q('covidInjectionOutput_vac_vol').value,
+                        vac_type    : q('covidInjectionOutput_vac_type').value,
+                        vac_date    : q('covidInjectionOutput_vac_loc').value,
+                        vac_date_2  : q('covidInjectionOutput_vac_date').value,
+                        vac_loc     : q('covidInjectionOutput_vac_date_2').value
+                    };
+
                     //Find largest index
                     let bigindex = -1;
                     for (var i in ODX) if (ODX[i] > bigindex) bigindex = ODX[i];
 
                     let clipdata = new Array(bigindex+1);
 
-                    for (var i in ODX) clipdata[ODX[i]] = i;
+                    for (var i in ODX) {
+                        
+                        //clipdata[ODX[i]] = i;
+
+                        if (c[IDX[i]] == null) {
+
+                            if (od[i] == null) alert(`Field ${i} missing! File a bug report.`);
+                            else {
+                                clipdata[ODX[i]] = od[i];
+                            }
+                        }
+                        else {
+                            clipdata[ODX[i]] = c[IDX[i]];
+                        }
+
+                    }
 
                     console.log(clipdata);
 
