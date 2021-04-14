@@ -330,7 +330,9 @@ It's a *snicker* JavaScript injection... :-)
 
         //Invalidate all of the old bookmarklets
         if (colOrder == null && outOrder == null) {
-            alert("You are using an outdated bookmarklet. Head over the the CoVID Injection website and install or create a new one.");
+            if (confirm("You are using an outdated bookmarklet. Should I redirect you to the CoVID Injection website so you can get a new one?")) {
+                location.href="https://covid-injection.netlify.app";
+            }
         }
 
         //Read in columns
