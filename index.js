@@ -351,7 +351,8 @@ It's a *snicker* JavaScript injection... :-)
                 if (q('#col_'+IDX[i])) q('#col_'+IDX[i]).value = i;
             }
 
-            if (ODX.length > 0) { console.log(ODX);
+            console.log(ODX);
+            if (ODX.length > 0) { 
 
                 q('#output_toggle').checked = true;
 
