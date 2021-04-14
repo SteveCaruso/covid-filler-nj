@@ -898,6 +898,15 @@ It's a *snicker* JavaScript injection... :-)
                 //if (u_a_sun != null && u_a_mon != null && u_a_tue != null && u_a_wed != null
                 //    && u_a_thu != null && u_a_fri != null && u_a_sat != null) {
                 if (true) {
+
+                    var u_a_sun = "Mornings";
+                    var u_a_mon = "Afternoons";
+                    var u_a_tue = "Evenings";
+                    var u_a_wed = "Mornings,Afternoons";
+                    var u_a_thu = "Afternoons,Evenings";
+                    var u_a_fri = "Mornings,Evenings";
+                    var u_a_sat = "Mornings,Afternoons,Evenings";
+
                     q('#COVID-TARGET').innerHTML += `<br>Availability:<br><table id="covid_availability_grid">
                     <tr>
                         <th>&nbsp;</th>
