@@ -464,10 +464,10 @@ It's a *snicker* JavaScript injection... :-)
                 <label for="covidInjectionOutput_vac_type">Vaccine Type:<br>
                 <select id="covidInjectionOutput_vac_type">
                     <option value="">Choose</option>
-                    <option value="Moderna">Moderna</option>
-                    <option value="Pfizer">Pfizer</option>
-                    <option value="JnJ">J&amp;J/Jansen</option>
-                    <option value="Unknown">Unknown</option>
+                    <option id="covidInjectionOutput_moderna" value="Moderna">Moderna</option>
+                    <option id="covidInjectionOutput_pfizer" value="Pfizer">Pfizer</option>
+                    <option id="covidInjectionOutput_jnj" value="JnJ">J&amp;J/Jansen</option>
+                    <option id="covidInjectionOutput_unknown" value="Unknown">Unknown</option>
                 </select></label>
                 <br>
                 <label for="covidInjectionOutput_vac_loc">Location:<br>
@@ -479,7 +479,7 @@ It's a *snicker* JavaScript injection... :-)
                 <label for="covidInjectionOutput_vac_date_2">Second Dose Date:<br>
                 <input id="covidInjectionOutput_vac_date_2" type="datetime-local"></label>
                 <br>
-                <button id="covidInjectionOutput_copy">Copy to Clipboard</button><br>
+                <button id="covidInjectionOutput_copy" style="border:2px solid black; border-radius:4px; padding:.5ex;">Copy to Clipboard</button><br>
                 (This will overwrite what you currently have in it.)`;
             output.style.fontFamily = "Arial";
             output.style.padding = "1ex";
