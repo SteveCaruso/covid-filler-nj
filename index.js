@@ -895,9 +895,9 @@ It's a *snicker* JavaScript injection... :-)
 
                 //Display availability grid -- pending
                 //This feature's gonna rock.
-                //if (u_a_sun != null && u_a_mon != null && u_a_tue != null && u_a_wed != null
-                //    && u_a_thu != null && u_a_fri != null && u_a_sat != null) {
-                if (true) {
+                if (u_a_sun != null && u_a_mon != null && u_a_tue != null && u_a_wed != null
+                    && u_a_thu != null && u_a_fri != null && u_a_sat != null) {
+                //if (true) {
 
                     var u_a_sun = "Mornings";
                     var u_a_mon = "Afternoons";
@@ -907,7 +907,7 @@ It's a *snicker* JavaScript injection... :-)
                     var u_a_fri = "Mornings,Evenings";
                     var u_a_sat = "Mornings,Afternoons,Evenings";
 
-                    q('#COVID-TARGET').innerHTML += `<br>Availability:<br><table id="covid_availability_grid" style="width:200px;margin-left:auto; margin-right:auto;">
+                    q('#COVID-TARGET').innerHTML += `<br><hr><br>Availability:<br><table id="covid_availability_grid" style="width:200px;margin-left:auto; margin-right:auto;">
                     <tr>
                         <th>&nbsp;</th>
                         <th>Morning</th>
