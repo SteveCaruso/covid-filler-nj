@@ -907,12 +907,12 @@ It's a *snicker* JavaScript injection... :-)
                     var u_a_fri = "Mornings,Evenings";
                     var u_a_sat = "Mornings,Afternoons,Evenings";
 
-                    q('#COVID-TARGET').innerHTML += `<br>Availability:<br><table id="covid_availability_grid">
+                    q('#COVID-TARGET').innerHTML += `<br>Availability:<br><table id="covid_availability_grid" style="width:200px;margin-left:auto; margin-right:auto;">
                     <tr>
                         <th>&nbsp;</th>
-                        <th>Morn.</th>
-                        <th>After.</th>
-                        <th>Even.</th>
+                        <th>Morning</th>
+                        <th>Afternoon</th>
+                        <th>Evening</th>
                     </tr>  
                     <tr>
                         <th>Sun</th>
