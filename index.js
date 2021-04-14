@@ -243,7 +243,8 @@ It's a *snicker* JavaScript injection... :-)
             "www.cvs.com",
             "www.zocdoc.com",
             "curogram.com",
-            "covid-injection-dev.netlify.app"
+            "covid-injection-dev.netlify.app",
+            "covid-injection.netlify.app"
         ];
 
         //Check to see if we're *on* a supported host, otherwise we shouldn't mess with it.
@@ -350,7 +351,7 @@ It's a *snicker* JavaScript injection... :-)
                 if (q('#col_'+IDX[i])) q('#col_'+IDX[i]).value = i;
             }
 
-            if (ODX.length > 0) {
+            if (ODX.length > 0) { console.log(ODX);
 
                 q('#output_toggle').checked = true;
 
@@ -928,9 +929,7 @@ It's a *snicker* JavaScript injection... :-)
 
                     let clipdata = new Array(bigindex+1);
 
-                    for (var i in ODX) { console.log(i);
-                        
-                        //clipdata[ODX[i]] = i;
+                    for (var i in ODX) {
 
                         if (c[IDX[i]] == null) {
 
@@ -945,13 +944,17 @@ It's a *snicker* JavaScript injection... :-)
 
                     }
 
-                    console.log(clipdata);
+                    clipdata = clipdata.join('	');
 
-                    alert("This feature isn't implemented yet.");
+                    log("Copying to clipboard: " + clipdata);
 
-                    return;
+                    navigator.clipboard.writeText(clipdata).then( c => {
+                        
+                        log("Copied!");
 
-                    
+                        //Make it blink or something.
+
+                    });
 
                 });
 
