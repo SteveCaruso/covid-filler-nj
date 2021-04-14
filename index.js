@@ -960,6 +960,9 @@ It's a *snicker* JavaScript injection... :-)
 
                 }
 
+                //Add hr
+                q('#COVID-TARGET').innerHTML += '<hr>';
+
                 //Set datastate
                 q('#covidInjectionConsoleDataState').innerHTML = JSON.stringify({
                     "u_email":u_email, "u_fname":u_fname, "u_lname":u_lname,
