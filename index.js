@@ -461,7 +461,7 @@ It's a *snicker* JavaScript injection... :-)
             output.innerHTML = `<strong>Vaccination Information</strong>
                 <br>
                 <label for="covidInjectionOutput_vac_vol">Volunteer Name:<br>
-                <input id="covidInjectionOutput_vac_vol" type="text"></label>
+                <input id="covidInjectionOutput_vac_vol" type="text" value="${localStorage.getItem('volunteerName')}"></label>
                 <br>
                 <label for="covidInjectionOutput_vac_type">Vaccine Type:<br>
                 <select id="covidInjectionOutput_vac_type">
@@ -946,6 +946,9 @@ It's a *snicker* JavaScript injection... :-)
                     clipdata = clipdata.join('	');
 
                     log("Copying to clipboard: " + clipdata);
+
+                    //Save volunteer name to localStorage
+                    localStorage.setItem('volunteerName', od["vac_vol"]);
 
                     navigator.clipboard.writeText(clipdata).then( c => {
                         
