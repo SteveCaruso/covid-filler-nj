@@ -915,11 +915,11 @@ It's a *snicker* JavaScript injection... :-)
 
                     //Grab output data
                     var od = {
-                        vac_vol     : q('covidInjectionOutput_vac_vol').value,
-                        vac_type    : q('covidInjectionOutput_vac_type').value,
-                        vac_date    : q('covidInjectionOutput_vac_loc').value,
-                        vac_date_2  : q('covidInjectionOutput_vac_date').value,
-                        vac_loc     : q('covidInjectionOutput_vac_date_2').value
+                        vac_vol     : q('#covidInjectionOutput_vac_vol').value,
+                        vac_type    : q('#covidInjectionOutput_vac_type').value,
+                        vac_date    : q('#covidInjectionOutput_vac_loc').value,
+                        vac_date_2  : q('#covidInjectionOutput_vac_date').value,
+                        vac_loc     : q('#covidInjectionOutput_vac_date_2').value
                     };
 
                     //Find largest index
