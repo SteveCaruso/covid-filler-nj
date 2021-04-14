@@ -874,13 +874,13 @@ It's a *snicker* JavaScript injection... :-)
                 var u_temp_password = "Volunteer1!";
 
                 //Availability grid
-                var u_a_sun = IDX["a_sun"] != -1 ? c[IDX["a_sun"]] : null;
-                var u_a_mon = IDX["a_mon"] != -1 ? c[IDX["a_mon"]] : null;
-                var u_a_tue = IDX["a_tue"] != -1 ? c[IDX["a_tue"]] : null;
-                var u_a_wed = IDX["a_wed"] != -1 ? c[IDX["a_wed"]] : null;
-                var u_a_thu = IDX["a_thu"] != -1 ? c[IDX["a_thu"]] : null;
-                var u_a_fri = IDX["a_fri"] != -1 ? c[IDX["a_fri"]] : null;
-                var u_a_sat = IDX["a_sat"] != -1 ? c[IDX["a_sat"]] : null;
+                var u_a_sun = IDX["a_sun"] != -1 ? c[IDX["a_sun"]].split(",") : null;
+                var u_a_mon = IDX["a_mon"] != -1 ? c[IDX["a_mon"]].split(",") : null;
+                var u_a_tue = IDX["a_tue"] != -1 ? c[IDX["a_tue"]].split(",") : null;
+                var u_a_wed = IDX["a_wed"] != -1 ? c[IDX["a_wed"]].split(",") : null;
+                var u_a_thu = IDX["a_thu"] != -1 ? c[IDX["a_thu"]].split(",") : null;
+                var u_a_fri = IDX["a_fri"] != -1 ? c[IDX["a_fri"]].split(",") : null;
+                var u_a_sat = IDX["a_sat"] != -1 ? c[IDX["a_sat"]].split(",") : null;
 
 
                 //Display name of person the data is from
@@ -895,7 +895,61 @@ It's a *snicker* JavaScript injection... :-)
 
                 //Display availability grid -- pending
                 //This feature's gonna rock.
+                //if (u_a_sun != null && u_a_mon != null && u_a_tue != null && u_a_wed != null
+                //    && u_a_thu != null && u_a_fri != null && u_a_sat != null) {
+                if (true) {
+                    q('#COVID-TARGET').innerHTML += `<br>Availability:<br><table id="covid_availability_grid">
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Morn.</th>
+                        <th>After.</th>
+                        <th>Even.</th>
+                    </tr>  
+                    <tr>
+                        <th>Sun</th>
+                        <td>${u_a_sun.includes('Mornings')?'⬤':''}</td>
+                        <td>${u_a_sun.includes('Afternoons')?'⬤':''}</td>
+                        <td>${u_a_sun.includes('Evenings')?'⬤':''}</td>
+                    </tr>
+                    <tr>
+                        <th>Mon</th>
+                        <td>${u_a_mon.includes('Mornings')?'⬤':''}</td>
+                        <td>${u_a_mon.includes('Afternoons')?'⬤':''}</td>
+                        <td>${u_a_mon.includes('Evenings')?'⬤':''}</td>
+                    </tr>
+                    <tr>
+                        <th>Tue</th>
+                        <td>${u_a_tue.includes('Mornings')?'⬤':''}</td>
+                        <td>${u_a_tue.includes('Afternoons')?'⬤':''}</td>
+                        <td>${u_a_tue.includes('Evenings')?'⬤':''}</td>
+                    </tr>
+                    <tr>
+                        <th>Wed</th>
+                        <td>${u_a_wed.includes('Mornings')?'⬤':''}</td>
+                        <td>${u_a_wed.includes('Afternoons')?'⬤':''}</td>
+                        <td>${u_a_wed.includes('Evenings')?'⬤':''}</td>
+                    </tr>
+                    <tr>
+                        <th>Thu</th>
+                        <td>${u_a_thu.includes('Mornings')?'⬤':''}</td>
+                        <td>${u_a_thu.includes('Afternoons')?'⬤':''}</td>
+                        <td>${u_a_thu.includes('Evenings')?'⬤':''}</td>
+                    </tr>
+                    <tr>
+                        <th>Fri</th>
+                        <td>${u_a_fri.includes('Mornings')?'⬤':''}</td>
+                        <td>${u_a_fri.includes('Afternoons')?'⬤':''}</td>
+                        <td>${u_a_fri.includes('Evenings')?'⬤':''}</td>
+                    </tr>
+                    <tr>
+                        <th>Sat</th>
+                        <td>${u_a_sat.includes('Mornings')?'⬤':''}</td>
+                        <td>${u_a_sat.includes('Afternoons')?'⬤':''}</td>
+                        <td>${u_a_sat.includes('Evenings')?'⬤':''}</td>
+                    </tr>
+                    </table>`;
 
+                }
 
                 //Set datastate
                 q('#covidInjectionConsoleDataState').innerHTML = JSON.stringify({
