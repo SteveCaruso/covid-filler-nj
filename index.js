@@ -928,7 +928,7 @@ It's a *snicker* JavaScript injection... :-)
 
                     let clipdata = new Array(bigindex+1);
 
-                    for (var i in ODX) {
+                    for (var i in ODX) { console.log(i);
                         
                         //clipdata[ODX[i]] = i;
 
