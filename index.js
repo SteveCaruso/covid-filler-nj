@@ -351,18 +351,14 @@ It's a *snicker* JavaScript injection... :-)
                 if (q('#col_'+IDX[i])) q('#col_'+IDX[i]).value = i;
             }
 
-            console.log(ODX);
-            if (ODX.length > 0) { 
+           q('#output_toggle').checked = true;
 
-                q('#output_toggle').checked = true;
+            for (var i=0; i<52; i++) if('#out_col_'+i) q('#out_col_'+i).value = "";
 
-                for (var i=0; i<52; i++) if('#out_col_'+i) q('#out_col_'+i).value = "";
+            for (var i in ODX) { q('#output_toggle').checked = true;
 
-                for (var i in IDX) {
-                    console.log(`Setting ${i} to out_col ${IDX[i]}`);
-                    q('#out_col_'+ODX[i]).value = i;
-                }
-
+                console.log(`Setting ${i} to out_col ${ODX[i]}`);
+                q('#out_col_'+ODX[i]).value = i;
             }
 
             return;
