@@ -458,10 +458,11 @@ It's a *snicker* JavaScript injection... :-)
             //And here is the output form
             output = document.createElement("div");
             output.id = "covidInjectionOutput";
+            let volname = localStorage.getItem('volunteerName') == null ? "" : localStorage.getItem('volunteerName');
             output.innerHTML = `<strong>Vaccination Information</strong>
                 <br>
                 <label for="covidInjectionOutput_vac_vol">Volunteer Name:<br>
-                <input id="covidInjectionOutput_vac_vol" type="text" value="${localStorage.getItem('volunteerName')}"></label>
+                <input id="covidInjectionOutput_vac_vol" type="text" value="${volname}"></label>
                 <br>
                 <label for="covidInjectionOutput_vac_type">Vaccine Type:<br>
                 <select id="covidInjectionOutput_vac_type">
