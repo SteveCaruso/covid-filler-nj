@@ -469,7 +469,7 @@ It's a *snicker* JavaScript injection... :-)
                     <option value="">Choose</option>
                     <option id="covidInjectionOutput_moderna" value="Moderna">Moderna</option>
                     <option id="covidInjectionOutput_pfizer" value="Pfizer">Pfizer</option>
-                    <option id="covidInjectionOutput_jnj" value="JnJ">J&amp;J/Jansen</option>
+                    <option id="covidInjectionOutput_jnj" value="JnJ">J&amp;J / Jansen</option>
                     <option id="covidInjectionOutput_unknown" value="Unknown">Unknown</option>
                 </select></label>
                 <br>
@@ -920,7 +920,8 @@ It's a *snicker* JavaScript injection... :-)
                         vac_type    : q('#covidInjectionOutput_vac_type').value,
                         vac_date    : q('#covidInjectionOutput_vac_loc').value,
                         vac_date_2  : q('#covidInjectionOutput_vac_date').value,
-                        vac_loc     : q('#covidInjectionOutput_vac_date_2').value
+                        vac_loc     : q('#covidInjectionOutput_vac_date_2').value,
+                        vac_website : location.host
                     };
 
                     //Find largest index
