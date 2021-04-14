@@ -106,13 +106,6 @@
     <h1>CoVID Injection</h1>
     <h2>A JavaScript Autofill Injection Bookmarklet For CoVID Vaccine Signups</h2>
 
-    <h3>Custom Bookmarklet Generator</h3>
-
-    <p>If you don't need a custom bookmarklet, head <a href="index.html">back to the main page</a>.</p>
-
-    <p>If you're using a spreadsheet that does not use the <a href="https://github.com/SteveCaruso/covid-filler-nj#spreadsheet-description" target="_blank">default format that's described in the README.md on GitHub</a>, you can use this page to generate a custom one for your own system.</p>
-
-
     <h3>Generate Bookmarklet: (Scroll horizontally for more cels)</h3>
 
     <h4>Input Spreadsheet:</h4>
@@ -357,15 +350,20 @@
 
     </script>
 
-    <h3>If You're Having Trouble</h3>
-
-    <p>If you can't seem to get the bookmarklet to work with your custom form, <a href="https://github.com/SteveCaruso/covid-filler-nj/issues">submit an issue on GitHub</a>. We will help you to get it up and running!</p>
-
     <h3>Pre-Generated Custom Buttons For Different Groups:</h3>
 
     <ul>
-        <li><a href="javascript:(function()%7Bfunction callback()%7Bwindow.COVID.inject(%5B1,2,3,4,5,6,7,8,9,-1,18,-1,-1,-1,19%5D)%7Dvar s%3Ddocument.createElement(%22script%22)%3Bs.src%3D%22https%3A%2F%2Fcovid-injection.netlify.app%2Findex.js%22%3Bif(s.addEventListener)%7Bs.addEventListener(%22load%22%2Ccallback%2Cfalse)%7Delse if(s.readyState)%7Bs.onreadystatechange%3Dcallback%7Ddocument.body.appendChild(s)%3B%7D)()" class="vaxbutton">HPVaxHelp Injection</a></li>
+        
+        <!--<li><a href="javascript:(function()%7Bfunction callback()%7Bwindow.COVID.inject(%5B1,2,3,4,5,6,7,8,9,-1,18,-1,-1,-1,19%5D)%7Dvar s%3Ddocument.createElement(%22script%22)%3Bs.src%3D%22https%3A%2F%2Fcovid-injection.netlify.app%2Findex.js%22%3Bif(s.addEventListener)%7Bs.addEventListener(%22load%22%2Ccallback%2Cfalse)%7Delse if(s.readyState)%7Bs.onreadystatechange%3Dcallback%7Ddocument.body.appendChild(s)%3B%7D)()" class="vaxbutton">HPVaxHelp Injection</a></li>-->
     </ul>
+
+    <h3>How Do I Use This?</h3>
+
+    <p>A video tutorial is coming soon.</p>
+
+    <h3>If You're Having Trouble</h3>
+
+    <p>If you can't seem to get the bookmarklet to work with your custom form, <a href="https://github.com/SteveCaruso/covid-filler-nj/issues">submit an issue on GitHub</a>. We will help you to get it up and running!</p>
 
     <script>
 
@@ -380,15 +378,19 @@
 
     </script>
 
-    <h3>For Occupation and Health</h3>
+    <h3>Acceptable Formats</h3>
 
-    <h4>The Occupation field only recognizes the following values:</h4>
+    <h4>Occupation</h4>
+
+    <p>The following values are recognized:</p>
 
     <blockquote>"Airport and Commercial Airlines" <br> "Childcare Worker" <br> "Clergy" <br> "Clergy and Other Essential Support for House of Worship" <br> "Correctional Officers" <br> "Emergency Medical Services (EMS)" <br> "Essential Worker" <br> "Family Childcare Providers" <br> "Firefighters" <br> "First Responder" <br> "Food and Agricultural Workers" <br> "Funeral Services" <br> "Grocery Workers" <br> "Head Start and Early Head Start" <br> "Health Care Worker" <br> "Janitorial Staff" <br> "Judicial Staff" <br> "Judiciary" <br> "Law Enforcement" <br> "Local Transportation" <br> "Long Term Care Facility Staff" <br> "Mail Carriers" <br> "Manufacturing Workers" <br> "Members of tribal communities" <br> "Migrant Farm Workers" <br> "Multigenerational Household" <br> "Persons experiencing homelessness" <br> "Persons living in shelters" <br> "Pharmacy Staff" <br> "Postal and Shipping Services" <br> "Pre-Kindergarten -12th grade Educator & Staff" <br> "Public Health Employee" <br> "Public Safety Workers" <br> "Public Transit Workers" <br> "U.S. Postal Service" <br> "Veterinarians and Support Staff" <br> "None of the Above"</blockquote>
 
     <p>Anything not on the above list will either be interpreted as "None of the Above" or substituted for dummy information.</p>
 
-    <h4>The Health Conditions field only recognizes the following values:</h4>
+    <h4>Health Conditions</h4>
+
+    <p>The following values are recognized:</p>
 
     <blockquote>"Asthma-with hospitalization" <br> "Amyotrophic Lateral Asclerosis (ALS)" <br> "Asthma" <br> "Bone Marrow Transplant" <br> "COPD" <br> "Cancer" <br> "Cerebral Palsy" <br> "Cystic Fibrosis" <br> "Diabetes" <br> "Down Syndrome" <br> "Epilepsy" <br> "HIV" <br> "Heart Condition" <br> "Intellectual and Developmental Disabilities" <br> "Kidney Disease" <br> "Liver Disease" <br> "Metabolic Disorders" <br> "Muscular Dystrophy" <br> "Neurologic Condition" <br> "Obesity" <br> "Organ transplant" <br> "Pregnancy" <br> "Pulmonary Fibrosis" <br> "Severe Genetic Disorders" <br> "Sickle Cell Anemia" <br> "Smoking" <br> "Spina Bifida" <br> "Weakened Immune System" <br> "None of the Above"</blockquote>
 
