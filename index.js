@@ -481,7 +481,7 @@ It's a *snicker* JavaScript injection... :-)
                 <label for="covidInjectionOutput_vac_date_2">Second Dose Date:<br>
                 <input id="covidInjectionOutput_vac_date_2" type="datetime-local"></label>
                 <br>
-                <button id="covidInjectionOutput_copy" style="border:2px solid black; border-radius:4px; padding:.5ex;">Copy to Clipboard</button><br>
+                <button id="covidInjectionOutput_copy" style="color:white; border:1px solid #333; border-radius:7px; padding:.5ex;">Copy Output to Clipboard</button><br>
                 (This will overwrite what you currently have in it.)`;
             output.style.fontFamily = "Arial";
             output.style.padding = "1ex";
@@ -951,7 +951,14 @@ It's a *snicker* JavaScript injection... :-)
                         
                         log("Copied!");
 
-                        //Make it blink or something.
+                        //Messy, but here we go.
+                        q('#covidInjectionOutput_copy').style.transitionDuration = "0s";
+                        q('#covidInjectionOutput_copy').style.backgroundColor = "#FCC";
+
+                        pause(1000).then(() => {
+                            q('#covidInjectionOutput_copy').style.transitionDuration = "1s";
+                            q('#covidInjectionOutput_copy').style.backgroundColor = "#FFF";
+                        });
 
                     });
 
