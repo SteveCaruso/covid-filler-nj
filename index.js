@@ -1288,8 +1288,8 @@ It's a *snicker* JavaScript injection... :-)
                         var age = (new Date().getFullYear()) - parseInt(u_bday_YYYY);
                         set('#q1_0',age);
 
-                        //Over 65
-                        if (age >= 65) {
+                        //Over 55
+                        if (age >= 55) {
                             click('#q20');
                         }
 
