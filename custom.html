@@ -249,6 +249,15 @@
 
     <script>
 
+        //Pause function
+        var pause = function (time) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve();
+                }, time);
+            });
+        }
+
         const req_fields = {
             email:-1,
             fname:-1,
@@ -276,6 +285,19 @@
 
         document.querySelector('#generate').addEventListener('click',() => {
 
+            //The output area
+            let results = document.querySelector("#generationResults");
+
+            //Make it flash
+            //Same mess as in index.js, but here we go.
+            results.style.transitionDuration = "0s";
+            results.style.backgroundColor = "#333";
+
+            pause(100).then(() => {
+                results.style.transitionDuration = "1s";
+                results.style.backgroundColor = "#111";
+            });
+
             //Pre-fill results array
             var finalSet = {}; for (var f in req_fields) finalSet[f] = req_fields[f];
 
@@ -290,8 +312,6 @@
             }
 
             document.querySelector("#generationResults").innerHTML = "";
-
-            let results = document.querySelector("#generationResults");
 
             let errors = [];
 
