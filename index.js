@@ -243,6 +243,7 @@ It's a *snicker* JavaScript injection... :-)
             "www.cvs.com",
             "www.zocdoc.com",
             "curogram.com",
+            "vaccine.lpgrx.us",
             "covid-injection-dev.netlify.app",
             "covid-injection.netlify.app"
         ];
@@ -542,6 +543,7 @@ It's a *snicker* JavaScript injection... :-)
 
         };
 
+        //Set querySelectorAll index
         var setqai = function(query,index,value,events) {
 
             let theSet = document.querySelectorAll(query);
@@ -573,6 +575,7 @@ It's a *snicker* JavaScript injection... :-)
 
         };
 
+        //Click
         var click = function(query,index) {
 
             log(`Click ${query}.`);
@@ -586,6 +589,7 @@ It's a *snicker* JavaScript injection... :-)
 
         }
 
+        //Click querySelectorAll index
         var clickqai = function(query) {
 
             log(`Click ${query}{${index}}.`);
@@ -607,6 +611,7 @@ It's a *snicker* JavaScript injection... :-)
 
         }
 
+        //Set the status
         var stat = function(str) {
 
             q('#COVID-STATUS').innerHTML = str;
@@ -1617,7 +1622,6 @@ It's a *snicker* JavaScript injection... :-)
                 } //END CVS
 
 
-
                 /*
                     ZocDoc (Handles several portals)
                 */
@@ -1697,7 +1701,7 @@ It's a *snicker* JavaScript injection... :-)
 
                     }
 
-                }
+                } //END ZocDoc
 
 
                 /*
@@ -1934,7 +1938,119 @@ It's a *snicker* JavaScript injection... :-)
 
                     }
                 
-                }//END VNA
+                } //END VNA
+
+
+                /*
+                    Albertsons
+                */
+                else if (host == "www.mhealthappointments.com") {
+
+                    if (location.pathname == "/covidappt") {
+
+                        stat("Albertsons Front Page Detected<br>Searching for availability.<br> Continue manually.");
+
+                        //Input zip code
+                        set("#covid_vaccine_search_input",u_zip);
+
+                        //Their own function
+                        checkAvailabilityAndSearch();
+
+                    }
+                    else {
+                        log("Albertsons Detected.<br>Unknown page.");
+                    }
+
+                } //END Albertsons
+
+
+                /*
+                    Legacy Pharma Group
+                */
+                else if (host == "vaccine.lpgrx.us") {
+
+                    if (location.pathname == "/") {
+                        
+                        stat("Legacy Pharma Groups Detected.<br>Select pharmacy in dropdown and locate appointment.<br>Upload ID information.<br>Then continue manually.");
+
+                        var age = (new Date().getFullYear()) - parseInt(u_bday_YYYY);
+
+                        //Category
+                        //Health worker or not
+                        if (occs[u_occupation] == "Healthcare workers") {
+                            set("age","Health care personnel");
+                            set('#health_worker',"Yes");
+                        }
+                        //Over 65
+                        else if (age >= 65) {
+                            set("age","Persons ages 65 and older");
+                        }
+                        //Health condition
+                        else if (u_health_conditions != "None of the above") {
+                            set("age","Persons ages 16-64 with high-risk conditions as identified by the CDC");
+                        }
+                        //Else -- not perfect but most cases
+                        else {
+                            set("age",occs[u_occupation]);
+                        }
+
+                        //State
+                        set("#state_id",u_state_name);
+
+                        //Birthday
+                        set("#date_of_birth",""+u_bday_YYYY+u_bday_MM+u_bday_DD);
+
+                        //First name
+                        set('#patient_name',u_fname);
+
+                        //Last name
+                        set('#patient_last_name',u_lname);
+
+                        //Email
+                        set('#patient_email',u_email);
+
+                        //Phone Number
+                        set('#phone_number',u_phone);
+
+                        //Gender
+                        if (u_gender == "Male") set('#gender').value = "Male";
+                        else if (u_gender == "Female") set('#gender').value = "Female";
+                        else set('#gender').value = "Unknown";
+
+                        //Race
+                        set('#race_id',"Prefer not to specify");
+
+                        //Ethnicity
+                        set('#ethnicity_id',"Prefer not to specify");
+
+                        //Address
+                        set('#address',u_address);
+
+                        //Address 2
+                        set('#address2',u_address_2);
+
+                        //City
+                        set('#city',u_city);
+
+                        //State
+                        set('#state',u_state_name);
+
+                        //Zip
+                        set('#zip_code',u_zip);
+
+                        //Address type
+                        set('#address_type',"Home");
+
+                        //Insurance - nah
+                        set('#have_insurance',"No");
+
+                    }
+                    else {
+                        log("Legacy Pharma Groups Detected.<br>Unknown page.");
+                    }
+
+                } //END Legacy
+
 
             });
 
