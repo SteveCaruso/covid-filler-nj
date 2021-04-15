@@ -23,12 +23,19 @@
             }
 
         }
+        #tutorial {
+            display:block;
+            margin-left:auto;
+            margin-right:auto;
+            width:560px;
+            max-width:100%;
+        }
     </style>
 
 </head>
 <body>
     
-    <h1>CoVID Injection</h1>
+    <h1>CoVID Injection 💉</h1>
     <h2>A JavaScript Autofill Injection Bookmarklet For CoVID Vaccine Signups</h2>
 
     <h3>What is CoVID Injection?</h3>
@@ -37,27 +44,11 @@
 
     <h3>How Can I Install It?</h3>
 
-    <h4>If you're using a spreadsheet that is compatible with the default column configuration:</h4>
-        
-    <p>Click and drag the 
-        
-        <a id="injector" href="javascript:(function()%7Bfunction%20callback()%7Bwindow.COVID.inject()%7Dvar%20s%3Ddocument.createElement(%22script%22)%3Bs.src%3D%22https%3A%2F%2Fcovid-injection.netlify.app%2Findex.js%22%3Bif(s.addEventListener)%7Bs.addEventListener(%22load%22%2Ccallback%2Cfalse)%7Delse%20if(s.readyState)%7Bs.onreadystatechange%3Dcallback%7Ddocument.body.appendChild(s)%3B%7D)()" style="border:3px solid gray; background-color:gray; color:white; border-radius:3px; font-weight:bold; text-decoration:none;">CoVID Injection</a>
+    <p>Watch the tutorial here:</p>
 
-        <script>
+    <iframe id="tutorial" width="560" height="315" src="https://www.youtube.com/embed/fhF3Gt-dXhg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-            //Fix link if in dev branch
-            if (location.host == "covid-injection-dev.netlify.app") {
-                var h = document.querySelector("#injector").href;
-                document.querySelector("#injector").href = h.replace("covid-injection.netlify.app","covid-injection-dev.netlify.app");
-            }
-
-        </script>
-        
-        link into your bookmark bar. That's it.</p>
-
-    <h4>If you're using your own custom spreadsheet:</h4>
-
-    <p>Visit the custom <a href="custom.html">bookmarklet generator page here</a>.</p>
+    <p>Then visit the <a href="custom.html">bookmarklet generator page here</a>.</p>
 
     <h3>How Do I Uninstall It?</h3>
 
@@ -65,13 +56,15 @@
 
     <h3>How Can I Use It?</h3>
 
-    <p>Three easy steps:</p>
+    <p>After configuration, basic operation requires three easy steps:</p>
 
     <ol>
         <li>Copy the line of the spreadsheet that has the user's information you wish to sign up with into your clipboard.</li>
         <li>Go to the vaccine portal.</li>
-        <li>Click on the bookmarklet you put in your bookmarks bar.</li>
+        <li>Click on the bookmarklet you put in your bookmarks bar and follow the instructions.</li>
     </ol>
+
+    <p>Advanced operation can be found on the <a href="custom.html">bookmarklet generator page here</a>.</p>
 
     <h3>Which Vaccine Portals Are Supported?</h3>
 
@@ -80,13 +73,12 @@
     <ul>
         <li><a href="https://www.riteaid.com/pharmacy/covid-qualifier" target="_blank">Rite Aid</a></li>
         <li><a href="https://www.cvs.com/immunizations/covid-19-vaccine" target="_blank">CVS</a></li>
+        <li>Most <a href="https://www.curogram.com" target="_blank">Curogram</a>-based signups.</li>
     </ul>
 
-    <h3>Is Any Spreadsheet Supported?</h3>
+    <h3>Can I Help?</h3>
 
-    <p>Right now this is being built and maintained for the Christ Church New Brunswick (CCNB) CoVID-19 Vaccine Signup. This spreadsheet assumes that the data in your clipboard is tab-delimited and that the columns come in a specific order.</p>
-        
-    <p>However, <a href="https://github.com/SteveCaruso/covid-filler-nj">it can be forked on GitHub</a> and adapted, if you have sufficient coding skills.</p>
+    <p>Check the project out on <a href="https://github.com/SteveCaruso/covid-filler-nj">GitHub</a>.</p>
 
 </body>
 </html>

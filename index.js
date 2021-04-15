@@ -8,6 +8,123 @@ It's a *snicker* JavaScript injection... :-)
 
 (function() {
 
+    //What occupations qualify? This reverse hash tree is designed to collapse all former field data into the official categories.
+    //It'll be properly hashed in the next assignment
+    var qualifiedOccs = {
+        "Childcare workers in licensed and registered settings" : [
+            "Childcare Worker",
+            "Family Childcare Providers"
+        ],
+        "Clergy" : [
+            "Clergy and Other Essential Support for House of Worship"
+        ],
+        "Communications, IT, and media workers" : [
+
+        ],
+        "Educators and staff, including pre-K to 12 and higher education" : [
+            "Head Start and Early Head Start",
+            "Pre-Kindergarten -12th grade Educator & Staff"
+        ],
+        "Eldercare and support workers" : [
+            "Multigenerational Household"
+        ],
+        "Elections personnel" : [
+
+        ],
+        "First responders" : [
+            "Emergency Medical Services (EMS)",
+            "Firefighters",
+            "First Responder",
+            "Law Enforcement",
+            "Veterinarians and Support Staff"
+        ],
+        "Healthcare workers" : [
+            "Health Care Worker",
+            "Public Health Employee",
+            "Funeral Services"
+        ],
+        "Hospitality workers" : [
+            "Grocery Workers",
+            "Janitorial Staff"
+        ],
+        "Individuals experiencing homelessness and those living in shelters" : [
+            "Persons experiencing homelessness",
+            "Persons living in shelters"
+        ],
+        "Judicial system workers" : [
+            "Judicial Staff",
+            "Judiciary"
+        ],
+        "Laundry services workers" : [
+
+        ],
+        "Librarians and library support staff" : [
+
+        ],
+        "Long-term care and high-risk congregate care facility residents and staff" : [
+            "Long Term Care Facility Staff"
+        ],
+        "Medical supply chain employees" : [
+            "Pharmacy Staff"
+        ],
+        "Members of tribal communities" : [
+            "Members of tribal communities"
+        ],
+        "Migrant farm workers" : [
+            "Food and Agricultural Workers",
+            "Migrant Farm Workers"
+        ],
+        "Postal and shipping service workers" : [
+            "Mail Carriers",
+            "Postal and Shipping Services",
+            "U.S. Postal Service"
+        ],
+        "Public safety workers" : [
+            "Correctional Officers",
+            "Public Safety Workers"
+        ],
+        "Real estate, building, and home services workers" : [
+
+        ],
+        "Retail financial institution workers" : [
+
+        ],
+        "Sanitation workers" : [
+
+        ],
+        "Social service workers and support staff" : [
+
+        ],
+        "Transportation workers" : [
+            "Airport and Commercial Airlines",
+            "Local Transportation",
+            "Public Transit Workers"
+        ],
+        "Utilities workers" : [
+
+        ],
+        "Warehousing and logistics workers" : [
+
+        ]
+    };
+
+    //Unfold the hash
+    var occs = {};
+    for (var i in qualifiedOccs) {
+        occs[i] = i;
+        for (var j in qualifiedOccs[i]) {
+            occs[ qualifiedOccs[i][j] ] = i;
+        }
+    }
+    qualifiedOccs = occs;
+
+    /*
+        Where to put :
+            Essential Worker
+            Manufacturing Workers
+    */
+
+
     //Translation text for data given in forms other than English
     //YES it would be better to change the form so it's all in English or has a language neutral internal state
     // ... but we went with Google Forms and that's not possible. So we need to work around it.
@@ -94,7 +211,6 @@ It's a *snicker* JavaScript injection... :-)
         }
     };
 
-
     //Language input data
     const LANG = "en";
 
@@ -105,7 +221,7 @@ It's a *snicker* JavaScript injection... :-)
     }
 
     //Do the thing!
-    async function inject(colOrder) {
+    async function inject(colOrder,outOrder) {
 
         //Pause function
         var pause = function (time) {
@@ -118,15 +234,17 @@ It's a *snicker* JavaScript injection... :-)
 
         //Shorten some commonly-used stuff
         var host = document.location.host;
-        var el = document.getElementById.bind(document);
-        var q = document.querySelector.bind(document);
+        const el = document.getElementById.bind(document);
+        const q = document.querySelector.bind(document);
 
         //List of supported hosts
         const supported = [
             "www.riteaid.com",
             "www.cvs.com",
             "www.zocdoc.com",
-            "curogram.com"
+            "curogram.com",
+            "covid-injection-dev.netlify.app",
+            "covid-injection.netlify.app"
         ];
 
         //Check to see if we're *on* a supported host, otherwise we shouldn't mess with it.
@@ -142,12 +260,14 @@ It's a *snicker* JavaScript injection... :-)
         //const COLS = 24; //Unneeded now.
 
         //Data columns - These are the indexes (starting with 0) for each piece of user info we'll need. If you're using your own form, you'll need to change these to match your order.
+        //THESE will soon be obsolete.
+        /*
         var EMAIL = 1;
         var FNAME = 2;
         var LNAME = 3;
         var BDAY = 4;
         var PHONE = 5;
-        var ADDR = 6;
+        var ADDR = 6;   var ADDR2 = -1; //We'll need the second field soon... I'm a dork for not doing this
         var CITY = 7;
         var STATE = 8;
         var ZIP = 9;
@@ -157,12 +277,93 @@ It's a *snicker* JavaScript injection... :-)
         var EMP = 13;
         var HEALTH = 14;
         var NOTES = 17;
+        //Additional notes fields
+        var NOTES2 = -1;
+        var NOTES3 = -1;
 
-        const DEFAULT_COLS = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,17];
+        //Availability grid (new visualization based on Google Forms)
+        var A_SUN = -1;
+        var A_MON = -1;
+        var A_TUE = -1;
+        var A_WED = -1;
+        var A_THU = -1;
+        var A_FRI = -1;
+        var A_SAT = -1;
 
-        //If different columns are passed, set them
-        if (colOrder) {
-            [EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = colOrder;
+        const DEFAULT_COLS = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,17];*/
+
+        //New default columns system!
+        const DEFAULT_IDX = {
+            email:1,
+            fname:2,
+            lname:3,
+            bday:4,
+            phone:5,
+            addr:6,
+            addr2:-1,
+            city:7,
+            state:8,
+            zip:9,
+            sex:10,
+            gen:11,
+            occ:12,
+            emp:13,
+            health:14,
+            notes:17,
+            notes2:-1,
+            notes3:-1,
+            notes4:-1,
+            a_sun:-1,
+            a_mon:-1,
+            a_tue:-1,
+            a_wed:-1,
+            a_thu:-1,
+            a_fri:-1,
+            a_sat:-1
+        };
+
+        //The new INDEX! -- copy defaults
+        var IDX = {}; for (var i in DEFAULT_IDX) IDX[i] = -1;
+
+        //The new OUTDEX
+        var ODX = {};
+
+        //Invalidate all of the old bookmarklets
+        if (colOrder == null && outOrder == null) {
+            if (confirm("You are using an outdated bookmarklet. Should I redirect you to the CoVID Injection website so you can get a new one?")) {
+                location.href="https://covid-injection.netlify.app";
+            }
+        }
+
+        //Read in columns
+        for (var i in colOrder) IDX[i] = colOrder[i];
+
+        //Read out columns
+        for (var i in outOrder) ODX[i] = outOrder[i];
+
+        //If you're on the bookmarklet page, load everything in, and then return.
+        if (location.href == "https://covid-injection-dev.netlify.app/custom.html" || location.href == "https://covid-injection.netlify.app/custom.html") {
+
+            alert("Loading this bookmarklet's configuration into the custom bookmarklet maker...");
+
+            for (var i=0; i<52; i++) q('#col_'+i).value = "";
+            
+            for (var i in IDX) {
+                console.log(`Setting ${i} to col ${IDX[i]}`);
+                if (q('#col_'+IDX[i])) q('#col_'+IDX[i]).value = i;
+            }
+
+           q('#output_toggle').checked = true;
+
+            for (var i=0; i<52; i++) if('#out_col_'+i) q('#out_col_'+i).value = "";
+
+            for (var i in ODX) { q('#output_toggle').checked = true;
+
+                console.log(`Setting ${i} to out_col ${ODX[i]}`);
+                q('#out_col_'+ODX[i]).value = i;
+            }
+
+            return;
         }
 
         //Numerical month to Full Month
@@ -183,6 +384,8 @@ It's a *snicker* JavaScript injection... :-)
 
         //Construct and/or recognize the button
         var button = q('#covidInjectionButton');
+        var cconsole = q('#covidInjectionConsole');
+        var output = q('#covidInjectionOutput');
 
         //If it's not there, let's add it
         if (button == null) {
@@ -198,6 +401,7 @@ It's a *snicker* JavaScript injection... :-)
                     Then click here.
                 </div>`;
             button.style.fontFamily = "Arial";
+            button.style.padding = "1ex";
             button.style.width="250px";
             button.style.position = "fixed";
             button.style.left="10px";
@@ -207,11 +411,208 @@ It's a *snicker* JavaScript injection... :-)
             button.style.borderRadius = "5px";
             button.style.boxShadow = "5px 5px 5px 5px rgba(0,0,0,.5)";
             button.style.whiteSpace = "normal !important";
-            //button.style.overflowWrap = "";
+            button.style.overflowWrap = "normal !important";
+            button.style.wordWrap = "break-word !important";
+            button.style.backgroundColor = "#EEE";
         
             //Inject the button into the document
             document.body.appendChild(button);
+
+            //Let's also make a debug console that is separate from the regular console, so that helpers can submit bug reports more easily
+            cconsole = document.createElement("div");
+            cconsole.id = "covidInjectionConsole";
+            cconsole.innerHTML = `<strong>CoVID Injector 💉 Message Console <a href="javascript:navigator.clipboard.writeText(document.getElementById('covidInjectionConsole').innerText);">[copy to clipboard]</a></strong>
+                <div id="covidInjectionConsoleDataState" style="font-size:50%"></div>
+                <div><strong>Actions:</strong></div>
+                <div id="covidInjectionConsoleMessages" style="font-size:75%"></div>`;
+            cconsole.style.fontFamily = "Arial";
+            cconsole.style.position = "fixed";
+            cconsole.style.left="20%";
+            cconsole.style.top="20%";
+            cconsole.style.right="20%";
+            cconsole.style.bottom="20%";
+            cconsole.style.border="3px solid darkgoldenrod";
+            cconsole.style.color = "darkgoldenrod";
+            cconsole.style.padding = "20px";
+            cconsole.style.backgroundColor = `rgba(0,0,0,.9)`;
+            cconsole.style.boxShadow = "5px 5px 5px 5px rgba(0,0,0,.5)";
+            cconsole.style.zIndex = 10001;
+            cconsole.style.borderRadius = "5px";
+            cconsole.style.whiteSpace = "normal !important";
+            cconsole.style.overflowWrap = "normal !important";
+            cconsole.style.overflow = "scroll";
+            cconsole.style.height="300px";
+            cconsole.style.display = "none";
+
+            //Inject the console into the document
+            document.body.appendChild(cconsole);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.code == "Backquote") {
+                    if (cconsole.style.display == "none") cconsole.style.display = "block";
+                    else cconsole.style.display = "none";
+                }
+            });
+
+
+            //And here is the output form
+            output = document.createElement("div");
+            output.id = "covidInjectionOutput";
+            let volname = localStorage.getItem('volunteerName') == null ? "" : localStorage.getItem('volunteerName');
+            output.innerHTML = `<strong>Vaccination Information</strong>
+                <br>
+                <label for="covidInjectionOutput_vac_vol">Volunteer Name:<br>
+                <input id="covidInjectionOutput_vac_vol" type="text" value="${volname}"></label>
+                <br>
+                <label for="covidInjectionOutput_vac_type">Vaccine Type:<br>
+                <select id="covidInjectionOutput_vac_type">
+                    <option value="">Choose</option>
+                    <option id="covidInjectionOutput_moderna" value="Moderna">Moderna</option>
+                    <option id="covidInjectionOutput_pfizer" value="Pfizer">Pfizer</option>
+                    <option id="covidInjectionOutput_jnj" value="JnJ">J&amp;J / Jansen</option>
+                    <option id="covidInjectionOutput_unknown" value="Unknown">Unknown</option>
+                </select></label>
+                <br>
+                <label for="covidInjectionOutput_vac_loc">Location:<br>
+                <input id="covidInjectionOutput_vac_loc" type="text"></label>
+                <br>
+                <label for="covidInjectionOutput_vac_date">First Dose Date:<br>
+                <input id="covidInjectionOutput_vac_date" type="datetime-local"></label>
+                <br>
+                <label for="covidInjectionOutput_vac_date_2">Second Dose Date:<br>
+                <input id="covidInjectionOutput_vac_date_2" type="datetime-local"></label>
+                <br>
+                <button id="covidInjectionOutput_copy" style="background-color:white; border:1px solid #333; border-radius:7px; padding:.5ex;">Copy Output to Clipboard</button><br>
+                (This will overwrite what you currently have in it.)`;
+            output.style.fontFamily = "Arial";
+            output.style.padding = "1ex";
+            output.style.textAlign = "center";
+            output.style.position = "fixed";
+            output.style.width="250px";
+            output.style.right="10px";
+            output.style.top="10px";
+            output.style.border="3px solid red";
+            output.style.zIndex = 10000;
+            output.style.borderRadius = "5px";
+            output.style.boxShadow = "5px 5px 5px 5px rgba(0,0,0,.5)";
+            output.style.whiteSpace = "normal !important";
+            output.style.overflowWrap = "normal !important";
+            output.style.wordWrap = "break-word !important";
+            output.style.display = "none";
+            output.style.backgroundColor = "#EEE";
+
+            //Inject the console into the document
+            document.body.appendChild(output);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.code == "Equal") {
+                    if (output.style.display == "none") output.style.display = "block";
+                    else output.style.display = "none";
+                }
+            });
+
         }
+
+        //Logging function
+        var log = function(str) {
+            q('#covidInjectionConsoleMessages').innerHTML += `<div>${str}</div>`;
+        }
+
+        //Add set function - this makes things easier
+        var set = function (query,value,events) {
+
+            if (q(query) == null) {
+                log(`ERROR: ${query} not found in the document.`);
+                return false;
+            }
+
+            if (events == null) events = ["input","change"];
+
+            log(`Set ${query} to "${value}" with events [${events.join(',')}].`);
+
+            //Set the element's value accordingly
+            q(query).value = value;
+
+            //Then fire off appropriate events
+            if (events) {
+                for (var e in events) {
+                    q(query).dispatchEvent(new Event(events[e],{ bubbles: true }));
+                }
+            }
+
+        };
+
+        var setqai = function(query,index,value,events) {
+
+            let theSet = document.querySelectorAll(query);
+
+            if (theSet.length == 0) {
+                log(`ERROR: querySelectorAll(${query}) not found in the document.`);
+                return false;
+            }
+            if (index >= theSet.length) {
+                log(`ERROR: Index ${index} is out of bounds in setqai.`);
+                return false;
+            }
+
+            let elem = theSet[index];
+
+            if (events == null) events = ["input","change"];
+
+            log(`Set ${query}{${index}} to "${value}" with events [${events.join(',')}].`);
+
+            //Set the element's value accordingly
+            elem.value = value;
+
+            //Then fire off appropriate events
+            if (events) {
+                for (var e in events) {
+                    elem.dispatchEvent(new Event(events[e],{ bubbles: true }));
+                }
+            }
+
+        };
+
+        var click = function(query,index) {
+
+            log(`Click ${query}.`);
+
+            if (q(query) == null) {
+                log(`ERROR: ${query} not found in the document.`);
+                return false;
+            }
+
+            q(query).click();
+
+        }
+
+        var clickqai = function(query) {
+
+            log(`Click ${query}{${index}}.`);
+
+            let theSet = document.querySelectorAll(query);
+
+            if (theSet.length == 0) {
+                log(`ERROR: querySelectorAll(${query}) not found in the document.`);
+                return false;
+            }
+            if (index >= theSet.length) {
+                log(`ERROR: Index ${index} is out of bounds in clickqai.`);
+                return false;
+            }
+
+            let elem = theSet[index];
+
+            elem.click();
+
+        }
+
+        var stat = function(str) {
+
+            q('#COVID-STATUS').innerHTML = str;
+            log(`<strong>${str}</strong>`);
+
+        };
 
         //Add the function that fires when that button is clicked
         button.onclick = function() { try {
@@ -222,74 +623,86 @@ It's a *snicker* JavaScript injection... :-)
                 //Split the clipboard data by the delimiter
                 c = c.split(DELIM);
 
+                
+
+                //Detect language
+                //figure that out... still...
+
+                
+
+
+                //Here we need to tease out the given data into whatever different formats we may need
+
+
+                //Do zip code first
+                var u_zip = c[IDX["zip"]];
+
                 //Better check for now, instead of columns: See if the zip code is in the right place
                 //if (c.length != COLS) {
-                if ( !/^\d\d\d\d\d$/.test(c[ZIP]) ) {
+                if ( !/^\d\d\d\d\d$/.test(u_zip) ) {
 
                     var clength = c.length;
 
                     navigator.clipboard.writeText(`TEST DATA	john.doe.wiley.jane1938@gmail.com	Jim	Doe	4/15/1938	7328679420	9.75 River Rd	Highland Park	New Jersey	08904	Male	Male	None of the Above		Obesity	No	No	<strong>Remember to copy the real data into your clipboard when you're scheduling!</strong>						`).then( c => {
 
-                        alert(`You do not appear to have the data you need in your clipboard. (Zip code expected in column ${ZIP}, but not found.) Dummy data 'Jim Doe' has just been copied.`);
+                        alert(`You do not appear to have the data you need in your clipboard. (Zip code expected in column ${IDX["zip"]}, but not found.) Dummy data 'Jim Doe' has just been copied.`);
 
-                        [EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = DEFAULT_COLS;
+                        //[EMAIL, FNAME, LNAME, BDAY, PHONE, ADDR, CITY, STATE, ZIP, SEX, GEN, OCC, EMP, HEALTH, NOTES] = DEFAULT_COLS;
 
-                        pause(500).then(button.click);
+                        IDX = {}; for (var i in DEFAULT_IDX) IDX[i] = DEFAULT_IDX[i];
+
+                        pause(500).then(function () {
+                            button.click();
+                        });
 
                     } );
 
                     return;
                     
                 }
-
-                //Detect language
-                //figure that out...
-
-                //Display name of person the data is from
-                q('#COVID-TARGET').innerHTML = "<strong><em>" + c[FNAME] + " " + c[LNAME] + "</em></strong>";
-
-                //Check if there are any considerations
-                if (c[NOTES].length > 0) {
-                    q('#COVID-TARGET').innerHTML += "<br>(<em>" + c[NOTES] + "</em>)";
-                }
-
-
-                //Here we need to tease out the given data into whatever different formats we may need
-
                 
                 
                 //Email (already OK)
+                var u_email = c[IDX["email"]];
 
                 //First Name
+                var u_fname = c[IDX["fname"]];
+
                 //Last Name
+                var u_lname = c[IDX["lname"]];
                 
                 //Birthday
+                var u_bday = c[IDX["bday"]];
+
                 //Let's break it down to its constituent parts
-
-                //Add a version of the birthdate so that it has leading zeroes
-                //A number of sites want it this way...
-                var d1; var d2;
-                var d = c[BDAY].split('/');
-
-                    // MMDDYYYY
-                    d1 = d[0].padStart(2,"0")+d[1].padStart(2,"0")+d[2];
-                    d2 = d;
-
-                    // MM/DD/YYYY
-                    d = d[0].padStart(2,"0")+'/'+d[1].padStart(2,"0")+'/'+d[2];
-                
+                var u_bday_arr = u_bday.split('/');
+                var u_bday_MMDDYYYY = u_bday_arr[0].padStart(2,"0")+u_bday_arr[1].padStart(2,"0")+u_bday_arr[2];
+                var u_bday_MM_DD_YYYY = u_bday_arr[0].padStart(2,"0")+'/'+u_bday_arr[1].padStart(2,"0")+'/'+u_bday_arr[2];;
+                var u_bday_Month = FMONTH[parseInt(u_bday_arr[0])];
+                var u_bday_Mon = u_bday_Month.substr(0,3);
+                var u_bday_M = u_bday_arr[0];
+                var u_bday_MM = u_bday_arr[0].padStart(2,"0");
+                var u_bday_D = u_bday_arr[1];
+                var u_bday_DD = u_bday_arr[1].padStart(2,"0");
+                var u_bday_YYYY = u_bday_arr[2];
 
                 //Phone Number (ok so far)
+                var u_phone = c[IDX["phone"]];
 
                 //Address
+                var u_address = c[IDX["addr"]];
+                var u_address_2; 
+                    if (IDX["addr2"] == -1) u_address_2 = "";
+                    else u_address_2 = c[IDX["addr2"]];
 
                 //City
+                var u_city = c[IDX["city"]];
 
                 //State
-                var stateName;
-                var stateCode;
+                var u_state_name;
+                var u_state_code;
 
-                var stateNames = {
+                const stateNames = {
                     "AL": "Alabama",
                     "AK": "Alaska",
                     "AS": "American Samoa",
@@ -351,7 +764,7 @@ It's a *snicker* JavaScript injection... :-)
                     "WY": "Wyoming"
                 };
 
-                var stateCodes = {
+                const stateCodes = {
                     'Alabama': 'AL',
                     'Alaska': 'AK',
                     'American Samoa': 'AS',
@@ -413,54 +826,217 @@ It's a *snicker* JavaScript injection... :-)
                     'Wyoming': 'WY'
                 };
 
-                if (c[STATE].length > 2) {
-                    stateName = c[STATE];
-                    stateCode = stateCodes[stateName];
+                c[IDX["state"]] = c[IDX["state"]].trim();
+
+                //Check if the State is properly formed
+                if ( stateCodes[c[IDX["state"]]] == undefined && stateNames[c[IDX["state"]]] == undefined ) {
+                    alert(`The State "${c[IDX["state"]]}" is improperly spelled or is in the wrong field. Please check your user's data and try again.`);
+                    return;
+                }
+
+                if (c[IDX["state"]].length > 2) {
+                    u_state_name = c[IDX["state"]];
+                    u_state_code = stateCodes[u_state_name];
                 }
                 else {
-                    stateCode = c[STATE];
-                    stateName = stateNames[stateCode];
+                    u_state_code = c[IDX["state"]];
+                    u_state_name = stateNames[u_state_code];
                 }
-                
-                //Zip (this is OK)
 
                 //Sex
-                if (SEX == -1) SEX = GEN;
-                if (c[SEX] == "M") c[SEX] = "Male";
-                else if (c[SEX] == "F") c[SEX] = "Female";
-                else if (c[SEX] == "O") c[SEX] = "Other or prefer not to say";
+                if (IDX["sex"] == -1) IDX["sex"] = IDX["gen"];
+                var u_sex = _(c[IDX["sex"]]);
+                if ( u_sex == "M") u_sex = "Male";
+                else if ( u_sex == "F") u_sex = "Female";
+                else if ( u_sex == "O") u_sex = "Other";
                 
                 //Gender
-                if (c[GEN] == "M") c[GEN] = "Male";
-                else if (c[GEN] == "F") c[GEN] = "Female";
-                else if (c[GEN] == "O") c[GEN] = "Other or prefer not to say";
+                var u_gender = _(c[IDX["gen"]]);
+                if (u_gender == "M") u_gender = "Male";
+                else if (u_gender == "F") u_gender = "Female";
+                else if (u_gender == "O") u_gender = "Other";
 
                 //Occupation
-                if (OCC == -1) {
-                    OCC = c.length;
-                    c.push("None of the Above");
-                }
-                
+                var u_occupation = IDX["occ"] != -1 ? _(c[IDX["occ"]]) : "None of the above";
+
                 //Employer
-                if (EMP == -1) {
-                    EMP = c.length;
-                    c.push("Employer");
-                }
+                var u_employer = IDX["emp"] != -1 ? _(c[IDX["emp"]]) : "Employer";
                 
                 //Health Conditions
-                if (HEALTH == -1) {
-                    HEALTH = c.length;
-                    c.push("None of the Above");
-                }
+                var u_health_conditions = IDX["health"] != -1 ? _(c[IDX["health"]]) : "None of the above";
                 
                 //Notes
-                if (NOTES == -1) {
-                    NOTES = c.length;
-                    c.push("");
+                var u_notes = IDX["notes"] != -1 ? _(c[IDX["notes"]]) : "";
+                var u_notes_2 = IDX["notes2"] != -1 ? _(c[IDX["notes2"]]) : "";
+                var u_notes_3 = IDX["notes3"] != -1 ? _(c[IDX["notes3"]]) : "";
+                var u_notes_4 = IDX["notes4"] != -1 ? _(c[IDX["notes4"]]) : "";
+
+                var u_temp_password = "Volunteer1!";
+
+                //Availability grid
+                var u_a_sun = IDX["a_sun"] != -1 ? c[IDX["a_sun"]].split(",") : null;
+                var u_a_mon = IDX["a_mon"] != -1 ? c[IDX["a_mon"]].split(",") : null;
+                var u_a_tue = IDX["a_tue"] != -1 ? c[IDX["a_tue"]].split(",") : null;
+                var u_a_wed = IDX["a_wed"] != -1 ? c[IDX["a_wed"]].split(",") : null;
+                var u_a_thu = IDX["a_thu"] != -1 ? c[IDX["a_thu"]].split(",") : null;
+                var u_a_fri = IDX["a_fri"] != -1 ? c[IDX["a_fri"]].split(",") : null;
+                var u_a_sat = IDX["a_sat"] != -1 ? c[IDX["a_sat"]].split(",") : null;
+
+
+                //Display name of person the data is from
+                q('#COVID-TARGET').innerHTML = "<strong><em>" + u_fname + " " + u_lname + "</em></strong>";
+
+                //Check if there are any considerations
+                if (u_notes.length   > 0) q('#COVID-TARGET').innerHTML += "<br><em>" + u_notes   + "</em>";
+                if (u_notes_2.length > 0) q('#COVID-TARGET').innerHTML += "<br><em>" + u_notes_2 + "</em>";
+                if (u_notes_3.length > 0) q('#COVID-TARGET').innerHTML += "<br><em>" + u_notes_3 + "</em>";
+                if (u_notes_4.length > 0) q('#COVID-TARGET').innerHTML += "<br><em>" + u_notes_4 + "</em>";
+
+
+                //Display availability grid -- pending
+                //This feature's gonna rock.
+                if (u_a_sun != null && u_a_mon != null && u_a_tue != null && u_a_wed != null
+                    && u_a_thu != null && u_a_fri != null && u_a_sat != null) {
+                //if (true) {
+
+                    var u_a_sun = "Mornings";
+                    var u_a_mon = "Afternoons";
+                    var u_a_tue = "Evenings";
+                    var u_a_wed = "Mornings,Afternoons";
+                    var u_a_thu = "Afternoons,Evenings";
+                    var u_a_fri = "Mornings,Evenings";
+                    var u_a_sat = "Mornings,Afternoons,Evenings";
+
+                    q('#COVID-TARGET').innerHTML += `<br><hr><br>Availability:<br><table id="covid_availability_grid" style="width:200px;margin-left:auto; margin-right:auto;">
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Morning</th>
+                        <th>Afternoon</th>
+                        <th>Evening</th>
+                    </tr>  
+                    <tr>
+                        <th>Sun</th>
+                        <td>${u_a_sun.includes('Mornings')?'⬤':''}</td>
+                        <td>${u_a_sun.includes('Afternoons')?'⬤':''}</td>
+                        <td>${u_a_sun.includes('Evenings')?'⬤':''}</td>
+                    </tr>
+                    <tr>
+                        <th>Mon</th>
+                        <td>${u_a_mon.includes('Mornings')?'⬤':''}</td>
+                        <td>${u_a_mon.includes('Afternoons')?'⬤':''}</td>
+                        <td>${u_a_mon.includes('Evenings')?'⬤':''}</td>
+                    </tr>
+                    <tr>
+                        <th>Tue</th>
+                        <td>${u_a_tue.includes('Mornings')?'⬤':''}</td>
+                        <td>${u_a_tue.includes('Afternoons')?'⬤':''}</td>
+                        <td>${u_a_tue.includes('Evenings')?'⬤':''}</td>
+                    </tr>
+                    <tr>
+                        <th>Wed</th>
+                        <td>${u_a_wed.includes('Mornings')?'⬤':''}</td>
+                        <td>${u_a_wed.includes('Afternoons')?'⬤':''}</td>
+                        <td>${u_a_wed.includes('Evenings')?'⬤':''}</td>
+                    </tr>
+                    <tr>
+                        <th>Thu</th>
+                        <td>${u_a_thu.includes('Mornings')?'⬤':''}</td>
+                        <td>${u_a_thu.includes('Afternoons')?'⬤':''}</td>
+                        <td>${u_a_thu.includes('Evenings')?'⬤':''}</td>
+                    </tr>
+                    <tr>
+                        <th>Fri</th>
+                        <td>${u_a_fri.includes('Mornings')?'⬤':''}</td>
+                        <td>${u_a_fri.includes('Afternoons')?'⬤':''}</td>
+                        <td>${u_a_fri.includes('Evenings')?'⬤':''}</td>
+                    </tr>
+                    <tr>
+                        <th>Sat</th>
+                        <td>${u_a_sat.includes('Mornings')?'⬤':''}</td>
+                        <td>${u_a_sat.includes('Afternoons')?'⬤':''}</td>
+                        <td>${u_a_sat.includes('Evenings')?'⬤':''}</td>
+                    </tr>
+                    </table>`;
+
                 }
 
+                //Add hr
+                q('#COVID-TARGET').innerHTML += '<hr>';
 
-                
+                //Set datastate
+                q('#covidInjectionConsoleDataState').innerHTML = JSON.stringify({
+                    "u_email":u_email, "u_fname":u_fname, "u_lname":u_lname,
+                    "u_bday":u_bday, "u_phone":u_phone, 
+                    "u_address":u_address, "u_address_2":u_address_2,
+                    "u_city":u_city, "u_state_name":u_state_name, "u_state_code":u_state_code, "u_zip":u_zip,
+                    "u_sex":u_sex, "u_gender":u_gender, "u_occupation":u_occupation, "u_health_conditions":u_health_conditions,
+                    "u_notes":u_notes, "u_notes_2":u_notes_2, "u_notes_3":u_notes_3, "u_notes_4":u_notes_4,
+                    "u_a_sun":u_a_sun, "u_a_mon":u_a_mon, "u_a_tue":u_a_tue, "u_a_wed":u_a_wed, 
+                    "u_a_thu":u_a_thu, "u_a_fri":u_a_fri, "u_a_sat":u_a_sat
+                }).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+
+
+                //Link up output button
+                q('#covidInjectionOutput_copy').addEventListener("click",() => {
+
+                    //Grab output data
+                    var od = {
+                        vac_vol     : q('#covidInjectionOutput_vac_vol').value,
+                        vac_type    : q('#covidInjectionOutput_vac_type').value,
+                        vac_date    : q('#covidInjectionOutput_vac_loc').value,
+                        vac_date_2  : q('#covidInjectionOutput_vac_date').value,
+                        vac_loc     : q('#covidInjectionOutput_vac_date_2').value,
+                        vac_website : location.host
+                    };
+
+                    //Find largest index
+                    let bigindex = -1;
+                    for (var i in ODX) if (ODX[i] > bigindex) bigindex = ODX[i];
+
+                    let clipdata = new Array(bigindex+1);
+
+                    for (var i in ODX) {
+
+                        if (c[IDX[i]] == null) {
+
+                            if (od[i] == null) alert(`Field ${i} missing! File a bug report.`);
+                            else {
+                                clipdata[ODX[i]] = od[i];
+                            }
+                        }
+                        else {
+                            clipdata[ODX[i]] = c[IDX[i]];
+                        }
+
+                    }
+
+                    clipdata = clipdata.join('	');
+
+                    log("Copying to clipboard: " + clipdata);
+
+                    //Save volunteer name to localStorage
+                    localStorage.setItem('volunteerName', od["vac_vol"]);
+
+                    navigator.clipboard.writeText(clipdata).then( c => {
+                        
+                        log("Copied!");
+
+                        q('#covidInjectionOutput_copy').innerHTML = "Copied!";
+
+                        //Messy, but here we go.
+                        q('#covidInjectionOutput_copy').style.transitionDuration = "0s";
+                        q('#covidInjectionOutput_copy').style.backgroundColor = "#FCC";
+
+                        pause(1000).then(() => {
+                            q('#covidInjectionOutput_copy').innerHTML = "Copy Output to Clipboard";
+                            q('#covidInjectionOutput_copy').style.transitionDuration = "1s";
+                            q('#covidInjectionOutput_copy').style.backgroundColor = "#FFF";
+                        });
+
+                    });
+
+                });
 
 
 
@@ -471,29 +1047,31 @@ It's a *snicker* JavaScript injection... :-)
 
                     if (location.pathname == "/pharmacy/covid-qualifier") {
 
-                        q('#COVID-STATUS').innerHTML = 'RiteAid Page 1 detected...';
+                        stat('RiteAid Page 1 detected...');
 
                         //Add in everything to the appropriate fields
-                        q("#dateOfBirth").value =           d;
-                        q("#city").value =                  c[CITY];
-                        q("#state").value =                 stateName;//c[STATE];
-                        q("#eligibility_state").value =     stateName;//c[STATE];
-                        q("#zip").value =                   c[ZIP];
-                        
-                        q("#Occupation").value =            _(c[OCC]);
-                        q("#occu").value =                  _(c[OCC]);
+                        set("#dateOfBirth",u_bday_MM_DD_YYYY);
+                        set("#city",u_city);
 
-                        q("#mediconditions").value =        _(c[HEALTH]);
-                        q("#medcond").value =               _(c[HEALTH]);
+                        set("#state",u_state_name);
+                        set("#eligibility_state",u_state_name);
+                        
+                        set("#zip",u_zip);
+                        
+                        set("#Occupation",u_occupation);
+                        set("#occu",u_occupation);
+
+                        set("#mediconditions",u_health_conditions);
+                        set("#medcond",u_health_conditions);
 
                         //Since there are no fields that need manual filling, click next
                         q("#continue").disabled = false;
-                        q("#continue").click();
+                        click("#continue");
 
                         pause(2000).then(() => {
 
                             //Click forward
-                            q("#learnmorebttn").click();
+                            click("#learnmorebttn");
 
                         });
                     
@@ -502,51 +1080,48 @@ It's a *snicker* JavaScript injection... :-)
 
                         if (q("#firstName") == null) {
                         
-                            q('#COVID-STATUS').innerHTML = 'RiteAid Page 2 detected. Continue manually until you get to <em>Customer Information</em>, then click here.';
+                            stat('RiteAid Page 2 detected. Continue manually until you get to <em>Customer Information</em>, then click here.');
                         
                         }
                         else {
 
-                            q('#COVID-STATUS').innerHTML = 'RiteAid fields filled out. Continue and review manually. Sign with an X.';
-
-                            //Click to fill. Review and manually continue.
+                            stat('RiteAid fields filled out. Continue and review manually. Sign with an X.');
 
                             //#firstName
-                            q("#firstName").value = c[FNAME];
+                            set("#firstName",u_fname);
 
                             //#lastName
-                            q("#lastName").value = c[LNAME];
+                            set("#lastName",u_lname);
 
                             //#dateOfBirth MM/DD/YYYY
-                            q("#dateOfBirth").value = d;
+                            set("#dateOfBirth",u_bday_MM_DD_YYYY);
 
                             //#phone
-                            q("#phone").value = c[PHONE];
+                            set("#phone",u_phone);
 
                             //#addr1
-                            q("#addr1").value = c[ADDR];
+                            set("#addr1",u_address);
 
                             //#email
-                            q("#email").value = c[EMAIL];
+                            set("#email",u_email);
 
                             //#city
-                            q("#city").value = c[CITY];
+                            set("#city",u_city);
 
                             //#patient_state
-                            q("#patient_state").value = stateName;//"New Jersey";
-
-                            /*
-<ul class="typeahead__list"><li class="typeahead__item typeahead__group-group" data-group="group" data-index="0"><a href="javascript:;">Alaska</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="1"><a href="javascript:;">Alabama</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="2"><a href="javascript:;">Arkansas</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="3"><a href="javascript:;">Arizona</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="4"><a href="javascript:;">California</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="5"><a href="javascript:;">Colorado</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="6"><a href="javascript:;">Connecticut</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="7"><a href="javascript:;">District Of Columbia</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="8"><a href="javascript:;">Delaware</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="9"><a href="javascript:;">Florida</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="10"><a href="javascript:;">Georgia</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="11"><a href="javascript:;">Hawaii</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="12"><a href="javascript:;">Iowa</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="13"><a href="javascript:;">Idaho</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="14"><a href="javascript:;">Illinois</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="15"><a href="javascript:;">Indiana</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="16"><a href="javascript:;">Kansas</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="17"><a href="javascript:;">Kentucky</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="18"><a href="javascript:;">Louisiana</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="19"><a href="javascript:;">Massachusetts</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="20"><a href="javascript:;">Maryland</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="21"><a href="javascript:;">Maine</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="22"><a href="javascript:;">Michigan</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="23"><a href="javascript:;">Minnesota</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="24"><a href="javascript:;">Missouri</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="25"><a href="javascript:;">Mississippi</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="26"><a href="javascript:;">Montana</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="27"><a href="javascript:;">North Carolina</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="28"><a href="javascript:;">North Dakota</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="29"><a href="javascript:;">Nebraska</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="30"><a href="javascript:;">New Hampshire</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="31"><a href="javascript:;">New Jersey</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="32"><a href="javascript:;">New Mexico</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="33"><a href="javascript:;">Nevada</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="34"><a href="javascript:;">New York</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="35"><a href="javascript:;">Ohio</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="36"><a href="javascript:;">Oklahoma</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="37"><a href="javascript:;">Oregon</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="38"><a href="javascript:;">Pennsylvania</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="39"><a href="javascript:;">Rhode Island</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="40"><a href="javascript:;">South Carolina</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="41"><a href="javascript:;">South Dakota</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="42"><a href="javascript:;">Tennessee</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="43"><a href="javascript:;">Texas</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="44"><a href="javascript:;">Utah</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="45"><a href="javascript:;">Virginia</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="46"><a href="javascript:;">Vermont</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="47"><a href="javascript:;">Washington</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="48"><a href="javascript:;">Wisconsin</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="49"><a href="javascript:;">West Virginia</a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="50"><a href="javascript:;">Wyoming</a></li></ul>
-                            */
+                            set("#patient_state",u_state_name);
 
                             //#zip
-                            q("#zip").value = c[ZIP];
+                            set("#zip",u_zip);
+
+                            //ssnNotProvided
+                            click("#ssnNotProvided");
 
                             //#sendReminderEmail
-                            q('label[for="sendReminderEmail"]').click();
+                            click('label[for="sendReminderEmail"]');
 
                             //Physician details, hide
-                            q('.primarycareprovider label.physcian-details__switch').click();
+                            click('.primarycareprovider label.physcian-details__switch');
 
                             //#continue switch disabled to false
                             q('#continue').setAttribute("disabled","false");
@@ -554,117 +1129,73 @@ It's a *snicker* JavaScript injection... :-)
                             //Click to fill. Manually review and continue.
 
                             //#mi_gender <-- sex assigned at birth
-                            if ( _(c[SEX]) == "Female" ) q("#mi_gender").value = "Female";
-                            else if ( _(c[SEX]) == "Male" ) q("#mi_gender").value = "Male";
-                            else q("#mi_gender").value = "Decline to Answer";
-                            /*
+                            if ( u_sex == "Female" ) set("#mi_gender","Female");
+                            else if ( u_sex == "Male" ) set("#mi_gender","Male");
+                            else set("#mi_gender","Decline to Answer");
 
-<input type="text" class="medical-information__gender form__input error" id="mi_gender" name="mi_gender" aria-label="Select Gender" autocomplete="false" ptsexassignedatbirth="true">
+                            //#ptHispanic
+                            set("#ptHispanic","Unknown ethnicity");
+                            //#mi_origin
+                            set("#mi_origin","Unknown ethnicity");
 
-<ul class="typeahead__list"><li class="typeahead__item typeahead__group-group" data-group="group" data-index="0"><a href="javascript:;"><span class="typeahead__display">Decline to Answer</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="1"><a href="javascript:;"><span class="typeahead__display">Female</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="2"><a href="javascript:;"><span class="typeahead__display">Male</span></a></li></ul>
-
-                            */
-
-                            //#ptWeight  <-- weight if less than 110 lbs
-                            //Ignore
-
-                            //#mi_origin <-- latino
-                            /*
-
-<input type="text" class="medical-information__origin form__input" id="mi_origin" name="mi_origin" aria-label="Select Race" autocomplete="false" pthispanic="true">
-
-<ul class="typeahead__list"><li class="typeahead__item typeahead__group-group" data-group="group" data-index="0"><a href="javascript:;"><span class="typeahead__display">Hispanic or Latino</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="1"><a href="javascript:;"><span class="typeahead__display">Not Hispanic or Latino</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="2"><a href="javascript:;"><span class="typeahead__display">Unknown ethnicity</span></a></li></ul>
-*/
-
-                            /*
-<input type="text" class="medical-information__represents form__input error" id="mi_represents" name="mi_represents" aria-label="Select Hispanic" autocomplete="false" ptrace="true">
-
-<ul class="typeahead__list"><li class="typeahead__item typeahead__group-group" data-group="group" data-index="0"><a href="javascript:;"><span class="typeahead__display">American Indian or Alaska Native</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="1"><a href="javascript:;"><span class="typeahead__display">Asian</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="2"><a href="javascript:;"><span class="typeahead__display">Black or African American</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="3"><a href="javascript:;"><span class="typeahead__display">Native Hawaiian or Other Pacific Islander</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="4"><a href="javascript:;"><span class="typeahead__display">White</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="5"><a href="javascript:;"><span class="typeahead__display">Other</span></a></li><li class="typeahead__item typeahead__group-group" data-group="group" data-index="6"><a href="javascript:;"><span class="typeahead__display">Unknown</span></a></li></ul>
-                            */
+                            //#ptRace
+                            set("#ptRace","Unknown");
+                            //#mi_represents
+                            set("#mi_represents","Unknown");
 
 
                             //Do you have a long-term health problem with heart disease, kidney disease, metabolic disorder (e.g. diabetes), anemia, or blood disorders?
-
-                            //#ysptHasHealthProblem yes click?
-                            //#noptHasHealthProblem no click?
-                            //#naptHasHealthProblem don't know click?
-                            q('#naptHasHealthProblem').click();
+                            click('#naptHasHealthProblem');
 
                             //Do you have a long-term health problem with lung disease or asthma?
-
-                            //#ysptHasLungProblem
-                            //#noptHasLungProblem
-                            //#naptHasLungProblem
-                            q('#naptHasLungProblem').click();
+                            click('#naptHasLungProblem');
 
                             //Do you use any nicotine products?
-                            //ysptUsesNicotine
-                            //noptUsesNicotine
-                            //naptUsesNicotine
-                            q('#naptUsesNicotine').click();
+                            click('#naptUsesNicotine');
 
                             //Do you have allergies to medications, food (i.e. eggs), latex or any vaccine component (e.g. neomycin, formaldehyde, gentamicin, thimerosal, bovine protein, phenol, polymyxin, gelatin, baker's yeast or yeast)?
-                            //ysptHasVaxAllergy
-                            //noptHasVaxAllergy
-                            //naptHasVaxAllergy
-                            q('#naptHasVaxAllergy').click();
+                            click('#naptHasVaxAllergy');
 
                             //Have you received any vaccinations in the past 4 weeks?
-                            //ysptGotVaxInLast4Weeks
-                            //noptGotVaxInLast4Weeks
-                            //naptGotVaxInLast4Weeks
-                            q('#naptGotVaxInLast4Weeks').click();
+                            click('#naptGotVaxInLast4Weeks');
 
                             //Have you ever had a serious reaction after receiving a vaccination?
-                            //ysptHasPriorVaxReaction
-                            //noptHasPriorVaxReaction
-                            //naptHasPriorVaxReaction
-                            q('#naptHasPriorVaxReaction').click();
+                            click('#naptHasPriorVaxReaction');
 
                             //Do you have a neurological disorder such as seizures or other disorders that affect the brain or have had a disorder that resulted from vaccine (e.g. Guillain-Barre Syndrome)?
-                            //ysptHasSeizureHistory
-                            //etc
-                            q('#naptHasSeizureHistory').click();
+                            click('#naptHasSeizureHistory');
+
+                            //Do you have cancer, leukemia, AIDS, or any other immune system problem? (in some circumstances you may be referred to your physician)
+                            click('#naptHasImmuneProblem');
 
                             //Do you take prednisone, other steroids, or anticancer drugs, or have you had radiation treatments?
-                            //ysptTakesCancerDrugs
-                            //etc
-                            q('#naptTakesCancerDrugs').click();
+                            click('#naptTakesCancerDrugs');
 
                             //During the past year, have you received a transfusion of blood or blood products, including anti bodies?
-                            //ysptReceivedTransfusion
-                            //etc
-                            q('#naptReceivedTransfusion').click();
+                            click('#naptReceivedTransfusion');
 
                             //Are you parent, family member, or caregiver to a new born infant?
-                            //ysptIsInfantCaregiver
-                            q('#naptIsInfantCaregiver').click();
+                            click('#naptIsInfantCaregiver');
 
                             //Are you pregnant or could you become pregnant in the next three months?
-                            //ysptIsPregnant
-                            q('#naptIsPregnant').click();
+                            click('#naptIsPregnant');
 
                             //Will you bring your Immunization Record Card with you?
-                            //ysptHasImmRecCard
-                            q('#naptHasImmRecCard').click();
+                            click('#naptHasImmRecCard');
 
                             //Are you currently enrolled in one of our medication adherence programs at Rite Aid (OneTrip Refill, Automated Courtesy Refills, or Rx Messaging - Text, Email, Phone)?
-                            //ysptHasMedAdherenceProgram
-                            q('#naptHasMedAdherenceProgram').click();
+                            click('#naptHasMedAdherenceProgram');
 
                             //Have you had a pneumococcal vaccine? (You may need two different pneumococcal shots)
-                            //ysptHadFluShot
-                            q('#naptHadFluShot').click();
+                            click('#naptHadFluShot');
 
                             //Have you had a shingles vaccine?
-                            //ysptHadShinglesShot
-                            q('#naptHadShinglesShot').click();
+                            click('#naptHadShinglesShot');
 
                             //Have you had a whooping cough(Tdap/Td) vaccine?
-                            //ysptHadWhoopShot
-                            q('#naptHadWhoopShot').click();
+                            click('#naptHadWhoopShot');
 
-                            //#continue <-- click
+                            click('#continue');
 
                             //// SCREENING AND CONSENT
 
@@ -677,7 +1208,7 @@ It's a *snicker* JavaScript injection... :-)
                     }
                     else {
 
-                        q('#COVID-STATUS').innerHTML = `RiteAid detected.<br><strong>ERROR:</strong> Unknown pathname "${location.pathname}".`;
+                        stat(`RiteAid detected.<br><strong>ERROR:</strong> Unknown pathname "${location.pathname}".`);
 
                     }
 
@@ -692,223 +1223,194 @@ It's a *snicker* JavaScript injection... :-)
                     //On: https://www.cvs.com/immunizations/covid-19-vaccine
                     if (location.pathname == "/immunizations/covid-19-vaccine") {
 
-                        q('#COVID-STATUS').innerHTML = '●○○○○○○○○○○○○○<br>CVS Page 1 detected...';
+                        stat('●○○○○○○○○○○○○○<br>CVS Page 1 detected...');
                     
                         //Click: a[data-analytics-name="New York"]
-                        q('a[data-analytics-name="New York"]').click();
+                        click('a[data-analytics-name="New York"]');
 
                         //wait
                         //await pause(500);
 
                         //Click: a[data-analytics-name="Schedule an appointment now"]
-                        q('a[data-analytics-name="Schedule an appointment now"]').click();
+                        click('a[data-analytics-name="Schedule an appointment now"]');
 
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/covid-screener/covid-qns
                     else if (location.pathname == "/vaccine/intake/store/covid-screener/covid-qns") {
 
-                        q('#COVID-STATUS').innerHTML = '●●○○○○○○○○○○○○<br>On CVS Page 2.<br>Click again.';
+                        stat('●●○○○○○○○○○○○○<br>On CVS Page 2.<br>Click again.');
 
                         //Click #q7_2
-                        q('#q7_2').click();
+                        click('#q7_2');
                         //Click #q8_2
-                        q('#q8_2').click();
+                        click('#q8_2');
                         //Click #q9_2
-                        q('#q9_2').click();
+                        click('#q9_2');
 
                         //Click button[_ngcontent-hll-c70]
-                        q('button.btn-control').click();
+                        click('button.btn-control');
                    
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/cvd/dose-select
                     else if (location.pathname == "/vaccine/intake/store/cvd/dose-select") {
 
-                        q('#COVID-STATUS').innerHTML = '●●●○○○○○○○○○○○<br>On CVS Page 3.<br>Click again.';
+                        stat('●●●○○○○○○○○○○○<br>On CVS Page 3.<br>Click again.');
 
                         //Click #customRadio_1
-                        q('#customRadio_1').click();
+                        click('#customRadio_1');
 
                         //Click button[_ngcontent-kqo-c72][type="submit"]
-                        q('button[type="submit"].btn-control').click();
+                        click('button[type="submit"].btn-control');
 
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-covid
                     else if (location.pathname == "/vaccine/intake/store/eligibility-screener/eligibility-covid") {
 
-                        q('#COVID-STATUS').innerHTML = '●●●●○○○○○○○○○○<br>On CVS Page 4.<br>Click again.';
+                        stat('●●●●○○○○○○○○○○<br>On CVS Page 4.<br>Click again.');
 
-                        //Set #jurisdiction 's selected element to one with value=
-                        //26: EID_NJ
-                        q('option[value*="EID_NJ"]').setAttribute("selected","true");
+                        //Set #jurisdiction
+                        q(`option[value*="EID_${u_state_code}"]`).setAttribute("selected","true");
 
                         //Fire the change event manually
                         q('#jurisdiction').dispatchEvent(new Event('change'));
 
                         //Click button!
-                        q('button[type="submit"].btn-control').click();
+                        click('button[type="submit"].btn-control');
 
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/eligibility-screener/eligibility-qns
                     else if (location.pathname == "/vaccine/intake/store/eligibility-screener/eligibility-qns") {
 
-                        q('#COVID-STATUS').innerHTML = '●●●●●○○○○○○○○○<br>On CVS Page 5.<br>Click again.';
+                        stat('●●●●●○○○○○○○○○<br>On CVS Page 5.<br>Click again.');
 
                         //Age in #q1_0
                         //Have to calculate it roughly
-                        var age = (new Date().getFullYear()) - parseInt(c[BDAY].split('/')[2]);
-                        q('#q1_0').value = age;
+                        var age = (new Date().getFullYear()) - parseInt(u_bday_YYYY);
+                        set('#q1_0',age);
 
-                        //Fire the change event manually
-                        q('#q1_0').dispatchEvent(new Event('input'));
-
-                        //March 22nd - q20-23 changed
-                        /*
-                            q20 - Age 65 or over
-                            q21 - Age 16 or over with medical conditions that increase risk of severe illness from COVID-19
-                            q22 - In another priority group
-                            q23 - None of the above
-                        */
-
-                        //Over 65
-                        if (age >= 65) {
-                            q('#q20').click();
+                        //Over 55
+                        if (age >= 55) {
+                            click('#q20');
                         }
 
                         //Health conditions
-                        else if ( _(c[HEALTH]) != "None of the Above" && c[HEALTH] != "") {
-                            q('#q21').click();
+                        else if ( u_health_conditions != "None of the Above" && u_health_conditions != "") {
+                            click('#q21');
                         }
 
                         //Priority group
-                        else if ( _(c[OCC]) != "None of the Above" && c[OCC] != "") {
+                        else if ( u_occupation != "None of the Above" && u_occupation != "") {
 
-                            q('#q22').click();
+                            click('#q22');
                             
-                            //Wait for it to populate
-                            //wait(500);
-
-                            /*
-April 2nd changes:
-
-<select _ngcontent-sim-c76="" id="qlist" aria-describedby="listErr" formcontrolname="list" class="dd-list ng-pristine ng-invalid ng-touched"><option _ngcontent-sim-c76="" disabled="" value="0: null">Select</option>
-√ <option _ngcontent-sim-c76="" value="1: Teachers and staff in PreK-12 Schools"> Teachers and staff in PreK-12 Schools</option>
-√ <option _ngcontent-sim-c76="" value="2: Childcare centers and staff"> Childcare centers and staff</option>
-√ <option _ngcontent-sim-c76="" value="3: Head Start, Part C Intervention &amp; licensed home"> Head Start, Part C Intervention &amp; licensed home visitors and staff</option>
-√ <option _ngcontent-sim-c76="" value="4: Healthcare workers (paid and unpaid)"> Healthcare workers (paid and unpaid)</option>
-√ <option _ngcontent-sim-c76="" value="5: First responders including law enforcement and "> First responders including law enforcement and fire professionals</option>
-√ <option _ngcontent-sim-c76="" value="6: Transit and public safety worker"> Transit and public safety worker</option>
-√ <option _ngcontent-sim-c76="" value="7: Migrant Farm Worker"> Migrant Farm Worker</option>
-√ <option _ngcontent-sim-c76="" value="8: Member of a tribal community"> Member of a tribal community</option>
-√ <option _ngcontent-sim-c76="" value="9: Person experiencing homelessness or living in a"> Person experiencing homelessness or living in a shelter</option>
-√ <option _ngcontent-sim-c76="" value="10: Residents of long-term and high risk congregat"> Residents of long-term and high risk congregate care settings</option>
-√ <option _ngcontent-sim-c76="" value="11: Healthcare workers or staff of long-term and h"> Healthcare workers or staff of long-term and high risk congregate care settings</option>
-√ <option _ngcontent-sim-c76="" value="12: Elder care and support"> Elder care and support</option>
-? <option _ngcontent-sim-c76="" value="13: Warehousing and logistics worker"> Warehousing and logistics worker</option>
-? <option _ngcontent-sim-c76="" value="14: Social services support staff"> Social services support staff</option>
-? <option _ngcontent-sim-c76="" value="15: Elections personnel"> Elections personnel</option>
-√ <option _ngcontent-sim-c76="" value="16: Hospitality"> Hospitality</option>
-√ <option _ngcontent-sim-c76="" value="17: Medical supply chain"> Medical supply chain</option>
-√ <option _ngcontent-sim-c76="" value="18: Postal and shipping services"> Postal and shipping services</option>
-√ <option _ngcontent-sim-c76="" value="19: Clergy"> Clergy</option>
-√ <option _ngcontent-sim-c76="" value="20: Judicial system workers"> Judicial system workers</option>
-<option _ngcontent-sim-c76="" value="21: None of the above"> None of the above</option><!----></select>
-
-                        */
-
-
                             //K-12 & Childcare
-                            if ( _(c[OCC]) == "Pre-Kindergarten -12th grade Educator & Staff" ) {
+                            if ( u_occupation == "Pre-Kindergarten -12th grade Educator & Staff" ) {
                                 q('option[value*="Teachers and staff in PreK-12 Schools"]').setAttribute("selected", "true");
                             }
                             //Childcare
-                            else if ( _(c[OCC]) == "Childcare Worker" 
-                                || _(c[OCC]) == "Family Childcare Providers"
+                            else if ( u_occupation == "Childcare Worker" 
+                                || u_occupation == "Family Childcare Providers"
                             ) {
                                 q('option[value*="Childcare centers and staff"]').setAttribute("selected", "true");
                             }
                             //Head Start
-                            else if ( _(c[OCC]) == "Head Start and Early Head Start" ) {
+                            else if ( u_occupation == "Head Start and Early Head Start" ) {
                                 q('option[value*="Head Start"]').setAttribute("selected", "true");
                             }
                             //Healthcare Workers
-                            else if ( _(c[OCC]) == "Health Care Worker") {
+                            else if ( u_occupation == "Health Care Worker") {
                                 q('option[value*="Healthcare workers"]').setAttribute("selected", "true");
                             }
                             //First Responders
-                            else if ( _(c[OCC]) == "Emergency Medical Services (EMS)"
-                                    || _(c[OCC]) == "Firefighters"
-                                    || _(c[OCC]) == "First Responder"
-                                    || _(c[OCC]) == "Law Enforcement"
+                            else if ( u_occupation == "Emergency Medical Services (EMS)"
+                                    || u_occupation == "Firefighters"
+                                    || u_occupation == "First Responder"
+                                    || u_occupation == "Law Enforcement"
                             ) {
                                 q('option[value*="First responders including law enforcement"]').setAttribute("selected", "true");
                             }
                             //Transit & Public Safety
-                            else if ( _(c[OCC]) == "Local Transportation"
-                                    || _(c[OCC]) == "Public Health Employee"
-                                    || _(c[OCC]) == "Public Safety Workers"
-                                    || _(c[OCC]) == "Public Transit Workers"
+                            else if ( u_occupation == "Local Transportation"
+                                    || u_occupation == "Public Health Employee"
+                                    || u_occupation == "Public Safety Workers"
+                                    || u_occupation == "Public Transit Workers"
                             ) {
                                 q('option[value*="Transit and public safety worker"]').setAttribute("selected", "true");
                             }
                             //Migrant Farm Workers
-                            else if ( _(c[OCC]) == "Migrant Farm Workers"
-                                    || _(c[OCC]) == "Food and Agricultural Workers" 
+                            else if ( u_occupation == "Migrant Farm Workers"
+                                    || u_occupation == "Food and Agricultural Workers" 
                             ) {
                                 q('option[value*="Migrant Farm Worker"]').setAttribute("selected", "true");
                             }
                             //Tribal
-                            else if ( _(c[OCC]) == "Members of tribal communities") {
+                            else if ( u_occupation == "Members of tribal communities") {
                                 q('option[value*="Member of a tribal community"]').setAttribute("selected", "true");
                             }
                             //Homeless
-                            else if ( _(c[OCC]) == "Persons experiencing homelessness"
-                                    || _(c[OCC]) == "Persons living in shelters"
+                            else if ( u_occupation == "Persons experiencing homelessness"
+                                    || u_occupation == "Persons living in shelters"
                             ) {
                                 q('option[value*="Person experiencing homelessness"]').setAttribute("selected", "true");
                             }
                             //Elder Care
-                            else if ( _(c[OCC]) == "Multigenerational Household"
+                            else if ( u_occupation == "Multigenerational Household"
                             ) {
                                 q('option[value*="Elder care and support"]').setAttribute("selected", "true");
                             }
+                            //Residents of long-term and high risk congregate care settings
+                                // *="Residents of long-term and high risk"
                             //Long Term Care Staff
-                            else if ( _(c[OCC]) == "Long Term Care Facility Staff") {
+                            else if ( u_occupation == "Long Term Care Facility Staff") {
                                 q('option[value*="Healthcare workers or staff of long-term and"]').setAttribute("selected", "true");
                             }
-                            //Warehousing and logistics worker??
+                            //Warehousing and logistics worker
                                 //I don't remember this on the list...
                             //Social Services
                                 //Or this either...
                             //Elections personnel
                                 //I *have* to be missing something...
                             //Hospitality
-                            else if ( _(c[OCC]) == "Janitorial Staff") {
+                            else if ( u_occupation == "Janitorial Staff") {
                                 q('option[value*="Hospitality"]').setAttribute("selected", "true");
                             }
                             //Medical supply chain
-                            else if ( _(c[OCC]) == "Pharmacy Staff") {
+                            else if ( u_occupation == "Pharmacy Staff") {
                                 q('option[value*="Medical supply chain"]').setAttribute("selected", "true");
                             }
                             //Postal and shipping services
-                            else if ( _(c[OCC]) == "Airport and Commercial Airlines"
-                                    || _(c[OCC]) == "Mail Carriers"
-                                    || _(c[OCC]) == "Postal and Shipping Services"
-                                    || _(c[OCC]) == "U.S. Postal Service"
+                            else if ( u_occupation == "Airport and Commercial Airlines"
+                                    || u_occupation == "Mail Carriers"
+                                    || u_occupation == "Postal and Shipping Services"
+                                    || u_occupation == "U.S. Postal Service"
                             ) {
                                 q('option[value*="Postal and shipping services"]').setAttribute("selected", "true");
                             }
                             //Clergy
-                            else if ( _(c[OCC]) == "Clergy"
-                                    || _(c[OCC]) == "Clergy and Other Essential Support for House of Worship"
+                            else if ( u_occupation == "Clergy"
+                                    || u_occupation == "Clergy and Other Essential Support for House of Worship"
                             ) {
                                 q('option[value*="Clergy"]').setAttribute("selected", "true");
                             }
                             //Judicial system workers
-                            else if ( _(c[OCC]) == "Judicial Staff"
-                                    || _(c[OCC]) == "Judiciary"
+                            else if ( u_occupation == "Judicial Staff"
+                                    || u_occupation == "Judiciary"
                             ) {
                                 q('option[value*="Judicial system workers"]').setAttribute("selected", "true");
                             }
+                            //Higher education workers
+                                //ADD
+                            //Critical infrastructure workers
+                                //ADD
+                            //Real estate, building, and home service worker
+                                //ADD
+                            //Laundry service workers
+                                //ADD
+                            //Librarians and support staff
+                                //ADD
+                            //Financial institution workers
+                                //ADD
+                            
 
                             //OTHER
                             else {
@@ -922,191 +1424,173 @@ April 2nd changes:
 
                         //None of the above
                         else {
-                            q('#q21').click(); //Elligible anyways.
-                            //q('#q23').click();
+                            click('#q21'); //Elligible anyways.
                         }
 
                         //Check if employer field is active
                         if (q('#qtext') != null) {
 
                             //Fill it.... we need to add EMPLOYER info to the form
-                            q('#qtext').value = c[EMP].length > 0 ? c[EMP] : ".";
+                            set('#qtext', u_employer.length > 0 ? u_employer : ".");
 
-                            //Fire the change event manually
-                            q('#qtext').dispatchEvent(new Event('input'));
                         }
 
                         //Click #qconsent
-                        q('#qconsent').click();
+                        click('#qconsent');
 
                         //Click button[_ngcontent-kqo-c76].btn-control
-                        q('button.btn-control').click();
+                        click('button.btn-control');
 
                         
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/cvd/how-to-schedule
                     else if (location.pathname == "/vaccine/intake/store/cvd/how-to-schedule") {
 
-                        q('#COVID-STATUS').innerHTML = '●●●●●●○○○○○○○○<br>On CVS Page 6.<br>Click again.';
+                        stat('●●●●●●○○○○○○○○<br>On CVS Page 6.<br>Click again.');
                         
                         //Click button[_ngcontent-kqo-c74].btn-control
-                        q('button.btn-control').click();
+                        click('button.btn-control');
 
                     }
                     //On: https://www.cvs.com/vaccine/intake/store/cvd-store-select/first-dose-select
                     else if (location.pathname == "/vaccine/intake/store/cvd-store-select/first-dose-select") {
 
                         //Set #address to Zip Code
-                        q('#address').value = c[ZIP];
-
-                        //Fire change event manually
-                        q('#address').dispatchEvent(new Event('input'));
-                        q('#address').dispatchEvent(new Event('compositionend'));
+                        set('#address',u_zip,['input','compositionend']);
 
                         //Click button[_ngcontent-kqo-c79]
-                        q('button').click();
+                        click('button');
 
-                        q('#COVID-STATUS').innerHTML = '●●●●●●●○○○○○○○<br>On CVS Page 7.<br>Continue manually until the <em>Please Provide Details</em> screen. Then click here again.';
+                        stat('●●●●●●●○○○○○○○<br>On CVS Page 7.<br>Continue manually until the <em>Please Provide Details</em> screen. Then click here again.');
                     }
 
                     //Patient info enter
                     else if (location.pathname == "/vaccine/intake/store/patient-info") {
 
-                        q('#COVID-STATUS').innerHTML = '●●●●●●●●○○○○○○<br>On CVS Page 8.<br>Continue manually.';
+                        stat('●●●●●●●●○○○○○○<br>On CVS Page 8.<br>Continue manually.');
 
                         //#firstName
-                        q('#firstName').value = c[FNAME];
-                        q('#firstName').dispatchEvent(new Event('input'));
-                        q('#firstName').dispatchEvent(new Event('compositionend'));
+                        set('#firstName',u_fname);//,['input','compositionend']);
 
                         //#lastName
-                        q('#lastName').value = c[LNAME];
-                        q('#lastName').dispatchEvent(new Event('input'));
-                        q('#lastName').dispatchEvent(new Event('compositionend'));
+                        set('#lastName',u_lname);//,['input','compositionend']);
 
                         //#dob -- MMDDYYYY without slashes
-                        q('#dob').value = d1;//.split("/").join("");
-                        q('#dob').dispatchEvent(new Event('input'),{ bubbles: true });
-                        q('#dob').dispatchEvent(new Event('change'));
-                        q('#dob').dispatchEvent(new Event('blur'));
-                        q('#dob').dispatchEvent(new Event('compositionend'));
+                        set('#dob',u_bday_MMDDYYYY.trim(),['input','change','blur','compositionend']);//.value = d1;//.split("/").join("");
+                        //q('#dob').dispatchEvent(new Event('input'),{ bubbles: true });
+                        //q('#dob').dispatchEvent(new Event('change'));
+                        //q('#dob').dispatchEvent(new Event('blur'));
+                        //q('#dob').dispatchEvent(new Event('compositionend'));
 
                         //#customRadio_F checkbox female
-                        if ( _(c[SEX]) == "Female") q("#customRadio_F").click();
+                        if ( u_sex == "Female") click("#customRadio_F");
                         //#customRadio_M checkbox male
-                        else q("#customRadio_M").click();
+                        else click("#customRadio_M");
 
                         //#address
-                        q('#address').value = c[ADDR];
-                        q('#address').dispatchEvent(new Event('input'));
-                        q('#address').dispatchEvent(new Event('compositionend'));
+                        set('#address',u_address);
 
                         //#addressLine2
-                        //Address 2?
+                        //if (u_address_2.length > 0) set('#addressLine2',u_address_2);
 
                         //#city
-                        q('#city').value = c[CITY];
-                        q('#city').dispatchEvent(new Event('input'));
-                        q('#city').dispatchEvent(new Event('compositionend'));
+                        set('#city',u_city);
 
                         //#state dropdown -- we're just gonna assume NJ
-                        q(`option[value*="${stateCode}"]`).setAttribute("selected","true");
+                        q(`option[value*="${u_state_code}"]`).setAttribute("selected","true");
                         q('#state').dispatchEvent(new Event('change'));
 
                         //#zip
-                        q('#zip').value = c[ZIP];
-                        q('#zip').dispatchEvent(new Event('input'));
-                        q('#zip').dispatchEvent(new Event('compositionend'));
+                        set('#zip',u_zip);
 
                         //#email
-                        q('#email').value = c[EMAIL];
-                        q('#email').dispatchEvent(new Event('input'));
-                        q('#email').dispatchEvent(new Event('compositionend'));
+                        set('#email',u_email);
 
                         //#phoneNumber -- all digits
-                        q('#phoneNumber').value = c[PHONE].split("-").join("").split(" ").join("");
-                        q('#phoneNumber').dispatchEvent(new Event('input'));
-                        q('#phoneNumber').dispatchEvent(new Event('compositionend'));
+                        set('#phoneNumber',u_phone);
+
+                        //click button type="submit"
+                        click('button.btn-control');
 
                     }
 
                     //Insurance status - assuming none
                     else if (location.pathname == "/vaccine/intake/store/insurance-status") {
 
-                        q('#COVID-STATUS').innerHTML = '●●●●●●●●●○○○○○<br>On CVS Page 9.<br>Click again.';
+                        stat('●●●●●●●●●○○○○○<br>On CVS Page 9.<br>Click again.');
                     
                         //click #customRadio_7
-                        q('#customRadio_7').click();
+                        click('#customRadio_7');
 
                         //click button type="submit"
-                        q('button.btn-control').click();
+                        click('button.btn-control');
                     }
 
                     //No insurance screen
                     else if (location.pathname == "/vaccine/intake/store/no-insurance") {
 
-                        q('#COVID-STATUS').innerHTML = '●●●●●●●●●●○○○○<br>On CVS Page 10.<br>Click again.';
+                        stat('●●●●●●●●●●○○○○<br>On CVS Page 10.<br>Click again.');
                     
                         //click #consentText
-                        q('#consentText').click();
+                        click('#consentText');
 
                         //click button type="submit"
-                        q('button.btn-control').click();
+                        click('button.btn-control');
 
                     }
 
                     //Immunization questions
                     else if (location.pathname == "/vaccine/intake/store/qns/imz-qns") {
 
-                        q('#COVID-STATUS').innerHTML = '●●●●●●●●●●●○○○<br>On CVS Page 11.<br>Click again.';
+                        stat('●●●●●●●●●●●○○○<br>On CVS Page 11.<br>Click again.');
                     
                         //click #q2_3
-                        q('#q2_3').click();
+                        click('#q2_3');
                         //click #q3_3
-                        q('#q3_3').click();
+                        click('#q3_3');
                         //click #q4_3
-                        q('#q4_3').click();
+                        click('#q4_3');
                         //click #q5_3
-                        q('#q5_3').click();
+                        click('#q5_3');
                         //click #q6_3
-                        q('#q6_3').click();
+                        click('#q6_3');
                         //click #q7_3
-                        q('#q7_3').click();
+                        click('#q7_3');
                         //click #q11_3
-                        q('#q11_3').click();
+                        click('#q11_3');
                         //click #q12_3
-                        q('#q12_3').click();
+                        click('#q12_3');
                         //click #q13_3
-                        q('#q13_3').click();
+                        click('#q13_3');
 
                         //click button type="submit"
-                        q('button.btn-control').click();
+                        click('button.btn-control');
                         
                     }
 
                     //Additional questions
                     else if (location.pathname == "/vaccine/intake/store/qns/addl-qns") {
 
-                        q('#COVID-STATUS').innerHTML = '●●●●●●●●●●●●○○<br>On CVS Page 12.<br>Click again.';
+                        stat('●●●●●●●●●●●●○○<br>On CVS Page 12.<br>Click again.');
                     
                         //click #qrace_2131-1
-                        q('#qrace_2131-1').click();
+                        click('#qrace_2131-1');
 
                         //click #qethnicity_U
-                        q('#qethnicity_U').click();
+                        click('#qethnicity_U');
 
                         //click button type="submit"
-                        q('button.btn-control').click();
+                        click('button.btn-control');
                         
                     }
 
                     //Vaccine review page
                     else if (location.pathname == "/vaccine/intake/store/review") {
 
-                        q('#COVID-STATUS').innerHTML = '●●●●●●●●●●●●●○<br>On CVS Page 13.<br>Click again.';
+                        stat('●●●●●●●●●●●●●○<br>On CVS Page 13.<br>Click again.');
 
                         //click button type="submit"
-                        q('button.btn-control').click();
+                        click('button.btn-control');
                         
                     }
 
@@ -1114,19 +1598,19 @@ April 2nd changes:
                     else if (location.pathname == "/vaccine/intake/store/consent") {
 
                         //click #consentText
-                        q('#consentText').click();
+                        click('#consentText');
 
                         //click button type="submit"
-                        q('button.btn-control').click();
+                        click('button.btn-control');
 
-                        q('#COVID-STATUS').innerHTML = '●●●●●●●●●●●●●●<br>On CVS Page 14.<br>Print out confirmation page and save it for your signee\'s records.';
+                        stat('●●●●●●●●●●●●●●<br>On CVS Page 14.<br>Print out confirmation page and save it for your signee\'s records.');
                         
                     }
 
 
                     else {
 
-                        q('#COVID-STATUS').innerHTML = `CVS detected.<br><strong>ERROR:</strong> Unknown pathname "${location.pathname}".`;
+                        stat(`CVS detected.<br><strong>ERROR:</strong> Unknown pathname "${location.pathname}".`);
 
                     }
                 
@@ -1149,73 +1633,65 @@ April 2nd changes:
                     */
                     if (location.pathname == "/wl/saintpeterscovid19vaccinemonroe/practice/65013?reason_visit=5243") {
 
-                        q('#COVID-STATUS').innerHTML = 'St. Peter\'s Page 1 detected. Continue manually until the Patient Information screen.';
+                        stat('St. Peter\'s Page 1 detected. Continue manually until the Patient Information screen.');
 
                         pause(1000).then(() => {
-                            q(`div#modal-root button[data-test="modal-primary-button"]`).click();
+                            click(`div#modal-root button[data-test="modal-primary-button"]`);
                         });
 
                     }
 
                     //There may be multiples here
-                    else if (location.href.substr(0,pi.length) == pi) { console.log("PatientInfoScreen detected.");
+                    else if (location.href.substr(0,pi.length) == pi) { log("PatientInfoScreen detected.");
 
                         //Detect St. Peters...
                         if ( q('img[src="https://d2gmqy7n86tnsf.cloudfront.net/c8beebd4-d6b3-4b40-a066-a3bd3bf819f2/bookingLogo.jpeg"]') != null ) {
 
-                            q('#COVID-STATUS').innerHTML = 'St. Peter\'s Page 2 detected.';
+                            stat('St. Peter\'s Page 2 detected.');
 
                             //First name
-                            q('input[name="firstName"]').value = c[FNAME];
-                            q('input[name="firstName"]').dispatchEvent(new Event('input',{ bubbles: true }));
+                            set('input[name="firstName"]',u_fname);
 
                             //Last name
-                            q('input[name="lastName"]').value = c[LNAME];
-                            q('input[name="lastName"]').dispatchEvent(new Event('input',{ bubbles: true }));
+                            set('input[name="lastName"]',u_lname);
 
                             let bd = d.split("/");
 
                             //Birth Month
-                            q('input[name="birthMonth"]').value = bd[0];
-                            q('input[name="birthMonth"]').dispatchEvent(new Event('input',{ bubbles: true }));
+                            set('input[name="birthMonth"]',u_bday_M);
 
                             //Birth Month
-                            q('input[name="birthDay"]').value = bd[1];
-                            q('input[name="birthDay"]').dispatchEvent(new Event('input',{ bubbles: true }));
+                            set('input[name="birthDay"]',u_bday_D);
 
                             //Birth Year
-                            q('input[name="birthYear"]').value = bd[2];
-                            q('input[name="birthYear"]').dispatchEvent(new Event('input',{ bubbles: true }));
+                            set('input[name="birthYear"]',u_bday_YYYY);
 
                             //Male/female
-                            if ( _(c[SEX]) == "Male" ) q('input[value="male"]').click();
-                            else q('input[value="female"]').click();
+                            if ( u_sex == "Male" )      click('input[value="male"]');
+                            else                        click('input[value="female"]');
 
                             //Wait and submit
                             pause(500).then( () => {
-                                q('div[class^="PatientInfoPageView"] button[type="submit"]').click();
+                                click('div[class^="PatientInfoPageView"] button[type="submit"]');
                             });
                         }
 
-                        else if (location.href.substr(0,pi.length) == pi) { console.log("Signup screen detected.");
+                        else if (location.href.substr(0,pi.length) == pi) { log("Signup screen detected.");
 
-                            q('#COVID-STATUS').innerHTML = 'St. Peter\'s Page 3 detected. Form autofilled. Click "Review and book" when ready.';
+                            stat('St. Peter\'s Page 3 detected. Form autofilled. Click "Review and book" when ready.');
 
                             //Email
-                            q('input[name="email"]').value = c[EMAIL];
-                            q('input[name="email"]').dispatchEvent(new Event('input',{ bubbles: true }));
-                            q('input[name="confirmEmail"]').value = c[EMAIL];
-                            q('input[name="confirmEmail"]').dispatchEvent(new Event('input',{ bubbles: true }));
+                            set('input[name="email"]',u_email);
+                            set('input[name="confirmEmail"]',u_email);
 
                             //Password
-                            q('input[name="password"]').value = 'Volunteer1!';
-                            q('input[name="password"]').dispatchEvent(new Event('input',{ bubbles: true }));
+                            set('input[name="password"]',u_temp_password);
 
                             //TOS
-                            q('input[name="termsOfService"]').click();
+                            click('input[name="termsOfService"]');
 
                             //Uncheck keep me logged in
-                            q('input[name="rememberMe"]').click();
+                            click('input[name="rememberMe"]');
 
                         }
 
@@ -1233,211 +1709,228 @@ April 2nd changes:
                     var step = parseInt(q('div.step-header').innerText.split(" ")[1].split(' ')[0]);
                     var title = q('div.step-header').innerText.split(", ")[1].trim();
 
-                    console.log("Step:",step,title);
-
-                    q('#COVID-STATUS').innerHTML = `Curogram VNA Step ${step} detected.`;
+                    stat(`Curogram VNA Step ${step} : ${title} detected.`);
 
                     if (title === "Language Selection") {
 
                         //Select English
-                        q('.languages .language').click();
+                        click('.languages .language');
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Language Selection filled out.<br>Click here again.`;
+                        stat(`Curogram VNA Language Selection filled out.<br>Click here again.`);
 
                     }
                     else if (title === "Introduction") {
 
                         //Select Get Started
-                        q('button.btn-nephritis').click();
+                        click('button.btn-nephritis');
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Introduction bypassed.<br>Select a time slot, then click here again.`;
+                        stat(`Curogram VNA Introduction bypassed.<br>Select a time slot, then click here again.`);
 
                     }
                     else if (title === "Pick A Time Slot") {
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Time Slot Screen detected.<br>Select a time slot, then click here again.`;
+                        stat(`Curogram VNA Time Slot Screen detected.<br>Select a time slot, then click here again.`);
 
                     }
                     else if (title === "Identification" && (step < 5)) { //Phone number
                         
                         //Input first name
-                        q('input[type="tel"]').value = c[PHONE];
-                        q('input[type="tel').dispatchEvent(new Event('input'),{ bubbles: true });
+                        set('input[type="tel"]',u_phone);
 
                         //Click next
-                        q('button.btn-nephritis').click();
+                        click('button.btn-nephritis');
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Phone Number Entered.<br>Click here again.`;
+                        stat(`Curogram VNA Phone Number Entered.<br>Click here again.`);
 
                     }
                     else if (title === "Demographics") { //Demographics
 
                         //Input first name
-                        q('input[name="firstname"]').value = c[FNAME];
-                        q('input[name="firstname').dispatchEvent(new Event('input'),{ bubbles: true });
+                        set('input[name="firstname"]',u_fname);
 
                         //Input last name
-                        q('input[name="lastname"]').value = c[LNAME];
-                        q('input[name="lastname').dispatchEvent(new Event('input'),{ bubbles: true });
+                        set('input[name="lastname"]',u_lname);
 
                         //DOB -- !!! Insane
                         //Month
-                        document.querySelectorAll('ng-select input')[0].value = FMONTH[parseInt(d2[0])];
-                        document.querySelectorAll('ng-select input')[0].dispatchEvent(new Event('input'),{ bubbles: true });
-                        document.querySelector('ng-select .ng-option-marked').click();
+                        //document.querySelectorAll('ng-select input')[0].value = u_bday_Month;
+                        //document.querySelectorAll('ng-select input')[0].dispatchEvent(new Event('input'),{ bubbles: true });
+                        //document.querySelector('ng-select .ng-option-marked').click();
+                        setqai('ng-select input', 0, u_bday_Month);
+                        click('ng-select .ng-option-marked');
 
                         //Day
-                        document.querySelectorAll('ng-select input')[1].value = parseInt(d2[1]);
-                        document.querySelectorAll('ng-select input')[1].dispatchEvent(new Event('input'),{ bubbles: true });
-                        document.querySelector('ng-select .ng-option-marked').click();
+                        //document.querySelectorAll('ng-select input')[1].value = u_bday_D
+                        //document.querySelectorAll('ng-select input')[1].dispatchEvent(new Event('input'),{ bubbles: true });
+                        //document.querySelector('ng-select .ng-option-marked').click();
+                        setqai('ng-select input', 1, u_bday_D);
+                        click('ng-select .ng-option-marked');
 
                         //Year YYYY
-                        document.querySelectorAll('ng-select input')[2].value = d2[2];
-                        document.querySelectorAll('ng-select input')[2].dispatchEvent(new Event('input'),{ bubbles: true });
-                        document.querySelector('ng-select .ng-option-marked').click();
+                        //document.querySelectorAll('ng-select input')[2].value = u_bday_YYYY;
+                        //document.querySelectorAll('ng-select input')[2].dispatchEvent(new Event('input'),{ bubbles: true });
+                        //document.querySelector('ng-select .ng-option-marked').click();
+                        setqai('ng-select input', 2, u_bday_YYYY);
+                        click('ng-select .ng-option-marked');
 
                         //Input email
-                        q('input[type="email"]').value = c[EMAIL];
-                        q('input[type="email').dispatchEvent(new Event('input'),{ bubbles: true });
+                        set('input[type="email"]',u_email);
 
                         //Sex
-                        document.querySelectorAll('ng-select input')[3].value = c[SEX];
-                        document.querySelectorAll('ng-select input')[3].dispatchEvent(new Event('input'),{ bubbles: true });
-                        document.querySelector('ng-select .ng-option-marked').click();
+                        //document.querySelectorAll('ng-select input')[3].value = u_sex
+                        //document.querySelectorAll('ng-select input')[3].dispatchEvent(new Event('input'),{ bubbles: true });
+                        //document.querySelector('ng-select .ng-option-marked').click();
+                        setqai('ng-select input', 3, u_sex);
+                        click('ng-select .ng-option-marked');
 
                         //Race
-                        document.querySelectorAll('ng-select input')[4].value = "Prefer not to say";
-                        document.querySelectorAll('ng-select input')[4].dispatchEvent(new Event('input'),{ bubbles: true });
-                        document.querySelector('ng-select .ng-option-marked').click();
+                        //document.querySelectorAll('ng-select input')[4].value = "Prefer not to say";
+                        //document.querySelectorAll('ng-select input')[4].dispatchEvent(new Event('input'),{ bubbles: true });
+                        //document.querySelector('ng-select .ng-option-marked').click();
+                        setqai('ng-select input', 4, "Prefer not to say");
+                        click('ng-select .ng-option-marked');
 
                         //Ethnicity (assuming not Hispanic –– we don't collect this)
-                        document.querySelectorAll('ng-select input')[5].value = "Not Hispanic";
-                        document.querySelectorAll('ng-select input')[5].dispatchEvent(new Event('input'),{ bubbles: true });
-                        document.querySelector('ng-select .ng-option-marked').click();
+                        //document.querySelectorAll('ng-select input')[5].value = "Not Hispanic";
+                        //document.querySelectorAll('ng-select input')[5].dispatchEvent(new Event('input'),{ bubbles: true });
+                        //document.querySelector('ng-select .ng-option-marked').click();
+                        setqai('ng-select input', 5, "Not Hispanic");
+                        click('ng-select .ng-option-marked');
 
                         //Click next
-                        q('button.btn-nephritis').click();
+                        click('button.btn-nephritis');
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Demographics entered.<br>Click here again.`;
+                        stat(`Curogram VNA Demographics entered.<br>Click here again.`);
 
                     }
                     else if (title === "Patient Address") { //Address
 
                         //Current address
-                        document.querySelectorAll('input[type="radio"]')[2].click();
+                        //document.querySelectorAll('input[type="radio"]')[2].click();
+                        clickqai('input[type="radio"]',2);
 
                         //Address
-                        q('input[name="address"]').value = c[ADDR];
-                        q('input[name="address"]').dispatchEvent(new Event('input'),{ bubbles: true });
+                        set('input[name="address"]',u_address);
 
                         //City
-                        q('input[name="city"]').value = c[CITY];
-                        q('input[name="city"]').dispatchEvent(new Event('input'),{ bubbles: true });
+                        set('input[name="city"]',u_city);
 
                         //State
-                        document.querySelectorAll('ng-select input')[0].value = stateCode;
-                        document.querySelectorAll('ng-select input')[0].dispatchEvent(new Event('input'),{ bubbles: true });
-                        document.querySelector('ng-select .ng-option-marked').click();
+                        //document.querySelectorAll('ng-select input')[0].value = u_state_code;
+                        //document.querySelectorAll('ng-select input')[0].dispatchEvent(new Event('input'),{ bubbles: true });
+                        //document.querySelector('ng-select .ng-option-marked').click();
+                        setqai('ng-select input',0,u_state_code);
+                        click('ng-select .ng-option-marked');
 
                         //Zipcode
-                        q('input[name="zip"]').value = c[ZIP];
-                        q('input[name="zip"]').dispatchEvent(new Event('input'),{ bubbles: true });
+                        set('input[name="zip"]',u_zip);
 
                         //Click next
-                        q('button.btn-nephritis').click();
+                        click('button.btn-nephritis');
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Address entered.<br>Click here again.`;
+                        stat(`Curogram VNA Address entered.<br>Click here again.`);
 
                     }
                     else if (title === "Screening") { //Screening
 
                         //Not sick
-                        document.querySelectorAll('input[type="radio"]')[1].click();
+                        //document.querySelectorAll('input[type="radio"]')[1].click();
+                        clickqai('input[type="radio"]',1);
 
                         //No allergies
-                        document.querySelectorAll('input[type="radio"]')[3].click();
+                        //document.querySelectorAll('input[type="radio"]')[3].click();
+                        clickqai('input[type="radio"]',3);
 
                         //Vaccine reaction
-                        document.querySelectorAll('input[type="radio"]')[5].click();
+                        //document.querySelectorAll('input[type="radio"]')[5].click();
+                        clickqai('input[type="radio"]',5);
 
                         //Blood thinner
-                        document.querySelectorAll('input[type="radio"]')[7].click();
+                        //document.querySelectorAll('input[type="radio"]')[7].click();
+                        clickqai('input[type="radio"]',7);
 
                         //Immunocompromised
-                        document.querySelectorAll('input[type="radio"]')[9].click();
+                        //document.querySelectorAll('input[type="radio"]')[9].click();
+                        clickqai('input[type="radio"]',9);
 
                         //Antibody therapy
-                        document.querySelectorAll('input[type="radio"]')[11].click();
+                        //document.querySelectorAll('input[type="radio"]')[11].click();
+                        clickqai('input[type="radio"]',11);
 
                         //Pregnant
-                        document.querySelectorAll('input[type="radio"]')[13].click();
+                        //document.querySelectorAll('input[type="radio"]')[13].click();
+                        clickqai('input[type="radio"]',13);
 
                         //Breast feeding
-                        document.querySelectorAll('input[type="radio"]')[15].click();
+                        //document.querySelectorAll('input[type="radio"]')[15].click();
+                        clickqai('input[type="radio"]',15);
 
                         //Don't currently have covid
-                        document.querySelectorAll('input[type="radio"]')[17].click();
+                        //document.querySelectorAll('input[type="radio"]')[17].click();
+                        clickqai('input[type="radio"]',17);
 
                         //Yes! Gimmie the vaccine! (click last as "YES!")
                         let yes = document.querySelectorAll('input[type="radio"]').length-2;
-                        document.querySelectorAll('input[type="radio"]')[yes].click();
+                        //document.querySelectorAll('input[type="radio"]')[yes].click();
+                        clickqai('input[type="radio"]',yes);
 
                         //Click next
-                        q('button.btn-nephritis').click();
+                        click('button.btn-nephritis');
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Screening info entered.<br>Click here again.`;
+                        stat(`Curogram VNA Screening info entered.<br>Click here again.`);
 
                     }
                     else if (title === "Disability") {
 
                         //Click skip!
-                        q('button.btn-outline-nephritis').click();
+                        click('button.btn-outline-nephritis');
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Disability skipped.<br>Click here again.`;
+                        stat(`Curogram VNA Disability skipped.<br>Click here again.`);
 
                     }
                     else if (title === "Insurance Info") {
 
                         //Figure out insurance later
-                        document.querySelectorAll('div.checkbox')[1].click();
+                        //document.querySelectorAll('div.checkbox')[1].click();
+                        clickqai('div.checkbox',1);
 
                         //Click next
-                        q('button.btn-nephritis').click();
+                        click('button.btn-nephritis');
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Insurance info bypassed.<br>Click here again.`;
+                        stat(`Curogram VNA Insurance info bypassed.<br>Click here again.`);
 
                     }
                     else if (title === "Identification") {
 
                         //Click skip!
-                        q('button.btn-outline-nephritis').click();
+                        click('button.btn-outline-nephritis');
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Identification skipped.<br>Click here again.`;
+                        stat(`Curogram VNA Identification skipped.<br>Click here again.`);
 
                     }
                     else if (title === "Consent") {
 
                         //Read and accept
-                        if (q('#checkbox1')) q('#checkbox1').click();
-                        if (q('#checkbox2')) q('#checkbox2').click();
+                        if (q('#checkbox1')) click('#checkbox1');
+                        if (q('#checkbox2')) click('#checkbox2');
 
                         //Queue up next prompt
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA Consent checked.<br>Sign with an X and continue manually.`;
+                        stat(`Curogram VNA Consent checked.<br>Sign with an X and continue manually.`);
 
                     }
                     else {
 
-                        q('#COVID-STATUS').innerHTML = `Curogram VNA detected.<br>Continue manually.`;
+                        stat(`Curogram VNA detected.<br>Continue manually.`);
 
                     }
                 

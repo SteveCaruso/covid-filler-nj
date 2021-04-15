@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoVID Injection - JavaScript Data Injection Bookmarklet</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            padding-left:20%;
+            padding-right:20%;
+        }
+        @media (max-width: 767px) {
+
+            body {
+                padding-left:10%;
+                padding-right:10%;
+            }
+
+        }
+        table {
+            margin-left:auto;
+            margin-right:auto;
+            border-collapse:collapse;
+        }
+        table tr:nth-child(even) {
+            background-color:#eee;
+        }
+        table td, table th {
+            padding:.5rem;
+        }
+    </style>
+
+</head>
+<body>
+    
+    <h1>CoVID Injection 💉</h1>
+    <h2>A JavaScript Autofill Injection Bookmarklet For CoVID Vaccine Signups</h2>
+
+    <h3>Tutorial Introduction</h3>
+
+    <p>So, the vaccine rollout has been tough. Appointments drop at odd hours and the vaccine portal forms can sometimes take 15 minutes to fill out. My wife and I have stood up many nights, typing as fast as we possiblty can to get past the qualification questionnaires and boilerplate, only to miss getting anything for anyone. So, like many things in my life, I identify limitations and I try and get around them with code. And that's what birthed this project.</p>
+
+    <p>The purpose of CoVID Injection was to basically come up with a system to help automate getting folks signed up for vaccinations, while at the same time stick to freely available software and resources. Because of that, a numnber of pieces of this system are not optimal if it was, say, running a custom database or whatever. But that's kinda the point. This was designed to be usable by anyone who had access to an Excell or Google Spreadsheet and a stable Internet connection and who wants to do some good – which is virtually anyone who is in the position to organize something like this in the first place.</p>
+
+    <h3>Basic Idea</h3>
+
+    <p>Now where I'm going to go over all of this steps in detail, this is the basic idea:</p>
+
+    <ol>
+        <li>You have to have a spreadsheet with a list of people who want to get vaccinated.</li>
+        <li>You copy one of them into the clipboard of your computer.</li>
+        <li>You visit a vaccination portal, and you invoke the Injection in your browser.</li>
+    </ol>
+
+    <p>What happens then, is that it injects a bit of JavaScript into the webpage which, through your guidance fills out all of the form fields, inputs, checkboxes, it answers questions about the person's qualifications, etc. There are some places that you'll have to do some manual work, such as selecting dates and times for appointments, etc.</p>
+
+    <p>Keep in mind, that it's designed to answer the questions they ask here in New Jersey, but I've had reports back that it works pretty well in other States, too.</p>
+
+    <p>Finally – and this part is optional – when you're done, you can have it copy information about what you've just scheduled back into your clipboard so you can keep track of who did the scheduling, where, and when, which you can then paste back into your original spreadsheet, or another spreadsheet that can act as your "Done" list.</p>
+
+
+    <h3>Setting Up a Form and Spreadsheet</h3>
+
+    <p>Now the easiest way to collect data is to set up a form.</p>
+
+    <p>For the rest of this tutorial, I'm going to be using Google Forms and Google Sheets. They're free, they're secure, and for our purposes they work. You can also use Microsoft Forms and Excel as well, if you prefer.</p>
+
+    <p>You can go to <a href="http://forms.google.com" target="_blank">Google Forms</a> and afrer you log in, it should look more or less like this.</p>
+
+    <p>Go ahead and select a blank form, and here you'll see that you can build out a form and customize it, literally any way you want.</p>
+
+    <p>You can collect whatever information you need to help your team do its job – just be sensititive about what you ask – but at a minimum for CoVID Injector to work, you'll need the following fields.</p>
+
+    <table>
+        <caption>Required fields and formats.</caption>
+        <tr>
+            <th>Field</th>
+            <th>Possible Values</th>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>(Any valid email address)</td>
+        </tr>
+        <tr>
+            <td>First Name</td>
+            <td>(Their first name)</td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td>(Their last name)</td>
+        </tr>
+        <tr>
+            <td>Birthday</td>
+            <td>M/D/YYYY<br>or MM/DD/YYYY format</td>
+        </tr>
+        <tr>
+            <td>Phone Number</td>
+            <td>(###) ###-####<br>or ###-###-####<br>or ########## format</td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>(Their street address)</td>
+        </tr>
+        <tr>
+            <td>City</td>
+            <td>(City name)</td>
+        </tr>
+        <tr>
+            <td>State</td>
+            <td>(Full name "New Jersey" or 2-letter code "NJ")</td>
+        </tr>
+        <tr>
+            <td>Zip</td>
+            <td>#####</td>
+        </tr>
+        <tr>
+            <td>Sex</td>
+            <td>"Male" or "M"<br>
+                "Female" or "F"<br>
+                "Other or prefer not to say" or "O"</td>
+        </tr>
+    </table>
+
+    <p>Here's a form that I already put together:</p>
+
+    <p>You'll need their email address. To get it at the top of the form here, you can click settings and select "Collect email address" – that puts it right at the top.</p>
+
+    <p>You'll need their first name and last name.</p>
+
+    <p>Their birthday – make sure the field type is set to Date, which will enforce the proper format.</p>
+
+    <p>Phone number, address, city.</p>
+
+    <p>For State, I recommend using a dropdown or radio button. Make sure that the State Names are written fully out with proper capitalization, or are with their 2-digit codes, like NJ, NY, etc.</p>
+
+    <p>Zip code</p>
+
+    <p>And sex. You can collect sex and gender separately, but at a minimum it needs a biological sex field, because most of the portals require it in order to sign up.</p>
+
+    <p>And be sure to mark all of the above fields as "REQUIRED" with these little switches.</p>
+
+    <p>Now, where it's not required, you can add in several notes fields, and we can make use of them later as you'll see.</p>
+
+    <p>And this availability grid is an advanced feature, we'll be getting to elsewhere in this video.</p>
+
+
+    In any case, you can preview it with this button here, and go ahead and fill it out once either with dummy information or otherwise and hit submit.
+
+
+    Now we head over to the responses tab. This is where the data is initially stored – but it's not of very much use for us. We're going to have the data accumulate in a spreadsheet instead.
+
+    We're going to click on the little spreadsheet icon, and we're going to create a new spreadsheet, or we're going to add it as a new tab to an existing one – and this is where the magic happens.
+
+
+    And as you can see, here it is. You can double-click the tabs at the bottom to re-name them.
+
+    As folk fill out the form, their responses will show up here. You can use standard spreadsheet jiggery pokery if you want to make another tab that keeps track of how many people are in the list, etc. But the important thing here is that we now have a dataset for CoVID Injection to work with.
+
+    # Setting Up the Bookmarklet
+
+    So now we need to configure CoVID Injection to work with our spreadsheet. It'll work with an auto-filling one like I just showed you how to do, or it will work with an existing one that you may have, too, it doesn't matter. All that matters at this point is that we know what fields are where, because we're going to tell CoVID Injection where to look for them.
+
+    Now, there are two websites for CoVID Injection:
+
+    There's the main deployment which is at http://covid-injection.netlify.app <-- This is the stable version of the software. Most folk will use this.
+
+    And there's the development branch which is at http://covid-injection-dev.netlify.app This is the version that I'm currently working on that has new features, and is a work literally in progress. It's not stable. I work on fixing bugs. But when it becomes stable, I push those changes to the main deployment. This way if I make a big change and it breaks the system it doesn't take everybody who's using it down.
+
+    Regardless, configuring a CoVID Injection works the same way on both.
+
+    We click on the bookmarklet generator page link here, and we are presented with the following interface.
+
+    Using this, we can tell CoVID Injection which columns in our spreadsheet represent what.
+
+    So with our example, Column A is just a timestamp, so we don't need it.
+
+    Column B is our email. Column C our First name, etc.
+
+    I'm going to fill this all out...
+
+    Once you're done, click Generate. And if you missed a required field – like I did – it'll tell you.
+
+    Let me fix that...
+
+    Ok, and I'm going to hit the Generate button again.
+
+    And here is our bookmarklet. How we install it is that we drag it up to our bookmarks bar (if you can't see your bookmarks bar, be sure to enable it).
+
+    Some organizations have buttons that are already pre-generated for them, and you can drag any of these to your bookmark bar, too.
+
+    If you have multiple spreadsheets that don't have the same format, you can create a button for each of them, and you can always edit the name of the bookmarklet so that you don't confuse them.
+
+    Once you have that sorted, we're ready to use it.
+
+
+    # Using CoVID Injector
+
+    The first thing we do is go back to our spreadsheet and select one of the rows that contains someone's information. It's best to click on the row number, and then hit CONTROL-C if you're on a PC or COMMAND-C if you're on a Mac.
+
+    We then, with that information copied, visit a supported vaccine portal and click on the bookmarklet.
+
+    If you don't have proper data in your clipboard, it'll alert you and load in dummy data that can help you get through the initial steps.
+
+    If the bookmarklet disappears, just click on it again and it'll come back and keep going.
+
+    You'll notice that at the top of the window it'll show the individual's name (this is to ensure that you're using the right information) along with any of the notes fields you defined below it.
+
+    In the bottom half of the window are general instructions. If there are a known number of steps or pages, the software will try and give you a status indicator for how far along you sare. 
+
+    Generally, you follow the instructions on the bottom part of the window.
+
+    For example, there will be places that it says to continue manually or to click again. 
+
+    When in doubt, click again, and if nothing happens, look for possible errors or things that you need to fill in manually.
+
+    And that is esssentially it. On average, this should reduce filling out a vaccine form from 10 minutes down to 2, and reduce any data entry errors by preventing you from re-typing anything.
+
+
+    # Advanced features
+
+    Now let's take a look at a few of the more "advanced" features of CoVID Injection that can be of a big help in a number of cases, but require a bit of extra work.
+
+
+    # Re-Configuring a Button
+
+    Let's say that your form got re-organized for whatever reason, or some columns were added, or they somehow just do not match up. This happens. Instead of having to re-enter all of the values all over again, you can pre-load what's in your bookmarklet by simply giving it a click when you're on the button generator page.
+
+    You can configure it just like before, and generate a new button. Simply delete the old one, replace, and rename. And then you're back on your way.
+
+
+    # Configuring the Output
+
+    Very often when you're working on a volunteer effor, you'll need to track some additional information, such as which people on a list are done, who did the scheduling, what type of vaccine they got, where and when the appointment is, etc. etc.. Usually this is done by more manual entry into a spreadsheet.
+
+    But here we can record additional info, and have CoVID Injection copy that, and whatever other columns we want back into our clipboard so we can simply paste it in.
+
+    When you're on the bookmarklet generation page, click on Output Spreadsheet, and the following interface will appear.
+
+    You'll notice that there are some new fields, such as Volunteer Name, Vaccine, Type, Vaccine Website, etc. Set all of these columns like you did for the input, generate the button and save it.
+
+    When you're in the midst of using the Injection, simply hit the [=] and a new panel will open on the right.
+
+    Here you can record your name or some other indicator of "who" is filling this out. (This will be saved between sessions.) The software will try and detect which vaccine they're getting, but you can set this manually. You can put the address of the site in the location field, and the dates for the first and (if applicable) second doses right here.
+
+    When you're finished scheduling and you click the Copy Output to Clipboard button, all of the fields you set for the bookmarklet will be sent to your clipboard, and you can paste them into your sheet directly.
+
+
+    # The Availability Grid
+
+    This bit allows you to have an availability grid in your Google Form where someone can indicate when they can be scheduled as well as a visual representation of it on the CoVID Injector for when you're scheduling them.
+
+    To do this, create a Checkbox Grid type question on your Google Form, and configure it exactly like this. The Rows are the days of the week, where the Columns are "Mornings" "Afternoons" and "Evenings". Make sure that "Require a response in each row" is unchecked.
+
+    When you save your form, you'll see that on your spreadsheet, seven new columns were created, one for each day of the week. 
+
+    When you're configuring your bookmarklet button, set the Sunday Availability through Saturday Availability columns appropirately. 
+
+    And now when you use the Injector, the grid will appear, allowing you to – at a glance – figure out when scheduling would work best.
+
+
+    # Conclusion
+
+    So that's about it.
+
+    If you have any questions about the software, reach out to covidinjector@gmail.com.
+
+    If you want to help maintain the codebase, the project is up on GitHub.
+
+    If you'd like to financially contribute, instead consider donating to Christ Church New Brunswick's Food Pantry or Laundry Love ministries.
+    
+
+</body>
+</html>
