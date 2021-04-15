@@ -1,5 +1,6 @@
 # CoVID Injection
 
+* [Follow us on Twitter](https://twitter.com/CovidInjector)
 * [Main branch](https://covid-injection.netlify.app/): [![Netlify Status](https://api.netlify.com/api/v1/badges/7447f05c-93a8-44ac-aef3-f20732e86808/deploy-status)](https://app.netlify.com/sites/covid-injection/deploys)
 * [Development branch](https://covid-injection-dev.netlify.app/): [![Netlify Status](https://api.netlify.com/api/v1/badges/253e9e6f-a428-4fbd-8ae6-0ddbd39a78c6/deploy-status)](https://app.netlify.com/sites/covid-injection-dev/deploys)
 
