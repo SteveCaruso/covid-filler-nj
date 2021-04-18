@@ -969,13 +969,14 @@ It's a *snicker* JavaScript injection... :-)
                 q('#COVID-TARGET').innerHTML += '<hr>';
 
                 //Set datastate
-                q('#covidInjectionConsoleDataState').innerHTML = JSON.stringify({
+                q('#covidInjectionConsoleDataState').innerHTML = JSON.stringify(IDX) + "<br>" + JSON.stringify({
                     "u_email":u_email, "u_fname":u_fname, "u_lname":u_lname,
                     "u_bday":u_bday, "u_phone":u_phone, 
                     "u_address":u_address, "u_address_2":u_address_2,
                     "u_city":u_city, "u_state_name":u_state_name, "u_state_code":u_state_code, "u_zip":u_zip,
                     "u_sex":u_sex, "u_gender":u_gender, "u_occupation":u_occupation, "u_health_conditions":u_health_conditions,
                     "u_notes":u_notes, "u_notes_2":u_notes_2, "u_notes_3":u_notes_3, "u_notes_4":u_notes_4,
+                    "u_a_grid":u_a_grid,
                     "u_a_sun":u_a_sun, "u_a_mon":u_a_mon, "u_a_tue":u_a_tue, "u_a_wed":u_a_wed, 
                     "u_a_thu":u_a_thu, "u_a_fri":u_a_fri, "u_a_sat":u_a_sat
                 }).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
