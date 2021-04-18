@@ -212,7 +212,7 @@ It's a *snicker* JavaScript injection... :-)
     };
 
     //Language input data
-    const LANG = "en";
+    var LANG = "en";
 
     //Translator
     function _(s) {
@@ -631,8 +631,8 @@ It's a *snicker* JavaScript injection... :-)
                 
 
                 //Detect language
-                //figure that out... still...
-
+                //BELOW
+                
                 
 
 
@@ -665,6 +665,16 @@ It's a *snicker* JavaScript injection... :-)
                     return;
                     
                 }
+
+
+
+
+                //Detect language
+                //Check a known, required field
+                var sx = c[IDX["sex"]];
+                if (sx == "Hombre" || sx == "Mujer" || sx == "Otro o prefiero no decir") LANG = "es";
+
+
                 
                 
                 //Email (already OK)
@@ -849,13 +859,13 @@ It's a *snicker* JavaScript injection... :-)
                 }
 
                 //Sex
-                if (IDX["sex"] == -1) IDX["sex"] = IDX["gen"];
                 var u_sex = _(c[IDX["sex"]]);
                 if ( u_sex == "M") u_sex = "Male";
                 else if ( u_sex == "F") u_sex = "Female";
                 else if ( u_sex == "O") u_sex = "Other";
                 
                 //Gender
+                if (IDX["gen"] == -1) IDX["gen"] = IDX["sex"];
                 var u_gender = _(c[IDX["gen"]]);
                 if (u_gender == "M") u_gender = "Male";
                 else if (u_gender == "F") u_gender = "Female";
