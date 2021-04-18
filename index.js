@@ -879,6 +879,7 @@ It's a *snicker* JavaScript injection... :-)
                 var u_temp_password = "Volunteer1!";
 
                 //Availability grid
+                var u_a_grid = (IDX["a_sun"]>=0) && (IDX["a_mon"]>=0) && (IDX["a_tue"]>=0) && (IDX["a_wed"]>=0) && (IDX["a_thu"]>=0) && (IDX["a_fri"]>=0) && (IDX["a_sat"]>=0);
                 var u_a_sun = IDX["a_sun"] != -1 ? (""+c[IDX["a_sun"]]).split(", ") : null;
                 var u_a_mon = IDX["a_mon"] != -1 ? (""+c[IDX["a_mon"]]).split(", ") : null;
                 var u_a_tue = IDX["a_tue"] != -1 ? (""+c[IDX["a_tue"]]).split(", ") : null;
@@ -900,8 +901,7 @@ It's a *snicker* JavaScript injection... :-)
 
                 //Display availability grid -- pending
                 //This feature's gonna rock.
-                if (u_a_sun != null && u_a_mon != null && u_a_tue != null && u_a_wed != null
-                    && u_a_thu != null && u_a_fri != null && u_a_sat != null) {
+                if (u_a_grid) {
                 //if (true) {
 
                     //var u_a_sun = "Mornings";
