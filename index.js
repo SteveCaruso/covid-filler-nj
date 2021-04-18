@@ -879,13 +879,13 @@ It's a *snicker* JavaScript injection... :-)
                 var u_temp_password = "Volunteer1!";
 
                 //Availability grid
-                var u_a_sun = IDX["a_sun"] != -1 ? c[IDX["a_sun"]].split(", ") : null;
-                var u_a_mon = IDX["a_mon"] != -1 ? c[IDX["a_mon"]].split(", ") : null;
-                var u_a_tue = IDX["a_tue"] != -1 ? c[IDX["a_tue"]].split(", ") : null;
-                var u_a_wed = IDX["a_wed"] != -1 ? c[IDX["a_wed"]].split(", ") : null;
-                var u_a_thu = IDX["a_thu"] != -1 ? c[IDX["a_thu"]].split(", ") : null;
-                var u_a_fri = IDX["a_fri"] != -1 ? c[IDX["a_fri"]].split(", ") : null;
-                var u_a_sat = IDX["a_sat"] != -1 ? c[IDX["a_sat"]].split(", ") : null;
+                var u_a_sun = IDX["a_sun"] != -1 ? (""+c[IDX["a_sun"]]).split(", ") : null;
+                var u_a_mon = IDX["a_mon"] != -1 ? (""+c[IDX["a_mon"]]).split(", ") : null;
+                var u_a_tue = IDX["a_tue"] != -1 ? (""+c[IDX["a_tue"]]).split(", ") : null;
+                var u_a_wed = IDX["a_wed"] != -1 ? (""+c[IDX["a_wed"]]).split(", ") : null;
+                var u_a_thu = IDX["a_thu"] != -1 ? (""+c[IDX["a_thu"]]).split(", ") : null;
+                var u_a_fri = IDX["a_fri"] != -1 ? (""+c[IDX["a_fri"]]).split(", ") : null;
+                var u_a_sat = IDX["a_sat"] != -1 ? (""+c[IDX["a_sat"]]).split(", ") : null;
 
 
                 //Display name of person the data is from
