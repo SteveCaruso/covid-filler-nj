@@ -2080,6 +2080,8 @@ It's a *snicker* JavaScript injection... :-)
                 */
                 else if (host == "www.atlantichealth.org") {
 
+                    //https://www.atlantichealth.org/conditions-treatments/coronavirus-covid-19/covid-vaccine/schedule.html
+
                     if (location.pathname == "/conditions-treatments/coronavirus-covid-19/covid-vaccine/schedule.html") {
 
                         if (q(`[data-json*='"Make an Appointment"']`)) {
@@ -2125,7 +2127,7 @@ It's a *snicker* JavaScript injection... :-)
 
                             }
 
-                            stat(`Atlantic Health Detected. Continue manually until asked for reason for visit, then click here.`);
+                            stat(`Atlantic Health Detected. Keep clicking here until you're asked to choose an appointment time. Then click here again when asked for the reason for visit, then click here again.`);
 
                         }
                         else if (q(`#comments`)) {
@@ -2171,6 +2173,8 @@ It's a *snicker* JavaScript injection... :-)
                             set('#Race',8); //Unknown
 
                             set("#Ethnicity",3); //Unknown
+
+                            stat(`Atlantic Health Detected. Continue manually.`);
 
                         }
 
