@@ -1767,7 +1767,7 @@ It's a *snicker* JavaScript injection... :-)
                             stat('St. Peter\'s Page 4 detected. Form autofilled. Book when ready.');
 
                             //Click class*="AddPhoneBox"
-                            click(`class*="AddPhoneBox"`);
+                            //click(`class*="AddPhoneBox"`);
 
                             //data-test="address-1"
                             set(`data-test="address-1"`,u_address);
