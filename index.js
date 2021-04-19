@@ -1710,7 +1710,7 @@ It's a *snicker* JavaScript injection... :-)
                             //Last name
                             set('input[name="lastName"]',u_lname);
 
-                            let bd = d.split("/");
+                            //let bd = d.split("/");
 
                             //Birth Month
                             set('input[name="birthMonth"]',u_bday_M);
