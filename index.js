@@ -246,6 +246,7 @@ It's a *snicker* JavaScript injection... :-)
             "www.riteaid.com",
             "www.cvs.com",
             "www.zocdoc.com",
+            "form.jotform.com",
             "curogram.com",
             "www.atlantichealth.org",
             "www.essexcovid.org",
@@ -1661,21 +1662,31 @@ It's a *snicker* JavaScript injection... :-)
                 
                 } //END CVS
 
+                /*
+                    Jotform - for St. Peter's
+                */ 
+                else if (host == "form.jotform.com") {
+
+                    click(`#label_input_3_0`);
+
+                }
 
                 /*
                     ZocDoc (Handles several portals)
                 */
                 else if (host == "www.zocdoc.com") {
 
+                    stat(`ZocDoc detected.`);
+
                     //Patient info URL
                     var pi = "https://www.zocdoc.com/booking/patientinfo/";
                     //Signup URL
-                    var pi = "https://www.zocdoc.com/booking/signup/";
+                    var su = "https://www.zocdoc.com/booking/signup/";
 
                     /*
                         St. Peter's
                     */
-                    if (location.pathname == "/wl/saintpeterscovid19vaccinemonroe/practice/65013?reason_visit=5243") {
+                    if (location.pathname == "/wl/saintpeterscovid19vaccinemonroe/practice/65013") {
 
                         stat('St. Peter\'s Page 1 detected. Continue manually until the Patient Information screen.');
 
@@ -1689,7 +1700,7 @@ It's a *snicker* JavaScript injection... :-)
                     else if (location.href.substr(0,pi.length) == pi) { log("PatientInfoScreen detected.");
 
                         //Detect St. Peters...
-                        if ( q('img[src="https://d2gmqy7n86tnsf.cloudfront.net/c8beebd4-d6b3-4b40-a066-a3bd3bf819f2/bookingLogo.jpeg"]') != null ) {
+                        if ( q('img[src="//d2uur722ua7fvv.cloudfront.net/photos/COVID-19-Vaccine-Clinic---Monroe-Senior-Communities-315130-circle_medium__v1__.png"]') != null ) {
 
                             stat('St. Peter\'s Page 2 detected.');
 
@@ -1699,7 +1710,7 @@ It's a *snicker* JavaScript injection... :-)
                             //Last name
                             set('input[name="lastName"]',u_lname);
 
-                            let bd = d.split("/");
+                            //let bd = d.split("/");
 
                             //Birth Month
                             set('input[name="birthMonth"]',u_bday_M);
@@ -1720,9 +1731,13 @@ It's a *snicker* JavaScript injection... :-)
                             });
                         }
 
-                        else if (location.href.substr(0,pi.length) == pi) { log("Signup screen detected.");
+                    }
 
-                            stat('St. Peter\'s Page 3 detected. Form autofilled. Click "Review and book" when ready.');
+                    else if (location.href.substr(0,su.length) == su) { log("Signup screen detected.");
+
+                        if ( q('img[src="//d2uur722ua7fvv.cloudfront.net/photos/COVID-19-Vaccine-Clinic---Monroe-Senior-Communities-315130-circle_medium__v1__.png') != null ) {
+
+                            stat('St. Peter\'s Page 3 detected. Form autofilled with default password. Click "Review and book" when ready!');
 
                             //Email
                             set('input[name="email"]',u_email);
