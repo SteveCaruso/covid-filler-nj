@@ -246,6 +246,7 @@ It's a *snicker* JavaScript injection... :-)
             "www.riteaid.com",
             "www.cvs.com",
             "www.zocdoc.com",
+            "form.jotform.com",
             "curogram.com",
             "www.atlantichealth.org",
             "www.essexcovid.org",
@@ -1661,11 +1662,21 @@ It's a *snicker* JavaScript injection... :-)
                 
                 } //END CVS
 
+                /*
+                    Jotform - for St. Peter's
+                */ 
+                else if (host == "form.jotform.com") {
+
+                    click(`#label_input_3_0`);
+
+                }
 
                 /*
                     ZocDoc (Handles several portals)
                 */
                 else if (host == "www.zocdoc.com") {
+
+                    stat(`ZocDoc detected.`);
 
                     //Patient info URL
                     var pi = "https://www.zocdoc.com/booking/patientinfo/";
@@ -1675,7 +1686,7 @@ It's a *snicker* JavaScript injection... :-)
                     /*
                         St. Peter's
                     */
-                    if (location.pathname == "/wl/saintpeterscovid19vaccinemonroe/practice/65013?reason_visit=5243") {
+                    if (location.pathname == "/wl/saintpeterscovid19vaccinemonroe/practice/65013") {
 
                         stat('St. Peter\'s Page 1 detected. Continue manually until the Patient Information screen.');
 
