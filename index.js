@@ -2206,26 +2206,26 @@ It's a *snicker* JavaScript injection... :-)
 
                         stat(`Essex County Detected. Keep clicking here.`);
 
-                        if (q(`#moderna-eua`)) { //Moderna - Step 2
+                        if (!q(`#eligibility-check`).checked) { //Step 1
+
+                            click(`#eligibility-check`);
+
+                            click(`.frm-question-check-eligibility-group button[type="submit"]`);
+
+                            stat(`Essex County Detected. Eligibility confirmed. Click here.`);
+
+                        }
+                        else if (!q(`#moderna-eua`).checked) { //Moderna - Step 2
 
                             click(`#moderna-eua`);
 
                             click(`#moderna-overview`);
 
-                            click(`button[type="submit"]`);
+                            click(`.frm-vaccine-overview button[type="submit"]`);
 
                             stat(`Essex County Detected. Moderna confirmed. Click here.`);
 
-                        }
-                        else if (q(`#eligibility-check`)) { //Step 1
-
-                            click(`#eligibility-check`);
-
-                            click(`button[type="submit"]`);
-
-                            stat(`Essex County Detected. Eligibility confirmed. Click here.`);
-
-                        }
+                        } 
 
                     }
 
