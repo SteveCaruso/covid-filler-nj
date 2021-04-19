@@ -140,6 +140,10 @@ It's a *snicker* JavaScript injection... :-)
             "Otro o prefiero no decir"                  : "Other or prefer not to say",
             "Ninguna de las anteriores"                 : "None of the above",
 
+            "Mañanas"                                   : "Mornings",
+            "Mediodía"                                  : "Afternoons",
+            "Tardes"                                    : "Evenings",
+
             //Occupations
             //""                                        : "Airport and Commercial Airlines",
             "Trabajador de cuidado infantil"            : "Childcare Worker",
@@ -212,7 +216,7 @@ It's a *snicker* JavaScript injection... :-)
     };
 
     //Language input data
-    const LANG = "en";
+    var LANG = "en";
 
     //Translator
     function _(s) {
@@ -243,6 +247,8 @@ It's a *snicker* JavaScript injection... :-)
             "www.cvs.com",
             "www.zocdoc.com",
             "curogram.com",
+            "www.atlantichealth.org",
+            "www.essexcovid.org",
             /*"vaccine.lpgrx.us",*/
             "covid-injection-dev.netlify.app",
             "covid-injection.netlify.app"
@@ -631,8 +637,8 @@ It's a *snicker* JavaScript injection... :-)
                 
 
                 //Detect language
-                //figure that out... still...
-
+                //BELOW
+                
                 
 
 
@@ -665,6 +671,16 @@ It's a *snicker* JavaScript injection... :-)
                     return;
                     
                 }
+
+
+
+
+                //Detect language
+                //Check a known, required field
+                var sx = c[IDX["sex"]];
+                if (sx == "Hombre" || sx == "Mujer" || sx == "Otro o prefiero no decir") LANG = "es";
+
+
                 
                 
                 //Email (already OK)
@@ -849,13 +865,13 @@ It's a *snicker* JavaScript injection... :-)
                 }
 
                 //Sex
-                if (IDX["sex"] == -1) IDX["sex"] = IDX["gen"];
                 var u_sex = _(c[IDX["sex"]]);
                 if ( u_sex == "M") u_sex = "Male";
                 else if ( u_sex == "F") u_sex = "Female";
                 else if ( u_sex == "O") u_sex = "Other";
                 
                 //Gender
+                if (IDX["gen"] == -1) IDX["gen"] = IDX["sex"];
                 var u_gender = _(c[IDX["gen"]]);
                 if (u_gender == "M") u_gender = "Male";
                 else if (u_gender == "F") u_gender = "Female";
@@ -880,13 +896,21 @@ It's a *snicker* JavaScript injection... :-)
 
                 //Availability grid
                 var u_a_grid = (IDX["a_sun"]>=0) && (IDX["a_mon"]>=0) && (IDX["a_tue"]>=0) && (IDX["a_wed"]>=0) && (IDX["a_thu"]>=0) && (IDX["a_fri"]>=0) && (IDX["a_sat"]>=0);
+
                 var u_a_sun = IDX["a_sun"] != -1 ? (""+c[IDX["a_sun"]]).split(", ") : null;
+                    for (var i in u_a_sun) u_a_sun[i] = _(u_a_sun[i]);
                 var u_a_mon = IDX["a_mon"] != -1 ? (""+c[IDX["a_mon"]]).split(", ") : null;
+                    for (var i in u_a_mon) u_a_mon[i] = _(u_a_mon[i]);
                 var u_a_tue = IDX["a_tue"] != -1 ? (""+c[IDX["a_tue"]]).split(", ") : null;
+                    for (var i in u_a_tue) u_a_tue[i] = _(u_a_tue[i]);
                 var u_a_wed = IDX["a_wed"] != -1 ? (""+c[IDX["a_wed"]]).split(", ") : null;
+                    for (var i in u_a_wed) u_a_wed[i] = _(u_a_wed[i]);
                 var u_a_thu = IDX["a_thu"] != -1 ? (""+c[IDX["a_thu"]]).split(", ") : null;
+                    for (var i in u_a_thu) u_a_thu[i] = _(u_a_thu[i]);
                 var u_a_fri = IDX["a_fri"] != -1 ? (""+c[IDX["a_fri"]]).split(", ") : null;
+                    for (var i in u_a_fri) u_a_fri[i] = _(u_a_fri[i]);
                 var u_a_sat = IDX["a_sat"] != -1 ? (""+c[IDX["a_sat"]]).split(", ") : null;
+                    for (var i in u_a_sat) u_a_sat[i] = _(u_a_sat[i]);
 
 
                 //Display name of person the data is from
@@ -969,13 +993,14 @@ It's a *snicker* JavaScript injection... :-)
                 q('#COVID-TARGET').innerHTML += '<hr>';
 
                 //Set datastate
-                q('#covidInjectionConsoleDataState').innerHTML = JSON.stringify({
+                q('#covidInjectionConsoleDataState').innerHTML = JSON.stringify(IDX) + "<br>" + JSON.stringify({
                     "u_email":u_email, "u_fname":u_fname, "u_lname":u_lname,
                     "u_bday":u_bday, "u_phone":u_phone, 
                     "u_address":u_address, "u_address_2":u_address_2,
                     "u_city":u_city, "u_state_name":u_state_name, "u_state_code":u_state_code, "u_zip":u_zip,
                     "u_sex":u_sex, "u_gender":u_gender, "u_occupation":u_occupation, "u_health_conditions":u_health_conditions,
                     "u_notes":u_notes, "u_notes_2":u_notes_2, "u_notes_3":u_notes_3, "u_notes_4":u_notes_4,
+                    "u_a_grid":u_a_grid,
                     "u_a_sun":u_a_sun, "u_a_mon":u_a_mon, "u_a_tue":u_a_tue, "u_a_wed":u_a_wed, 
                     "u_a_thu":u_a_thu, "u_a_fri":u_a_fri, "u_a_sat":u_a_sat
                 }).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -1293,6 +1318,7 @@ It's a *snicker* JavaScript injection... :-)
                         var age = (new Date().getFullYear()) - parseInt(u_bday_YYYY);
                         set('#q1_0',age);
 
+                        /*
                         //Over 55
                         if (age >= 55) {
                             click('#q20');
@@ -1302,7 +1328,9 @@ It's a *snicker* JavaScript injection... :-)
                         else if ( u_health_conditions != "None of the Above" && u_health_conditions != "") {
                             click('#q21');
                         }
+                        */
 
+                        /*
                         //Priority group
                         else if ( u_occupation != "None of the Above" && u_occupation != "") {
 
@@ -1424,7 +1452,17 @@ It's a *snicker* JavaScript injection... :-)
 
                             //Fire the change event manually
                             q('#qlist').dispatchEvent(new Event('change'));
+                            
 
+                        }*/
+
+                        //If a teacher
+                        if ( u_occupation == "Pre-Kindergarten -12th grade Educator & Staff" 
+                            || u_occupation == "Childcare Worker" 
+                            || u_occupation == "Family Childcare Providers"
+                            || u_occupation == "Head Start and Early Head Start") {
+                            
+                                click('#q20'); 
                         }
 
                         //None of the above
@@ -1433,12 +1471,14 @@ It's a *snicker* JavaScript injection... :-)
                         }
 
                         //Check if employer field is active
+                        /*
                         if (q('#qtext') != null) {
 
                             //Fill it.... we need to add EMPLOYER info to the form
                             set('#qtext', u_employer.length > 0 ? u_employer : ".");
 
                         }
+                        */
 
                         //Click #qconsent
                         click('#qconsent');
@@ -2050,6 +2090,168 @@ It's a *snicker* JavaScript injection... :-)
                     }
 
                 } //END Legacy
+
+                /*
+                    Atlantic Health
+                */
+                else if (host == "www.atlantichealth.org") {
+
+                    //https://www.atlantichealth.org/conditions-treatments/coronavirus-covid-19/covid-vaccine/schedule.html
+
+                    if (location.pathname == "/conditions-treatments/coronavirus-covid-19/covid-vaccine/schedule.html") {
+
+                        if (q(`[data-json*='"Make an Appointment"']`)) {
+                        
+                            //Start
+                            click(`[data-json*='"Make an Appointment"']`);
+
+                            //Wait?
+                            //
+                            click(`[data-json*='"I Understand"']`);
+
+                            //Click no
+                            click(`[data-json*='"No"']`);
+
+                            //Not diagnosed
+                            click(`[data-json*='"NOT DIAGNOSED WITH COVID-19"']`);
+
+                            //Click no
+                            click(`[data-json*='"No"']`);
+
+                            //"None of these Conditions apply to me"
+                            click(`[data-json*='"None of these Conditions apply to me"']`);
+
+                            //"I Understand, None of these conditions apply now"
+                            click(`[data-json*='"I Understand, None of these conditions apply now"']`);
+
+                            //Click no
+                            click(`[data-json*='"No"']`);
+
+                            //AGE
+                            var age = (new Date().getFullYear()) - parseInt(u_bday_YYYY);
+                        set('#q1_0',age);
+
+                            if (age == 16 || age == 17) {
+
+                                //"Age 16 or 17"
+                                click(`[data-json*='"Age 16 or 17"']`);
+
+                            } else {
+
+                                //"Age 18 or older"
+                                click(`[data-json*='"Age 18 or older"']`);
+
+                            }
+
+                            stat(`Atlantic Health Detected. Keep clicking here until you're asked to choose an appointment time. Then click here again when asked for the reason for visit, then click here again.`);
+
+                        }
+                        else if (q(`#comments`)) {
+
+                            //If #Comments exists and ".button .prevMainStep" and ".button .scheduleaction .completeworkflow"
+                            set('#Comments',"Covid vaccine");
+                            click('.completeworkflow');
+
+                            //Continue
+                            click('.nextstep');
+
+                            stat(`Atlantic Health Detected. Continue manually until asked for patient information, then click here.`);
+
+                        } 
+                        else if (q('#FirstName')) {
+
+                            //First name
+                            set('#FirstName',u_fname);
+
+                            //First name
+                            set('#LastName',u_lname);
+
+                            set('#AddressLine1',u_address);
+
+                            set('#City',u_city);
+
+                            set('#State',u_state_name);
+
+                            set('#PostalCode',u_zip);
+
+                            set('#Country',"United States of America");
+
+                            set('#DateOfBirthStr',u_bday_MM_DD_YYYY);
+
+                            if (u_sex == "Male") click('#legalSex1');
+                            else if (u_sex == "Female") click('#legalSex0');
+                            else click('#legalSex3');
+
+                            set('#HomePhone',u_phone);
+
+                            set('#Email',u_email);
+
+                            set('#Race',8); //Unknown
+
+                            set("#Ethnicity",3); //Unknown
+
+                            stat(`Atlantic Health Detected. Continue manually.`);
+
+                        }
+
+                    }
+
+                } //END Atlantic Health
+
+                /*
+                    Essex County
+                */
+                else if (host == "www.essexcovid.org") {
+
+                    stat(`Essex County Detected...`);
+
+                    if (location.pathname == '/index.php/vaccine/vaccine_availability') {
+
+                        //Splash page
+                        if (q(`input[value="Continue"]`)) {
+                            stat(`Essex County Detected. Fill out CAPTCHA and click Continue.`);
+                        }
+                        //Appointment page
+                        else if (q(`[aria-label="Location: activate to sort column ascending"]`)) {
+                            stat(`Essex County Detected. Select appointment location.`);
+                        }
+
+                    }
+                    else if (location.pathname == '/index.php/vaccine') {
+
+                        stat(`Essex County Detected. Keep clicking here.`);
+
+                        if (!q(`#eligibility-check`).checked) { //Step 1
+
+                            click(`#eligibility-check`);
+
+                            click(`.frm-question-check-eligibility-group button[type="submit"]`);
+
+                            stat(`Essex County Detected. Eligibility confirmed. Click here.`);
+
+                        }
+                        else if (!q(`#moderna-eua`).checked) { //Moderna - Step 2
+
+                            click(`#moderna-eua`);
+
+                            click(`#moderna-overview`);
+
+                            click(`.frm-vaccine-overview button[type="submit"]`);
+
+                            stat(`Essex County Detected. Moderna confirmed. Click here.`);
+
+                        } 
+                        else if (q(`.frm-survey-symptoms`)) { //Symptoms - Step 3
+
+                            clickqai(`.frm-survey-symptoms button`,1);
+
+                            stat(`Essex County Detected. Symptoms confirmed. Click here.`);
+
+                        }
+
+                    }
+
+                }
 
 
             });
