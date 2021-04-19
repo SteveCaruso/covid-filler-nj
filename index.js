@@ -2226,6 +2226,11 @@ It's a *snicker* JavaScript injection... :-)
                             stat(`Essex County Detected. Moderna confirmed. Click here.`);
 
                         } 
+                        else if (q(`.frm-survey-symptoms`)) { //Symptoms - Step 3
+
+                            clickqai(`.frm-survey-symptoms button`,1);
+
+                        }
 
                     }
 
