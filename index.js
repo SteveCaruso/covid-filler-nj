@@ -140,6 +140,10 @@ It's a *snicker* JavaScript injection... :-)
             "Otro o prefiero no decir"                  : "Other or prefer not to say",
             "Ninguna de las anteriores"                 : "None of the above",
 
+            "Mañanas"                                   : "Mornings",
+            "Mediodía"                                  : "Afternoons",
+            "Tardes"                                    : "Evenings",
+
             //Occupations
             //""                                        : "Airport and Commercial Airlines",
             "Trabajador de cuidado infantil"            : "Childcare Worker",
@@ -890,13 +894,21 @@ It's a *snicker* JavaScript injection... :-)
 
                 //Availability grid
                 var u_a_grid = (IDX["a_sun"]>=0) && (IDX["a_mon"]>=0) && (IDX["a_tue"]>=0) && (IDX["a_wed"]>=0) && (IDX["a_thu"]>=0) && (IDX["a_fri"]>=0) && (IDX["a_sat"]>=0);
+
                 var u_a_sun = IDX["a_sun"] != -1 ? (""+c[IDX["a_sun"]]).split(", ") : null;
+                    for (var i in u_a_sun) u_a_sun[i] = _(u_a_sun[i]);
                 var u_a_mon = IDX["a_mon"] != -1 ? (""+c[IDX["a_mon"]]).split(", ") : null;
+                    for (var i in u_a_mon) u_a_mon[i] = _(u_a_mon[i]);
                 var u_a_tue = IDX["a_tue"] != -1 ? (""+c[IDX["a_tue"]]).split(", ") : null;
+                    for (var i in u_a_tue) u_a_tue[i] = _(u_a_tue[i]);
                 var u_a_wed = IDX["a_wed"] != -1 ? (""+c[IDX["a_wed"]]).split(", ") : null;
+                    for (var i in u_a_wed) u_a_wed[i] = _(u_a_wed[i]);
                 var u_a_thu = IDX["a_thu"] != -1 ? (""+c[IDX["a_thu"]]).split(", ") : null;
+                    for (var i in u_a_thu) u_a_thu[i] = _(u_a_thu[i]);
                 var u_a_fri = IDX["a_fri"] != -1 ? (""+c[IDX["a_fri"]]).split(", ") : null;
+                    for (var i in u_a_fri) u_a_fri[i] = _(u_a_fri[i]);
                 var u_a_sat = IDX["a_sat"] != -1 ? (""+c[IDX["a_sat"]]).split(", ") : null;
+                    for (var i in u_a_sat) u_a_sat[i] = _(u_a_sat[i]);
 
 
                 //Display name of person the data is from
