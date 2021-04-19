@@ -1766,27 +1766,27 @@ It's a *snicker* JavaScript injection... :-)
 
                             stat('St. Peter\'s Page 4 detected. Form autofilled. Add phone number, then book when ready.');
 
-                            //Click class*="AddPhoneBox"
-                            //click(`class*="AddPhoneBox"`);
-
                             //data-test="address-1"
-                            set(`data-test="address-1"`,u_address);
+                            set(`[data-test="address-1"]`,u_address);
 
                             //data-test="city"
-                            set(`data-test="city"`,u_city);
+                            set(`[data-test="city"]`,u_city);
 
                             //data-test="state"   2 digit state
-                            set(`data-test="state"`,u_state_code);
+                            set(`[data-test="state"]`,u_state_code);
 
                             //data-test="zip"
-                            set(`data-test="zip"`,u_zip);
+                            set(`[data-test="zip"]`,u_zip);
 
                             //name="isNewPatient" click
-                            click(`name="isNewPatient"`);
+                            click(`[name="isNewPatient"]`);
 
                             //input[type="radio"][value="No"] x2
                             clickqai(`input[type="radio"][value="No"]`,0);
                             clickqai(`input[type="radio"][value="No"]`,1);
+
+                            //Click class*="AddPhoneBox"
+                            click(`[class*="AddPhoneBox"]`);
 
                         }
 
