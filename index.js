@@ -1733,20 +1733,24 @@ It's a *snicker* JavaScript injection... :-)
 
                         else if (location.href.substr(0,su.length) == pi) { log("Signup screen detected.");
 
-                            stat('St. Peter\'s Page 3 detected. Form autofilled. Click "Review and book" when ready.');
+                            if ( q('img[src="//d2uur722ua7fvv.cloudfront.net/photos/COVID-19-Vaccine-Clinic---Monroe-Senior-Communities-315130-circle_medium__v1__.png"]') != null ) {
 
-                            //Email
-                            set('input[name="email"]',u_email);
-                            set('input[name="confirmEmail"]',u_email);
+                                stat('St. Peter\'s Page 3 detected. Form autofilled. Click "Review and book" when ready!');
 
-                            //Password
-                            set('input[name="password"]',u_temp_password);
+                                //Email
+                                set('input[name="email"]',u_email);
+                                set('input[name="confirmEmail"]',u_email);
 
-                            //TOS
-                            click('input[name="termsOfService"]');
+                                //Password
+                                set('input[name="password"]',u_temp_password);
 
-                            //Uncheck keep me logged in
-                            click('input[name="rememberMe"]');
+                                //TOS
+                                click('input[name="termsOfService"]');
+
+                                //Uncheck keep me logged in
+                                click('input[name="rememberMe"]');
+
+                            }
 
                         }
 
