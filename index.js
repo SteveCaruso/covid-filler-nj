@@ -248,6 +248,7 @@ It's a *snicker* JavaScript injection... :-)
             "www.zocdoc.com",
             "curogram.com",
             "www.atlantichealth.org",
+            "www.essexcovid.org",
             /*"vaccine.lpgrx.us",*/
             "covid-injection-dev.netlify.app",
             "covid-injection.netlify.app"
@@ -2181,6 +2182,28 @@ It's a *snicker* JavaScript injection... :-)
                     }
 
                 } //END Atlantic Health
+
+                /*
+                    Essex County
+                */
+                else if (host == "www.essexcovid.org") {
+
+                    stat(`Essex County Detected...`);
+
+                    if (location.pathname == '/index.php/vaccine/vaccine_availability') {
+
+                        //Splash page
+                        if (q(`input[value="Continue"]`)) {
+                            stat(`Essex County Detected. Fill out CAPTCHA and click Continue.`);
+                        }
+                        //Appointment page
+                        else if (q(`[aria-label="Location: activate to sort column ascending"]`)) {
+                            stat(`Essex County Detected. Select appointment location.`);
+                        }
+
+                    }
+
+                }
 
 
             });
