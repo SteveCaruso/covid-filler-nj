@@ -1700,7 +1700,7 @@ It's a *snicker* JavaScript injection... :-)
                     else if (location.href.substr(0,pi.length) == pi) { log("PatientInfoScreen detected.");
 
                         //Detect St. Peters...
-                        if ( q('img[src="//d2uur722ua7fvv.cloudfront.net/photos/COVID-19-Vaccine-Clinic---Monroe-Senior-Communities-315130-circle_medium__v1__.png"]') != null ) {
+                        if ( q('img[src*="COVID-19-Vaccine-Clinic---Monroe-Senior-Communities') != null ) {
 
                             stat('St. Peter\'s Page 2 detected.');
 
@@ -1735,7 +1735,7 @@ It's a *snicker* JavaScript injection... :-)
 
                     else if (location.href.substr(0,su.length) == su) { log("Signup screen detected.");
 
-                        if ( q('img[src="//d2uur722ua7fvv.cloudfront.net/photos/COVID-19-Vaccine-Clinic---Monroe-Senior-Communities-315130-circle_medium__v1__.png') != null ) {
+                        if ( q('img[src*="COVID-19-Vaccine-Clinic---Monroe-Senior-Communities') != null ) {
 
                             stat('St. Peter\'s Page 3 detected. Form autofilled with default password. Click "Review and book" when ready!');
 
