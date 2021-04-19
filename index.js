@@ -2230,6 +2230,8 @@ It's a *snicker* JavaScript injection... :-)
 
                             clickqai(`.frm-survey-symptoms button`,1);
 
+                            stat(`Essex County Detected. Symptoms confirmed. Click here.`);
+
                         }
 
                     }
