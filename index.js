@@ -2202,6 +2202,13 @@ It's a *snicker* JavaScript injection... :-)
                         }
 
                     }
+                    else if (location.pathname == '/index.php/vaccine') {
+
+                        click(`#eligibility-check`);
+
+                        click(`button[type="submit"]`);
+
+                    }
 
                 }
 
