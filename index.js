@@ -583,7 +583,7 @@ It's a *snicker* JavaScript injection... :-)
         };
 
         //Click
-        var click = function(query,index) {
+        var click = function(query) {
 
             log(`Click ${query}.`);
 
@@ -597,7 +597,7 @@ It's a *snicker* JavaScript injection... :-)
         }
 
         //Click querySelectorAll index
-        var clickqai = function(query) {
+        var clickqai = function(query,index) {
 
             log(`Click ${query}{${index}}.`);
 
@@ -1782,8 +1782,8 @@ It's a *snicker* JavaScript injection... :-)
                             click(`[name="isNewPatient"]`);
 
                             //input[type="radio"][value="No"] x2
-                            clickqai(`input[type="radio"][value="No"]`,0);
-                            clickqai(`input[type="radio"][value="No"]`,1);
+                            clickqai(`input[value="No"]`,0);
+                            clickqai(`input[value="No"]`,1);
 
                             //Click class*="AddPhoneBox"
                             click(`[class*="AddPhoneBox"]`);
