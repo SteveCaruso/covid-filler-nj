@@ -247,6 +247,7 @@ It's a *snicker* JavaScript injection... :-)
             "www.cvs.com",
             "www.zocdoc.com",
             "curogram.com",
+            "www.atlantichealth.org",
             /*"vaccine.lpgrx.us",*/
             "covid-injection-dev.netlify.app",
             "covid-injection.netlify.app"
@@ -2073,6 +2074,109 @@ It's a *snicker* JavaScript injection... :-)
                     }
 
                 } //END Legacy
+
+                /*
+                    Atlantic Health
+                */
+                else if (host == "www.atlantichealth.org") {
+
+                    if (location.pathname == "/conditions-treatments/coronavirus-covid-19/covid-vaccine/schedule.html") {
+
+                        if (q(`[data-json*='"Make an Appointment"']`)) {
+                        
+                            //Start
+                            click(`[data-json*='"Make an Appointment"']`);
+
+                            //Wait?
+                            //
+                            click(`[data-json*='"I Understand"']`);
+
+                            //Click no
+                            click(`[data-json*='"No"']`);
+
+                            //Not diagnosed
+                            click(`[data-json*='"NOT DIAGNOSED WITH COVID-19"']`);
+
+                            //Click no
+                            click(`[data-json*='"No"']`);
+
+                            //"None of these Conditions apply to me"
+                            click(`[data-json*='"None of these Conditions apply to me"']`);
+
+                            //"I Understand, None of these conditions apply now"
+                            click(`[data-json*='"I Understand, None of these conditions apply now"']`);
+
+                            //Click no
+                            click(`[data-json*='"No"']`);
+
+                            //AGE
+                            var age = (new Date().getFullYear()) - parseInt(u_bday_YYYY);
+                        set('#q1_0',age);
+
+                            if (age == 16 || age == 17) {
+
+                                //"Age 16 or 17"
+                                click(`[data-json*='"Age 16 or 17"']`);
+
+                            } else {
+
+                                //"Age 18 or older"
+                                click(`[data-json*='"Age 18 or older"']`);
+
+                            }
+
+                            stat(`Atlantic Health Detected. Continue manually until asked for reason for visit, then click here.`);
+
+                        }
+                        else if (q(`#comments`)) {
+
+                            //If #Comments exists and ".button .prevMainStep" and ".button .scheduleaction .completeworkflow"
+                            set('#Comments',"Covid vaccine");
+                            click('.completeworkflow');
+
+                            //Continue
+                            click('.nextstep');
+
+                            stat(`Atlantic Health Detected. Continue manually until asked for patient information, then click here.`);
+
+                        } 
+                        else if (q('#FirstName')) {
+
+                            //First name
+                            set('#FirstName',u_fname);
+
+                            //First name
+                            set('#LastName',u_lname);
+
+                            set('#AddressLine1',u_address);
+
+                            set('#City',u_city);
+
+                            set('#State',u_state_name);
+
+                            set('#PostalCode',u_zip);
+
+                            set('#Country',"United States of America");
+
+                            set('#DateOfBirthStr',u_bday_MM_DD_YYYY);
+
+                            if (u_sex == "Male") click('#legalSex1');
+                            else if (u_sex == "Female") click('#legalSex0');
+                            else click('#legalSex3');
+
+                            set('#HomePhone',u_phone);
+
+                            set('#Email',u_email);
+
+                            set('#Race',8); //Unknown
+
+                            set("#Ethnicity",3); //Unknown
+
+                        }
+
+                    }
+
+                } //END Atlantic Health
 
 
             });
