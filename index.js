@@ -1683,6 +1683,8 @@ It's a *snicker* JavaScript injection... :-)
                     //Signup URL
                     var su = "https://www.zocdoc.com/booking/signup/";
 
+                    var rb = "https://www.zocdoc.com/booking/reviewandbook/";
+
                     /*
                         St. Peter's
                     */
@@ -1753,6 +1755,42 @@ It's a *snicker* JavaScript injection... :-)
                             click('input[name="rememberMe"]');
 
                         }
+
+                        
+
+                    }
+
+                    else if (location.href.substr(0,rb.length) == rb) { log("Review and book screen detected.");
+
+                        if ( q('img[src*="COVID-19-Vaccine-Clinic---Monroe-Senior-Communities') != null ) {
+
+                            stat('St. Peter\'s Page 4 detected. Form autofilled. Book when ready.');
+
+                            //Click class*="AddPhoneBox"
+                            click(`class*="AddPhoneBox"`);
+
+                            //data-test="address-1"
+                            set(`data-test="address-1"`,u_address);
+
+                            //data-test="city"
+                            set(`data-test="city"`,u_city);
+
+                            //data-test="state"   2 digit state
+                            set(`data-test="state"`,u_state_code);
+
+                            //data-test="zip"
+                            set(`data-test="zip"`,u_zip);
+
+                            //name="isNewPatient" click
+                            click(`name="isNewPatient"`);
+
+                            //input[type="radio"][value="No"] x2
+                            clickqai(`input[type="radio"][value="No"]`,0);
+                            clickqai(`input[type="radio"][value="No"]`,1);
+
+                        }
+
+                        
 
                     }
 
