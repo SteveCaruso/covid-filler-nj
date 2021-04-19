@@ -1737,7 +1737,7 @@ It's a *snicker* JavaScript injection... :-)
 
                         if ( q('img[src="//d2uur722ua7fvv.cloudfront.net/photos/COVID-19-Vaccine-Clinic---Monroe-Senior-Communities-315130-circle_medium__v1__.png') != null ) {
 
-                            stat('St. Peter\'s Page 3 detected. Form autofilled. Click "Review and book" when ready!');
+                            stat('St. Peter\'s Page 3 detected. Form autofilled with default password. Click "Review and book" when ready!');
 
                             //Email
                             set('input[name="email"]',u_email);
