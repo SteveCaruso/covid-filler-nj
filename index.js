@@ -1318,6 +1318,7 @@ It's a *snicker* JavaScript injection... :-)
                         var age = (new Date().getFullYear()) - parseInt(u_bday_YYYY);
                         set('#q1_0',age);
 
+                        /*
                         //Over 55
                         if (age >= 55) {
                             click('#q20');
@@ -1327,7 +1328,9 @@ It's a *snicker* JavaScript injection... :-)
                         else if ( u_health_conditions != "None of the Above" && u_health_conditions != "") {
                             click('#q21');
                         }
+                        */
 
+                        /*
                         //Priority group
                         else if ( u_occupation != "None of the Above" && u_occupation != "") {
 
@@ -1449,7 +1452,17 @@ It's a *snicker* JavaScript injection... :-)
 
                             //Fire the change event manually
                             q('#qlist').dispatchEvent(new Event('change'));
+                            
 
+                        }*/
+
+                        //If a teacher
+                        if ( u_occupation == "Pre-Kindergarten -12th grade Educator & Staff" 
+                            || u_occupation == "Childcare Worker" 
+                            || u_occupation == "Family Childcare Providers"
+                            || u_occupation == "Head Start and Early Head Start") {
+                            
+                                click('#q20'); 
                         }
 
                         //None of the above
@@ -1458,12 +1471,14 @@ It's a *snicker* JavaScript injection... :-)
                         }
 
                         //Check if employer field is active
+                        /*
                         if (q('#qtext') != null) {
 
                             //Fill it.... we need to add EMPLOYER info to the form
                             set('#qtext', u_employer.length > 0 ? u_employer : ".");
 
                         }
+                        */
 
                         //Click #qconsent
                         click('#qconsent');
