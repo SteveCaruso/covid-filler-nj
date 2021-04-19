@@ -2204,9 +2204,28 @@ It's a *snicker* JavaScript injection... :-)
                     }
                     else if (location.pathname == '/index.php/vaccine') {
 
-                        click(`#eligibility-check`);
+                        stat(`Essex County Detected. Keep clicking here.`);
 
-                        click(`button[type="submit"]`);
+                        if (q(`#eligibility-check`)) {
+
+                            click(`#eligibility-check`);
+
+                            click(`button[type="submit"]`);
+
+                            stat(`Essex County Detected. Eligibility confirmed. Click here.`);
+
+                        }
+                        else if (q(`#moderna-eua`)) { //Moderna 
+
+                            click(`#moderna-eua`);
+
+                            click(`#moderna-overview`);
+
+                            click(`button[type="submit"]`);
+
+                            stat(`Essex County Detected. Moderna confirmed. Click here.`);
+
+                        }
 
                     }
 
