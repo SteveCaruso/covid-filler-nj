@@ -1742,11 +1742,11 @@ It's a *snicker* JavaScript injection... :-)
                             stat('St. Peter\'s Page 3 detected. Form autofilled with default password. Click "Review and book" when ready!');
 
                             //Email
-                            set('input[name="email"]',u_email);
-                            set('input[name="confirmEmail"]',u_email);
+                            set('input[name="email"]',u_email,['input','change','selectionchange']);
+                            set('input[name="confirmEmail"]',u_email,['input','change','selectionchange']);
 
                             //Password
-                            set('input[name="password"]',u_temp_password);
+                            set('input[name="password"]',u_temp_password,['input','change','selectionchange']);
 
                             //TOS
                             click('input[name="termsOfService"]');
@@ -1764,7 +1764,7 @@ It's a *snicker* JavaScript injection... :-)
 
                         if ( q('img[src*="COVID-19-Vaccine-Clinic---Monroe-Senior-Communities') != null ) {
 
-                            stat('St. Peter\'s Page 4 detected. Form autofilled. Book when ready.');
+                            stat('St. Peter\'s Page 4 detected. Form autofilled. Add phone number, then book when ready.');
 
                             //Click class*="AddPhoneBox"
                             //click(`class*="AddPhoneBox"`);
