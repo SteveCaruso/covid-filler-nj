@@ -1681,7 +1681,7 @@ It's a *snicker* JavaScript injection... :-)
                     //Patient info URL
                     var pi = "https://www.zocdoc.com/booking/patientinfo/";
                     //Signup URL
-                    var pi = "https://www.zocdoc.com/booking/signup/";
+                    var su = "https://www.zocdoc.com/booking/signup/";
 
                     /*
                         St. Peter's
@@ -1700,7 +1700,7 @@ It's a *snicker* JavaScript injection... :-)
                     else if (location.href.substr(0,pi.length) == pi) { log("PatientInfoScreen detected.");
 
                         //Detect St. Peters...
-                        if ( q('img[src="https://d2gmqy7n86tnsf.cloudfront.net/c8beebd4-d6b3-4b40-a066-a3bd3bf819f2/bookingLogo.jpeg"]') != null ) {
+                        if ( q('img[src="//d2uur722ua7fvv.cloudfront.net/photos/COVID-19-Vaccine-Clinic---Monroe-Senior-Communities-315130-circle_medium__v1__.png"]') != null ) {
 
                             stat('St. Peter\'s Page 2 detected.');
 
@@ -1731,7 +1731,7 @@ It's a *snicker* JavaScript injection... :-)
                             });
                         }
 
-                        else if (location.href.substr(0,pi.length) == pi) { log("Signup screen detected.");
+                        else if (location.href.substr(0,su.length) == pi) { log("Signup screen detected.");
 
                             stat('St. Peter\'s Page 3 detected. Form autofilled. Click "Review and book" when ready.');
 
