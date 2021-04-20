@@ -2339,8 +2339,9 @@ It's a *snicker* JavaScript injection... :-)
 
                         set(`[data-params*="Race"] input`,"Unknown");
 
-                        set(`[data-params*="Street Address 1"] input`,u_address);
-                        set(`[data-params*="Street Address 2"] input`,u_address_2);
+                        set(`[data-params*="Street Address Line 1"] input`,u_address);
+                        set(`[data-params*="Street Address Line 2"] input`,u_address_2);
+
                         set(`[data-params*="City"] input`,u_city);
                         set(`[data-params*="State"] input`,u_state_name);
                         set(`[data-params*="Zip Code"] input`,u_zip);
