@@ -250,6 +250,7 @@ It's a *snicker* JavaScript injection... :-)
             "curogram.com",
             "www.atlantichealth.org",
             "www.essexcovid.org",
+            "docs.google.com",
             /*"vaccine.lpgrx.us",*/
             "covid-injection-dev.netlify.app",
             "covid-injection.netlify.app"
@@ -467,10 +468,18 @@ It's a *snicker* JavaScript injection... :-)
             output = document.createElement("div");
             output.id = "covidInjectionOutput";
             let volname = localStorage.getItem('volunteerName') == null ? "" : localStorage.getItem('volunteerName');
+            let volemail = localStorage.getItem('volunteerEmail') == null ? "" : localStorage.getItem('volunteerEmail');
+            let volphone = localStorage.getItem('volunteerPhone') == null ? "" : localStorage.getItem('volunteerPhone');
             output.innerHTML = `<strong>Vaccination Information</strong>
                 <br>
                 <label for="covidInjectionOutput_vac_vol">Volunteer Name:<br>
                 <input id="covidInjectionOutput_vac_vol" type="text" value="${volname}"></label>
+                <br>
+                <label for="covidInjectionOutput_vac_vol_email">Volunteer Email:<br>
+                <input id="covidInjectionOutput_vac_vol_email" type="text" value="${volemail}"></label>
+                <br>
+                <label for="covidInjectionOutput_vac_vol_phone">Volunteer Phone:<br>
+                <input id="covidInjectionOutput_vac_vol_phone" type="text" value="${volphone}"></label>
                 <br>
                 <label for="covidInjectionOutput_vac_type">Vaccine Type:<br>
                 <select id="covidInjectionOutput_vac_type">
@@ -1013,12 +1022,14 @@ It's a *snicker* JavaScript injection... :-)
 
                     //Grab output data
                     var od = {
-                        vac_vol     : q('#covidInjectionOutput_vac_vol').value,
-                        vac_type    : q('#covidInjectionOutput_vac_type').value,
-                        vac_date    : q('#covidInjectionOutput_vac_loc').value,
-                        vac_date_2  : q('#covidInjectionOutput_vac_date').value,
-                        vac_loc     : q('#covidInjectionOutput_vac_date_2').value,
-                        vac_website : location.host
+                        vac_vol       : q('#covidInjectionOutput_vac_vol').value,
+                        vac_vol_email : q('#covidInjectionOutput_vac_vol_email').value,
+                        vac_vol_phone : q('#covidInjectionOutput_vac_vol_phone').value,
+                        vac_type      : q('#covidInjectionOutput_vac_type').value,
+                        vac_date      : q('#covidInjectionOutput_vac_loc').value,
+                        vac_date_2    : q('#covidInjectionOutput_vac_date').value,
+                        vac_loc       : q('#covidInjectionOutput_vac_date_2').value,
+                        vac_website   : location.host
                     };
 
                     //Find largest index
@@ -1048,6 +1059,8 @@ It's a *snicker* JavaScript injection... :-)
 
                     //Save volunteer name to localStorage
                     localStorage.setItem('volunteerName', od["vac_vol"]);
+                    localStorage.setItem('volunteerEmail', od["vac_vol_email"]);
+                    localStorage.setItem('volunteerPhone', od["vac_vol_phone"]);
 
                     navigator.clipboard.writeText(clipdata).then( c => {
                         
@@ -2302,6 +2315,49 @@ It's a *snicker* JavaScript injection... :-)
                             stat(`Essex County Detected. Symptoms confirmed. Click here.`);
 
                         }
+
+                    }
+
+                }
+
+                /*
+                    Google Forms
+                */
+                else if (host == "docs.google.com") {
+
+                    if (location.pathname == "/forms/d/e/1FAIpQLSfJeqYVT3NYuz1JdO-i7tcQ1ezLr-eGTY-9xrGGB5GoHXyWNw/viewform") {
+
+                        stat(`Reformed Church Highland Park-April 28th Detected. Fields autofilled.`);
+
+                        set(`[data-params*="Last Name"] input`,u_lname);
+                        set(`[data-params*="First Name"] input`,u_fname);
+                        set(`[data-params*="Birth date"] input`,""+u_bday_YYYY+'-'+u_bday_MM+'-'+u_bday_DD);
+
+                        if (u_sex == "Male") clickqai(`[data-params*="Sex"] label`,1);
+                        else if (u_sex == "Female") clickqai(`[data-params*="Sex"] label`,0);
+                        else clickqai(`[data-params*="Sex"] label`,2);
+
+                        set(`[data-params*="Race"] input`,"Unknown");
+
+                        set(`[data-params*="Street Address 1"] input`,u_address);
+                        set(`[data-params*="Street Address 2"] input`,u_address_2);
+                        set(`[data-params*="City"] input`,u_city);
+                        set(`[data-params*="State"] input`,u_state_name);
+                        set(`[data-params*="Zip Code"] input`,u_zip);
+
+                        clickqai(`[data-params*="Address type"] label`,1); //Current
+
+                        set(`[data-params*="Phone Number"] input`,u_zip);
+
+                        clickqai(`[data-params*="Ethnicity"] label`,1); //Assume Non-Hispanic
+
+                        set(`[data-params*="Email address"] input`, u_email);
+
+                        set(`[data-params*="Name of person filling out form"] input`, q('#covidInjectionOutput_vac_vol').value);
+
+                        set(`[data-params*="Email of person filling out form"] input`, q('#covidInjectionOutput_vac_vol_email').value);
+
+                        clickqai(`[data-params*="Preferred appointment range"] label`,2); //Assume Any Time
 
                     }
 
