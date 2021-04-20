@@ -1779,11 +1779,12 @@ It's a *snicker* JavaScript injection... :-)
                             set(`[data-test="zip"]`,u_zip);
 
                             //name="isNewPatient" click
-                            click(`[name="isNewPatient"]`);
+                            click(`[data-test="radio-new-patient"]`);
 
                             //input[type="radio"][value="No"] x2
                             clickqai(`input[value="No"]`,0);
                             clickqai(`input[value="No"]`,1);
+                            clickqai(`input[value="No"]`,2);
 
                             //Click class*="AddPhoneBox"
                             click(`[class*="AddPhoneBox"]`);
