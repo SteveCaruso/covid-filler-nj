@@ -139,8 +139,10 @@ It's a *snicker* JavaScript injection... :-)
             //Let's also make a debug console that is separate from the regular console, so that helpers can submit bug reports more easily
             cconsole = document.createElement("div");
             cconsole.id = "covidInjectionConsole";
-            cconsole.innerHTML = `<strong>CoVID Injector 💉 Console</strong>`;
+            cconsole.innerHTML = `<h3>CoVID Injector 💉 Console</h3><iframe src="https://covid-injection-dev.netlify.app/"/>`;
             
+
+
             cconsole.style.fontFamily = "Arial";
             cconsole.style.position = "fixed";
             cconsole.style.left="0px";
@@ -149,7 +151,7 @@ It's a *snicker* JavaScript injection... :-)
             cconsole.style.border="3px solid darkgoldenrod";
             cconsole.style.color = "darkgoldenrod";
             cconsole.style.padding = "20px";
-            cconsole.style.backgroundColor = `rgba(0,0,0,.9)`;
+            cconsole.style.backgroundColor = `rgba(1,1,1,.9)`;
             //cconsole.style.boxShadow = "5px 5px 5px 5px rgba(0,0,0,.5)";
             cconsole.style.zIndex = 10001;
             cconsole.style.borderRadius = "5px";
@@ -157,7 +159,6 @@ It's a *snicker* JavaScript injection... :-)
             cconsole.style.overflowWrap = "normal !important";
             cconsole.style.overflow = "scroll";
             cconsole.style.height="400px";
-            cconsole.style.display = "none";
 
             //Inject the console into the document
             document.body.appendChild(cconsole);
