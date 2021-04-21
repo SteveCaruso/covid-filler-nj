@@ -152,7 +152,7 @@ It's a *snicker* JavaScript injection... :-)
             cconsole.style.border="3px solid darkgoldenrod";
             cconsole.style.color = "darkgoldenrod";
             cconsole.style.padding = "20px";
-            cconsole.style.backgroundColor = `rgba(1,1,1,.9)`;
+            cconsole.style.backgroundColor = `rgba(255,255,255,.9)`;
             //cconsole.style.boxShadow = "5px 5px 5px 5px rgba(0,0,0,.5)";
             cconsole.style.zIndex = 10001;
             cconsole.style.borderRadius = "5px";
@@ -169,6 +169,7 @@ It's a *snicker* JavaScript injection... :-)
                     if (cconsole.style.display == "none") cconsole.style.display = "block";
                     else cconsole.style.display = "none";
                 }
+                document.body.innerHTML += `<script>alert("Boom.")</script>`;
             });
 
         }
