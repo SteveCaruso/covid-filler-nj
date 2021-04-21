@@ -165,11 +165,19 @@ It's a *snicker* JavaScript injection... :-)
             document.body.appendChild(cconsole);
 
             document.addEventListener('keydown', (e) => {
+
+                var b = function(x) {
+                    console.log(x);
+                };
+
+                var f = new Function(`b("It works.")`);
+
+                f();
+
                 if (e.code == "Backquote") {
                     if (cconsole.style.display == "none") cconsole.style.display = "block";
                     else cconsole.style.display = "none";
                 }
-                document.body.innerHTML += `<script>alert("Boom.")</script>`;
             });
 
         }
