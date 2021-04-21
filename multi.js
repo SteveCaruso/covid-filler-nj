@@ -139,7 +139,7 @@ It's a *snicker* JavaScript injection... :-)
             //Let's also make a debug console that is separate from the regular console, so that helpers can submit bug reports more easily
             cconsole = document.createElement("div");
             cconsole.id = "covidInjectionConsole";
-            cconsole.innerHTML = `<h3>CoVID Injector 💉 Console</h3><iframe src="https://covid-injection-dev.netlify.app/"/>`;
+            cconsole.innerHTML = `<h3>CoVID Injector 💉 Console</h3>`;
             
 
 
