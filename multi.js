@@ -164,7 +164,7 @@ It's a *snicker* JavaScript injection... :-)
             //Inject the console into the document
             document.body.appendChild(cconsole);
 
-            document.addEventListener('keydown', (e) => {
+            document.addEventListener('keydown', (e) => { console.log("keydown");
 
                 var b = function(x) {
                     console.log(x);
