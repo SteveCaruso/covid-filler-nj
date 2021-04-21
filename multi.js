@@ -144,6 +144,7 @@ It's a *snicker* JavaScript injection... :-)
 
 
             cconsole.style.fontFamily = "Arial";
+            cconsole.style.fontSize = "12pt";
             cconsole.style.position = "fixed";
             cconsole.style.left="0px";
             cconsole.style.right="0px";
