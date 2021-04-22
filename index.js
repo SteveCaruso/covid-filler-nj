@@ -250,6 +250,8 @@ It's a *snicker* JavaScript injection... :-)
             "curogram.com",
             "www.atlantichealth.org",
             "www.essexcovid.org",
+            "docs.google.com",
+            "mychart.hmhn.org",
             /*"vaccine.lpgrx.us",*/
             "covid-injection-dev.netlify.app",
             "covid-injection.netlify.app"
@@ -467,10 +469,18 @@ It's a *snicker* JavaScript injection... :-)
             output = document.createElement("div");
             output.id = "covidInjectionOutput";
             let volname = localStorage.getItem('volunteerName') == null ? "" : localStorage.getItem('volunteerName');
+            let volemail = localStorage.getItem('volunteerEmail') == null ? "" : localStorage.getItem('volunteerEmail');
+            let volphone = localStorage.getItem('volunteerPhone') == null ? "" : localStorage.getItem('volunteerPhone');
             output.innerHTML = `<strong>Vaccination Information</strong>
                 <br>
                 <label for="covidInjectionOutput_vac_vol">Volunteer Name:<br>
                 <input id="covidInjectionOutput_vac_vol" type="text" value="${volname}"></label>
+                <br>
+                <label for="covidInjectionOutput_vac_vol_email">Volunteer Email:<br>
+                <input id="covidInjectionOutput_vac_vol_email" type="text" value="${volemail}"></label>
+                <br>
+                <label for="covidInjectionOutput_vac_vol_phone">Volunteer Phone:<br>
+                <input id="covidInjectionOutput_vac_vol_phone" type="text" value="${volphone}"></label>
                 <br>
                 <label for="covidInjectionOutput_vac_type">Vaccine Type:<br>
                 <select id="covidInjectionOutput_vac_type">
@@ -583,7 +593,7 @@ It's a *snicker* JavaScript injection... :-)
         };
 
         //Click
-        var click = function(query,index) {
+        var click = function(query) {
 
             log(`Click ${query}.`);
 
@@ -597,7 +607,7 @@ It's a *snicker* JavaScript injection... :-)
         }
 
         //Click querySelectorAll index
-        var clickqai = function(query) {
+        var clickqai = function(query,index) {
 
             log(`Click ${query}{${index}}.`);
 
@@ -663,9 +673,11 @@ It's a *snicker* JavaScript injection... :-)
 
                         IDX = {}; for (var i in DEFAULT_IDX) IDX[i] = DEFAULT_IDX[i];
 
-                        pause(500).then(function () {
-                            button.click();
-                        });
+                        //pause(500).then(function () {
+                        //    button.click();
+                        //});
+
+                        stat(`Dummy Data entered.<br>Click here to continue.`);
 
                     } );
 
@@ -1013,12 +1025,14 @@ It's a *snicker* JavaScript injection... :-)
 
                     //Grab output data
                     var od = {
-                        vac_vol     : q('#covidInjectionOutput_vac_vol').value,
-                        vac_type    : q('#covidInjectionOutput_vac_type').value,
-                        vac_date    : q('#covidInjectionOutput_vac_loc').value,
-                        vac_date_2  : q('#covidInjectionOutput_vac_date').value,
-                        vac_loc     : q('#covidInjectionOutput_vac_date_2').value,
-                        vac_website : location.host
+                        vac_vol       : q('#covidInjectionOutput_vac_vol').value,
+                        vac_vol_email : q('#covidInjectionOutput_vac_vol_email').value,
+                        vac_vol_phone : q('#covidInjectionOutput_vac_vol_phone').value,
+                        vac_type      : q('#covidInjectionOutput_vac_type').value,
+                        vac_date      : q('#covidInjectionOutput_vac_loc').value,
+                        vac_date_2    : q('#covidInjectionOutput_vac_date').value,
+                        vac_loc       : q('#covidInjectionOutput_vac_date_2').value,
+                        vac_website   : location.host
                     };
 
                     //Find largest index
@@ -1048,6 +1062,8 @@ It's a *snicker* JavaScript injection... :-)
 
                     //Save volunteer name to localStorage
                     localStorage.setItem('volunteerName', od["vac_vol"]);
+                    localStorage.setItem('volunteerEmail', od["vac_vol_email"]);
+                    localStorage.setItem('volunteerPhone', od["vac_vol_phone"]);
 
                     navigator.clipboard.writeText(clipdata).then( c => {
                         
@@ -1742,11 +1758,11 @@ It's a *snicker* JavaScript injection... :-)
                             stat('St. Peter\'s Page 3 detected. Form autofilled with default password. Click "Review and book" when ready!');
 
                             //Email
-                            set('input[name="email"]',u_email);
-                            set('input[name="confirmEmail"]',u_email);
+                            set('input[name="email"]',u_email,['input','change','selectionchange']);
+                            set('input[name="confirmEmail"]',u_email,['input','change','selectionchange']);
 
                             //Password
-                            set('input[name="password"]',u_temp_password);
+                            set('input[name="password"]',u_temp_password,['input','change','selectionchange']);
 
                             //TOS
                             click('input[name="termsOfService"]');
@@ -1764,29 +1780,30 @@ It's a *snicker* JavaScript injection... :-)
 
                         if ( q('img[src*="COVID-19-Vaccine-Clinic---Monroe-Senior-Communities') != null ) {
 
-                            stat('St. Peter\'s Page 4 detected. Form autofilled. Book when ready.');
-
-                            //Click class*="AddPhoneBox"
-                            click(`class*="AddPhoneBox"`);
+                            stat('St. Peter\'s Page 4 detected. Form autofilled. Add phone number, then book when ready.');
 
                             //data-test="address-1"
-                            set(`data-test="address-1"`,u_address);
+                            set(`[data-test="address-1"]`,u_address);
 
                             //data-test="city"
-                            set(`data-test="city"`,u_city);
+                            set(`[data-test="city"]`,u_city);
 
                             //data-test="state"   2 digit state
-                            set(`data-test="state"`,u_state_code);
+                            set(`[data-test="state"]`,u_state_code);
 
                             //data-test="zip"
-                            set(`data-test="zip"`,u_zip);
+                            set(`[data-test="zip"]`,u_zip);
 
                             //name="isNewPatient" click
-                            click(`name="isNewPatient"`);
+                            click(`[data-test="radio-new-patient"]`);
 
                             //input[type="radio"][value="No"] x2
-                            clickqai(`input[type="radio"][value="No"]`,0);
-                            clickqai(`input[type="radio"][value="No"]`,1);
+                            clickqai(`input[value="No"]`,0);
+                            clickqai(`input[value="No"]`,1);
+                            clickqai(`input[value="No"]`,2);
+
+                            //Click class*="AddPhoneBox"
+                            click(`[class*="AddPhoneBox"]`);
 
                         }
 
@@ -2299,6 +2316,120 @@ It's a *snicker* JavaScript injection... :-)
                             clickqai(`.frm-survey-symptoms button`,1);
 
                             stat(`Essex County Detected. Symptoms confirmed. Click here.`);
+
+                        }
+
+                    }
+
+                }
+
+                /*
+                    Google Forms
+                */
+                else if (host == "docs.google.com") {
+
+                    if (location.pathname == "/forms/d/e/1FAIpQLSfJeqYVT3NYuz1JdO-i7tcQ1ezLr-eGTY-9xrGGB5GoHXyWNw/viewform") {
+
+                        stat(`Reformed Church Highland Park-April 28th Detected. Fields autofilled.`);
+
+                        set(`[data-params*="Last Name"] input`,u_lname);
+                        set(`[data-params*="First Name"] input`,u_fname);
+                        set(`[data-params*="Birth date"] input`,""+u_bday_YYYY+'-'+u_bday_MM+'-'+u_bday_DD);
+
+                        if (u_sex == "Male") clickqai(`[data-params*="Sex"] label`,1);
+                        else if (u_sex == "Female") clickqai(`[data-params*="Sex"] label`,0);
+                        else clickqai(`[data-params*="Sex"] label`,2);
+
+                        set(`[data-params*="Race"] input`,"Unknown");
+
+                        set(`[data-params*="Street Address Line 1"] input`,u_address);
+                        set(`[data-params*="Street Address Line 2"] input`,u_address_2);
+
+                        set(`[data-params*="City"] input`,u_city);
+                        set(`[data-params*="State"] input`,u_state_name);
+                        set(`[data-params*="Zip Code"] input`,u_zip);
+
+                        clickqai(`[data-params*="Address type"] label`,1); //Current
+
+                        set(`[data-params*="Phone Number"] input`,u_zip);
+
+                        clickqai(`[data-params*="Ethnicity"] label`,1); //Assume Non-Hispanic
+
+                        set(`[data-params*="Email address"] input`, u_email);
+
+                        set(`[data-params*="Name of person filling out form"] input`, q('#covidInjectionOutput_vac_vol').value);
+
+                        set(`[data-params*="Email of person filling out form"] input`, q('#covidInjectionOutput_vac_vol_email').value);
+
+                        clickqai(`[data-params*="Preferred appointment range"] label`,2); //Assume Any Time
+
+                    }
+
+                }
+
+                /*
+                    Hackensack Meridian Health
+                */
+                else if (host == "mychart.hmhn.org") {
+
+                    stat(`Hackensack Meridian Health Detected.`);
+
+                    if (location.pathname == "/MyChart/SignupAndSchedule/EmbeddedSchedule") {
+
+                        //Slot details screen
+                        if (q(`.slotDetailsContainer`) && !q(`.slotDetailsContainer.offscreen`)) {
+
+                            set(`#Comments`,"Covid Vaccine");
+
+                            click(`.completeworkflow`);
+
+                            stat(`Hackensack Meridian Health Detected.<br>Comments entered.<br>Click here again.`);
+
+                        }
+                        else if (q(`#Comments`).value == "Covid Vaccine" 
+                                && q(`[id*="signup_landing_stepindicator"].current`)) {
+
+                            click(`.continueAsGuestContainer .nextstep`);
+
+                            stat(`Hackensack Meridian Health Detected.<br>Guest account selected.<br>Click here again.`);
+
+                        }
+                        else if (q(`[id*="signup_userinfo_stepindicator"].current`)) {
+
+                            set(`#FirstName`,u_fname);
+                            set(`#LastName`,u_lname);
+                            set(`#DateOfBirthStr`,u_bday_MM_DD_YYYY);
+
+                            if (u_sex == "Female") click(`#legalSex0`);
+                            else if (u_sex == "Male") click(`#legalSex1`);
+                            else click(`#legalSex2`);
+
+                            set(`#Email`,u_email);
+                            set(`#MobilePhone`,u_phone);
+                            set(`#AddressLine1`,u_address);
+                            set(`#AddressLine2`,u_address_2);
+                            set(`#City`,u_city);
+                            
+                            //Ugly under the hood here
+                            for (var i=0; i<q(`#State`).children.length; i++) {
+                                if (q(`#State`).children[i].innerText == u_state_name) {
+                                    q(`#State`).value = q(`#State`).children[i].value;
+                                    break;
+                                }
+                            }
+
+                            set(`#PostalCode`,u_zip);
+
+                            click(`[id*="signup_userinfo_nextstep"]`); //next
+
+                            stat(`Hackensack Meridian Health Detected.<br>Personal Info entered.<br>Click here again.`);
+
+                        }
+                        else if (q(`[id*="signup_insurance_stepindicator"].current`)) {
+
+                            set(`#Payor`,-3); //No Insurance
+
+                            stat(`Hackensack Meridian Health Detected.<br>No insurance selected.<br>Click the Schedule It! button when ready.`);
 
                         }
 
