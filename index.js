@@ -672,9 +672,11 @@ It's a *snicker* JavaScript injection... :-)
 
                         IDX = {}; for (var i in DEFAULT_IDX) IDX[i] = DEFAULT_IDX[i];
 
-                        pause(500).then(function () {
-                            button.click();
-                        });
+                        //pause(500).then(function () {
+                        //    button.click();
+                        //});
+
+                        stat(`Dummy Data entered.<br>Click here to continue.`);
 
                     } );
 
