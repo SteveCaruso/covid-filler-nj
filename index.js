@@ -251,6 +251,7 @@ It's a *snicker* JavaScript injection... :-)
             "www.atlantichealth.org",
             "www.essexcovid.org",
             "docs.google.com",
+            "mychart.hmhn.org",
             /*"vaccine.lpgrx.us",*/
             "covid-injection-dev.netlify.app",
             "covid-injection.netlify.app"
@@ -2361,6 +2362,53 @@ It's a *snicker* JavaScript injection... :-)
                         set(`[data-params*="Email of person filling out form"] input`, q('#covidInjectionOutput_vac_vol_email').value);
 
                         clickqai(`[data-params*="Preferred appointment range"] label`,2); //Assume Any Time
+
+                    }
+
+                }
+
+                /*
+                    Google Forms
+                */
+                else if (host == "mychart.hmhn.org") {
+
+                    if (location.pathname == "/MyChart/SignupAndSchedule/EmbeddedSchedule") {
+
+                        //Slot details screen
+                        if (q(`.slotDetailsContainer`) && !q(`.slotDetailsContainer.offscreen`)) {
+
+                            set(`#Comments`,"Covid Vaccine");
+
+                            click(`.completeworkflow`);
+
+                        }
+                        else if (q(`#Comments`).value == "Covid Vaccine" 
+                                && q(`[id*="signup_landing_stepindicator"].current`)) {
+
+                            click(`.continueAsGuestContainer .nextstep`);
+
+                        }
+                        else if (q(`[id*="signup_userinfo_stepindicator"].current`)) {
+
+                            set(`#FirstName`,u_fname);
+                            set(`#LastName`,u_fname);
+                            set(`#DateOfBirthStr`,u_bday_MM_DD_YYYY);
+
+                            if (u_sex == "Female") click(`#legalSex0`);
+                            else if (u_sex == "Male") click(`#legalSex1`);
+                            else click(`#legalSex2`);
+
+                            set(`#Email`,u_email);
+                            set(`#MobilePhone`,u_phone);
+                            set(`#AddressLine1`,u_address);
+                            set(`#AddressLine2`,u_address_2);
+                            set(`#City`,u_city);
+                            set(`#State`,u_state_name);
+                            set(`#PostalCode`,u_zip);
+
+                            click(`[id*="signup_userinfo_nextstep"]`); //next
+
+                        }
 
                     }
 
