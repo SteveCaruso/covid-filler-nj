@@ -2368,9 +2368,11 @@ It's a *snicker* JavaScript injection... :-)
                 }
 
                 /*
-                    Google Forms
+                    Hackensack Meridian Health
                 */
                 else if (host == "mychart.hmhn.org") {
+
+                    stat(`Hackensack Meridian Health Detected.`);
 
                     if (location.pathname == "/MyChart/SignupAndSchedule/EmbeddedSchedule") {
 
@@ -2381,17 +2383,21 @@ It's a *snicker* JavaScript injection... :-)
 
                             click(`.completeworkflow`);
 
+                            stat(`Hackensack Meridian Health Detected.<br>Comments entered.<br>Click here again.`);
+
                         }
                         else if (q(`#Comments`).value == "Covid Vaccine" 
                                 && q(`[id*="signup_landing_stepindicator"].current`)) {
 
                             click(`.continueAsGuestContainer .nextstep`);
 
+                            stat(`Hackensack Meridian Health Detected.<br>Guest account selected.<br>Click here again.`);
+
                         }
                         else if (q(`[id*="signup_userinfo_stepindicator"].current`)) {
 
                             set(`#FirstName`,u_fname);
-                            set(`#LastName`,u_fname);
+                            set(`#LastName`,u_lname);
                             set(`#DateOfBirthStr`,u_bday_MM_DD_YYYY);
 
                             if (u_sex == "Female") click(`#legalSex0`);
@@ -2403,10 +2409,27 @@ It's a *snicker* JavaScript injection... :-)
                             set(`#AddressLine1`,u_address);
                             set(`#AddressLine2`,u_address_2);
                             set(`#City`,u_city);
-                            set(`#State`,u_state_name);
+                            
+                            //Ugly under the hood here
+                            for (var i=0; i<q(`#State`).children.length; i++) {
+                                if (q(`#State`).children[i].innerText == u_state_name) {
+                                    q(`#State`).value = q(`#State`).children[i].value;
+                                    break;
+                                }
+                            }
+
                             set(`#PostalCode`,u_zip);
 
                             click(`[id*="signup_userinfo_nextstep"]`); //next
+
+                            stat(`Hackensack Meridian Health Detected.<br>Personal Info entered.<br>Click here again.`);
+
+                        }
+                        else if (q(`[id*="signup_insurance_stepindicator"].current`)) {
+
+                            set(`#Payor`,-3); //No Insurance
+
+                            stat(`Hackensack Meridian Health Detected.<br>No insurance selected.<br>Click the Schedule It! button when ready.`);
 
                         }
 
