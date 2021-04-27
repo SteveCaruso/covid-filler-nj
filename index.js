@@ -119,6 +119,74 @@ It's a *snicker* JavaScript injection... :-)
     qualifiedOccs = occs;
 
     /*
+        NJ Counties
+    */
+    var nj_county = {
+        "Middlesex" : [
+            "Carteret",
+            "Cranbury",
+            "Dunellen",
+            "East Brunswick",
+            "Edison",
+            "Helmetta",
+            "Highland Park",
+            "Jamesburg",
+            "Metuchen",
+            "Middlesex",
+            "Milltown",
+            "Monroe",
+            "New Brunswick",
+            "North Brunswick",
+            "Old Bridge",
+            "Perth Amboy",
+            "Piscataway",
+            "Plainsboro",
+            "Sayreville",
+            "South Amboy",
+            "South Brunswick",
+            "South Plainfield",
+            "South River",
+            "Spotswood",
+            "Woodbridge"
+        ],
+        "Somerset" : [
+            "Bedminster",
+            "Bernards",
+            "Bernardsville",
+            "Bound Brook",
+            "Branchburg",
+            "Bridgewater",
+            "Far Hills",
+            "Franklin",
+            "Green Brook",
+            "Hillsborough",
+            "Manville",
+            "Millstone",
+            "Montgomery",
+            "North Plainfield",
+            "Peapack & Gladstone",
+            "Raritan",
+            "Rocky Hill",
+            "Somerville",
+            "South Bound Brook",
+            "Warren",
+            "Watchung"
+        ]
+    };
+
+    //Unfold the hash
+    var nj_counties_temp = {};
+    for (var i in nj_county) {
+        nj_counties_temp[i] = i;
+        for (var j in nj_county[i]) {
+            nj_counties_temp[ nj_county[i][j] ] = i;
+        }
+    }
+    nj_county = nj_counties_temp;
+
+    console.log(nj_county);
+
+    /*
         Where to put :
             Essential Worker
             Manufacturing Workers
@@ -1934,6 +2002,17 @@ It's a *snicker* JavaScript injection... :-)
                         //City
                         set('input[name="city"]',u_city);
 
+                        //Queue up next prompt
+                        stat(`Curogram VNA Address entered.<br>Click here again.`);
+
+                        //County
+                        if (q(`input[name="county"]`)) {
+                            if (nj_county[u_city])
+                                set('input[name="county"]',nj_county[u_city]);
+                            else 
+                                stat(`Curogram VNA Address entered.<br>NOTE: Count not auto-detect County. Enter county and click here again.`);
+                        }
+
                         //State
                         //document.querySelectorAll('ng-select input')[0].value = u_state_code;
                         //document.querySelectorAll('ng-select input')[0].dispatchEvent(new Event('input'),{ bubbles: true });
@@ -1946,9 +2025,6 @@ It's a *snicker* JavaScript injection... :-)
 
                         //Click next
                         click('button.btn-nephritis');
-
-                        //Queue up next prompt
-                        stat(`Curogram VNA Address entered.<br>Click here again.`);
 
                     }
                     else if (title === "Screening") { //Screening
@@ -1989,10 +2065,12 @@ It's a *snicker* JavaScript injection... :-)
                         //document.querySelectorAll('input[type="radio"]')[17].click();
                         clickqai('input[type="radio"]',17);
 
+                        /*
                         //Yes! Gimmie the vaccine! (click last as "YES!")
                         let yes = document.querySelectorAll('input[type="radio"]').length-2;
                         //document.querySelectorAll('input[type="radio"]')[yes].click();
                         clickqai('input[type="radio"]',yes);
+                        */
 
                         //Click next
                         click('button.btn-nephritis');
