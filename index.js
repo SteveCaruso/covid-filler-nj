@@ -2002,7 +2002,10 @@ It's a *snicker* JavaScript injection... :-)
                         //City
                         set('input[name="city"]',u_city);
 
-                        //City
+                        //Queue up next prompt
+                        stat(`Curogram VNA Address entered.<br>Click here again.`);
+
+                        //County
                         if (q(`input[name="county"]`)) {
                             if (nj_county[u_city])
                                 set('input[name="county"]',nj_county[u_city]);
@@ -2022,9 +2025,6 @@ It's a *snicker* JavaScript injection... :-)
 
                         //Click next
                         click('button.btn-nephritis');
-
-                        //Queue up next prompt
-                        stat(`Curogram VNA Address entered.<br>Click here again.`);
 
                     }
                     else if (title === "Screening") { //Screening
