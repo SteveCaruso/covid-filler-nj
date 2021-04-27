@@ -1989,10 +1989,12 @@ It's a *snicker* JavaScript injection... :-)
                         //document.querySelectorAll('input[type="radio"]')[17].click();
                         clickqai('input[type="radio"]',17);
 
+                        /*
                         //Yes! Gimmie the vaccine! (click last as "YES!")
                         let yes = document.querySelectorAll('input[type="radio"]').length-2;
                         //document.querySelectorAll('input[type="radio"]')[yes].click();
                         clickqai('input[type="radio"]',yes);
+                        */
 
                         //Click next
                         click('button.btn-nephritis');
