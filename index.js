@@ -119,6 +119,74 @@ It's a *snicker* JavaScript injection... :-)
     qualifiedOccs = occs;
 
     /*
+        NJ Counties
+    */
+    var nj_county = {
+        "Middlesex" : [
+            "Carteret",
+            "Cranbury",
+            "Dunellen",
+            "East Brunswick",
+            "Edison",
+            "Helmetta",
+            "Highland Park",
+            "Jamesburg",
+            "Metuchen",
+            "Middlesex",
+            "Milltown",
+            "Monroe",
+            "New Brunswick",
+            "North Brunswick",
+            "Old Bridge",
+            "Perth Amboy",
+            "Piscataway",
+            "Plainsboro",
+            "Sayreville",
+            "South Amboy",
+            "South Brunswick",
+            "South Plainfield",
+            "South River",
+            "Spotswood",
+            "Woodbridge"
+        ],
+        "Somerset" : [
+            "Bedminster",
+            "Bernards",
+            "Bernardsville",
+            "Bound Brook",
+            "Branchburg",
+            "Bridgewater",
+            "Far Hills",
+            "Franklin",
+            "Green Brook",
+            "Hillsborough",
+            "Manville",
+            "Millstone",
+            "Montgomery",
+            "North Plainfield",
+            "Peapack & Gladstone",
+            "Raritan",
+            "Rocky Hill",
+            "Somerville",
+            "South Bound Brook",
+            "Warren",
+            "Watchung"
+        ]
+    };
+
+    //Unfold the hash
+    var nj_counties_temp = {};
+    for (var i in nj_counties) {
+        nj_counties_temp[i] = i;
+        for (var j in nj_counties[i]) {
+            nj_counties_temp[ nj_counties[i][j] ] = i;
+        }
+    }
+    nj_counties = nj_counties_temp;
+
+    console.log(nj_counties);
+
+    /*
         Where to put :
             Essential Worker
             Manufacturing Workers
