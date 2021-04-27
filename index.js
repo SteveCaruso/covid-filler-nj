@@ -176,15 +176,15 @@ It's a *snicker* JavaScript injection... :-)
 
     //Unfold the hash
     var nj_counties_temp = {};
-    for (var i in nj_counties) {
+    for (var i in nj_county) {
         nj_counties_temp[i] = i;
-        for (var j in nj_counties[i]) {
-            nj_counties_temp[ nj_counties[i][j] ] = i;
+        for (var j in nj_county[i]) {
+            nj_counties_temp[ nj_county[i][j] ] = i;
         }
     }
-    nj_counties = nj_counties_temp;
+    nj_county = nj_counties_temp;
 
-    console.log(nj_counties);
+    console.log(nj_county);
 
     /*
         Where to put :
