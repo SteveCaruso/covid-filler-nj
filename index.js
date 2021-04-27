@@ -2002,6 +2002,14 @@ It's a *snicker* JavaScript injection... :-)
                         //City
                         set('input[name="city"]',u_city);
 
+                        //City
+                        if (q(`input[name="county"]`)) {
+                            if (nj_county[u_city])
+                                set('input[name="county"]',u_city);
+                            else 
+                                stat(`Curogram VNA Address entered.<br>NOTE: Count not auto-detect County. Enter county and click here again.`);
+                        }
+
                         //State
                         //document.querySelectorAll('ng-select input')[0].value = u_state_code;
                         //document.querySelectorAll('ng-select input')[0].dispatchEvent(new Event('input'),{ bubbles: true });
