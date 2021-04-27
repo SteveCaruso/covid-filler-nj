@@ -2005,7 +2005,7 @@ It's a *snicker* JavaScript injection... :-)
                         //City
                         if (q(`input[name="county"]`)) {
                             if (nj_county[u_city])
-                                set('input[name="county"]',u_city);
+                                set('input[name="county"]',nj_county[u_city]);
                             else 
                                 stat(`Curogram VNA Address entered.<br>NOTE: Count not auto-detect County. Enter county and click here again.`);
                         }
