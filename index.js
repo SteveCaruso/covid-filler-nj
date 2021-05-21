@@ -2120,6 +2120,15 @@ It's a *snicker* JavaScript injection... :-)
                         stat(`Curogram VNA Consent checked.<br>Sign with an X and continue manually.`);
 
                     }
+                    else if (title === "Guardian") {
+
+                        //Click next
+                        click('button.btn-outline-nephritis');
+
+                        //Queue up next prompt
+                        stat(`Curogram VNA Guardian Page Skipped.<br>Click here again.`);
+
+                    }
                     else {
 
                         stat(`Curogram VNA detected.<br>Continue manually.`);
